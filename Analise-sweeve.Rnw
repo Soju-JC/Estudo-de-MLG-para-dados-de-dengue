@@ -74,6 +74,7 @@
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
 loadlibrary <- function(x){
+  
   if (!require(x,character.only = TRUE)) {
     install.packages(x,dependencies = T)
     if(!require(x, character.only = TRUE)) 
@@ -91,7 +92,6 @@ packages <- c(
   "magrittr", 
   "pipeR",
   "knitr",
-  "esquisse",
   "viridis",
   "cowplot",
   "tidyr",

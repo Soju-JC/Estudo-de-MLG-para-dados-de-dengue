@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}{\LARGE \textbf {Análise exploratória}}}{2}{}%
+\contentsline {subsection}{\numberline {1.1}\textbf {Descrição dos dados}}{2}{}%
+\contentsline {section}{\numberline {2}{\LARGE \textbf {Construção do modelo}}}{3}{}%
+\contentsline {subsection}{\numberline {2.1}\textbf {Definição do modelo}}{3}{}%
+\contentsline {subsection}{\numberline {2.2}\textbf {Modelo considerando todas as covariáveis}}{3}{}%
+\contentsline {subsection}{\numberline {2.3}\textbf {Verificando multicolinearidade}}{3}{}%
+\contentsline {subsection}{\numberline {2.4}\textbf {Seleção de covariáveis}}{3}{}%
+\contentsline {subsection}{\numberline {2.5}\textbf {Transformação de covariáveis}}{3}{}%
+\contentsline {section}{\numberline {3}\textbf {Pontos influentes/de alavanca/outliers}}{4}{}%
+\contentsline {section}{\numberline {4}{\LARGE \textbf {Verificação dos pressupostos}}}{5}{}%
+\contentsline {section}{\numberline {5}{\LARGE \textbf {Interpretação e conclusões}}}{6}{}%

@@ -1,0 +1,165 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\let\lctau\tau % save the lowercase of '\tau'
+\renewcommand{\tau}{\scalerel*{\lctau}{X}}
+
+
+\title{MLG - Trabalho 2}
+\author{José Carlos Soares Junior }
+\date{Matrícula: 2017100732}
+
+\begin{document}
+\begin{titlepage}
+	\begin{center}
+	
+	%\begin{figure}[!ht]
+	%\centering
+	%\includegraphics[width=2cm]{c:/ufba.jpg}
+	%\end{figure}
+
+		\Huge{UNIVERSIDADE FEDERAL DO ESPÍRITO SANTO}\\
+		\large{CENTRO DE CIÊNCIAS EXATAS}\\ 
+		\large{DEPARTAMENTO DE ESTATÍSTICA}\\ 
+\vspace{15pt}
+        
+        \vspace{85pt}
+        
+		\textbf{\LARGE{Modelagem dos dados de 2013 referentes às notificações de dengue no estado do Espírito Santo}}
+		\title{\large{Título}}
+	%	\large{Modelo\\
+     %   		Validação do modelo clássico}
+			
+	\end{center}
+\vspace{1,5cm}
+	
+	\begin{flushright}
+
+   \begin{list}{}{
+      \setlength{\leftmargin}{4.5cm}
+      \setlength{\rightmargin}{0cm}
+      \setlength{\labelwidth}{0pt}
+      \setlength{\labelsep}{\leftmargin}}
+
+      \item Segundo trabalho da disciplina de MLG ministrado pelo Prof. Dr. Saulo Morellato.
+
+      \begin{list}{}{
+      \setlength{\leftmargin}{0cm}
+      \setlength{\rightmargin}{0cm}
+      \setlength{\labelwidth}{0pt}
+      \setlength{\labelsep}{\leftmargin}}
+
+			\item Alunos: \
+            \item Orientador: Prof. Dr. Saulo Morellato\
+
+      \end{list}
+   \end{list}
+\end{flushright}
+\vspace{1cm}
+\begin{center}
+		\vspace{\fill}
+		 Abril\\
+		 2021
+			\end{center}
+\end{titlepage}
+\newpage
+
+% Pacotes:
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
+loadlibrary <- function(x){
+  if (!require(x,character.only = TRUE)) {
+    install.packages(x,dependencies = T)
+    if(!require(x, character.only = TRUE)) 
+      stop("Package not found")
+  }
+}
+
+packages <- c(
+  "tidyverse",
+  "readxl",
+  "janitor",
+  "skimr",
+  "lubridate",
+  "summarytools",
+  "magrittr", 
+  "pipeR",
+  "knitr",
+  "esquisse",
+  "viridis",
+  "cowplot",
+  "tidyr",
+  "reshape2",
+  "VIM",
+  "mice",
+  "VGAM",
+  "nlme",
+  "visreg",
+  "lme4",
+  "glmnet",
+  "leaps",
+  "glmmLasso",
+  "glmmTMB",
+  "mgcv",
+  "writexl"
+)
+
+lapply(packages, loadlibrary)
+
+#load("objects.RData")
+
+@
+
+\tableofcontents  % sumário
+
+% Formato do chunk:
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.height=8,fig.width=12>>=
+
+@
+
+\newpage
+\section{{\LARGE\textbf{Análise exploratória}}}
+
+
+\subsection{\textbf{Descrição dos dados}}
+
+
+\newpage
+\section{{\LARGE\textbf{Construção do modelo}}}
+
+\subsection{\textbf{Definição do modelo}}
+
+\subsection{\textbf{Modelo considerando todas as covariáveis}}
+
+\subsection{\textbf{Verificando multicolinearidade}}
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+
+# require(car)
+# fit <- lm(y~., data = dados)
+# vif(fit)
+@
+
+
+\subsection{\textbf{Seleção de covariáveis}}
+
+
+\subsection{\textbf{Transformação de covariáveis}}
+
+\newpage
+\section{\textbf{Pontos influentes/de alavanca/outliers}}
+
+\newpage
+\section{{\LARGE\textbf{Verificação dos pressupostos}}}
+
+\newpage
+\section{{\LARGE\textbf{Interpretação e conclusões}}}
+
+\end{document}

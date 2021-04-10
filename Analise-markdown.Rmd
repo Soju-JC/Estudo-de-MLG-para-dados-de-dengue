@@ -1,0 +1,106 @@
+---
+title: Modelagem dos dados de 2013 referentes às notificações de dengue no estado do Espírito Santo
+author: ""
+date: "2021"
+output:
+  html_document:
+    toc: yes
+    toc_depth: 2
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
+orientador(a): Prof. Dr. Saulo Morellato
+---
+
+<!-- Pacotes -->
+
+```{r setup, echo=FALSE, message=FALSE, warning =FALSE, error=FALSE, results='hide',comment=FALSE}
+knitr::opts_chunk$set(echo = TRUE, cache=FALSE, prompt=FALSE, comment=NA)
+
+loadlibrary <- function(x){
+  if (!require(x,character.only = TRUE)) {
+    install.packages(x,dependencies = T)
+    if(!require(x, character.only = TRUE)) 
+      stop("Package not found")
+  }
+}
+
+packages <- c(
+  "tidyverse",
+  "readxl",
+  "janitor",
+  "skimr",
+  "lubridate",
+  "summarytools",
+  "magrittr", 
+  "pipeR",
+  "knitr",
+  "esquisse",
+  "viridis",
+  "cowplot",
+  "tidyr",
+  "reshape2",
+  "VIM",
+  "mice",
+  "VGAM",
+  "nlme",
+  "visreg",
+  "lme4",
+  "glmnet",
+  "leaps",
+  "glmmLasso",
+  "glmmTMB",
+  "mgcv",
+  "writexl"
+)
+
+lapply(packages, loadlibrary)
+
+#mudança globais para o summarytools
+st_options(freq.cumul = FALSE,          
+           display.labels = TRUE,
+           lang = "pt",
+           bootstrap.css = FALSE,
+           plain.ascii = FALSE,
+           dfSummary.silent = TRUE,
+           footnote = NA,
+           subtitle.emphasis = FALSE)
+st_css()
+```
+
+<!-- Formato do chunk: -->
+
+```{r, echo = FALSE}
+
+
+```
+
+# Análise Exploratória
+
+### Descrição dos dados
+
+# Construção do modelo
+
+### Definição do modelo
+
+### Modelo considerando todas as covariáveis
+
+### Verificando multicolinearidade
+
+```{r, echo = FALSE}
+
+# require(car)
+# fit <- lm(y~., data = dados)
+# vif(fit)
+
+```
+
+### Seleção de covariáveis
+
+### Transformação de covariáveis
+
+# Pontos influentes/de alavanca/outliers
+
+# Verificação dos pressupostos
+
+# Interpretação e conclusões

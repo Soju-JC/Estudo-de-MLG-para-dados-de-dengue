@@ -9,4 +9,4 @@ que consiste na construção de um modelo para o número de notificações de de
 * Os arquivos Analise-sweeve.Rnw e Analise-markdown.Rmd são as opções para a construção do relatório, particularmente prefiro usar o Sweeve.
 * Os arquivos graficos-poisson.R e graficos-bin_negativa.R contém os códigos para construção dos gráficos para ambas as distribuições.
 
-Teste
+Teste 1

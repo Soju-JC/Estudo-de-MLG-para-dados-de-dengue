@@ -22,3 +22,4 @@ dinamite
 escreve  BOMBA
 
 alteracao
+alteracao2

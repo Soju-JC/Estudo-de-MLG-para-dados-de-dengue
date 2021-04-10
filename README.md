@@ -16,4 +16,8 @@ teste acrescimo
 
 acrescimo 2
 
+
 dinamite
+
+escreve  BOMBA
+

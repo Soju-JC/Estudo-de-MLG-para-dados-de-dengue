@@ -6,3 +6,4 @@ que consiste na construção de um modelo para o número de notificações de de
 # Observações
 
 ## O arquivo dados.xlsx contém os dados a serem usados.
+## Os arquivos Analise-sweeve.Rnw e Analise-markdown.Rmd são as opções para a construção do relatório, particularmente prefiro usar o Sweeve.

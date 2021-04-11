@@ -10,4 +10,4 @@ que consiste na construção de um modelo para o número de notificações de de
 * Os arquivos graficos-poisson.R e graficos-bin_negativa.R contém os códigos para construção dos gráficos para ambas as distribuições.
 
 # Resultado
-
+Observou...

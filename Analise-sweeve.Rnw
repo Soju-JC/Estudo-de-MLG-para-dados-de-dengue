@@ -144,7 +144,7 @@ View(dados_2013)
 \newpage
 \section{{\LARGE\textbf{Análise exploratória}}}   
 
-%%%%%%%%%% Descrição dos dados %%%%%%%%%%%%% 
+%%%%% Descrição dos dados %%%%%% 
 
 \subsection{\textbf{Descrição dos dados}}
 
@@ -234,7 +234,7 @@ $\mathbf{maior65}$ - proporção da população com mais de $65$ anos;
 \noindent
 \textbf{dengue} - número de notificações municipais de dengue.
 
-%%%%%%%%%% Notificações de dengue por municipio %%%%%%%%%%%%%
+%%%%%% Notificações de dengue por municipio %%%%%%%
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.width= 8, fig.height= 11, fig.align= "center", fig.pos='H'>>=
 ggplot(dados_2013,aes(x = Municipio, y = dengue)) + 

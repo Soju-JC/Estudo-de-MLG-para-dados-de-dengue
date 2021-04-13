@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.10)  10 APR 2021 22:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.10)  13 APR 2021 16:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -193,6 +193,14 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
+(c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2019/07/24 v1.2d Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup6
+\symboldletters=\mathgroup7
+\symboldsymbols=\mathgroup8
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 209.
+)
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.
 sty
 Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
@@ -350,7 +358,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip53
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 70.
+Package hyperref Info: Option `colorlinks' set `true' on input line 71.
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backen
 d-pdftex.def
@@ -360,24 +368,24 @@ File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 ) (./Analise-sweeve.aux)
 \openout1 = `Analise-sweeve.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 78.
-LaTeX Font Info:    ... okay on input line 78.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 79.
+LaTeX Font Info:    ... okay on input line 79.
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epsto
 pdf-base.sty
@@ -390,7 +398,7 @@ df-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring ON on input line 78.
+Package hyperref Info: Link coloring ON on input line 79.
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.s
 ty
@@ -406,9 +414,9 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
 \c@section@level=\count280
 )
-LaTeX Info: Redefining \ref on input line 78.
-LaTeX Info: Redefining \pageref on input line 78.
-LaTeX Info: Redefining \nameref on input line 78.
+LaTeX Info: Redefining \ref on input line 79.
+LaTeX Info: Redefining \pageref on input line 79.
+LaTeX Info: Redefining \nameref on input line 79.
  (./Analise-sweeve.out) (./Analise-sweeve.out)
 \@outlinefile=\write3
 \openout3 = `Analise-sweeve.out'.
@@ -435,24 +443,30 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.143 \newpage
-               [1] [2] [3] [4] [5] [6] (./Analise-sweeve.aux)
+l.144 \newpage
+               [1]
+Overfull \hbox (1.67479pt too wide) in paragraph at lines 182--184
+\OT1/cmr/bx/n/12 ifdm[]saude \OT1/cmr/m/n/12 - []Indice Fir-jan de De-sen-volvi
+-mento Municipal-IFDM para sa^^Sude; 
+ []
+
+[2] [3] [4] [5] [6] (./Analise-sweeve.aux)
 Package rerunfilecheck Info: File `Analise-sweeve.out' has not changed.
 (rerunfilecheck)             Checksum: 7AB4BBAD09A15C6FE1527C55A7154D74;2149.
  ) 
 Here is how much of TeX's memory you used:
- 9239 strings out of 480954
- 134805 string characters out of 5905840
- 428251 words of memory out of 5000000
- 26318 multiletter control sequences out of 15000+600000
- 410199 words of font info for 52 fonts, out of 8000000 for 9000
+ 9327 strings out of 480954
+ 135846 string characters out of 5905840
+ 432612 words of memory out of 5000000
+ 26394 multiletter control sequences out of 15000+600000
+ 412661 words of font info for 60 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 71i,5n,74p,326b,345s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,6n,74p,326b,345s stack positions out of 5000i,500n,10000p,200000b,80000s
 <c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfont
 s/cm/cmbx12.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmr12.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on Analise-sweeve.pdf (7 pages, 45459 bytes).
+Output written on Analise-sweeve.pdf (7 pages, 50274 bytes).
 PDF statistics:
  111 PDF objects out of 1000 (max. 8388607)
  98 compressed objects within 1 object stream

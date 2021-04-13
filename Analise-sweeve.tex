@@ -1,3 +1,5 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Preâmbulo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
 \documentclass[12pt,a4paper]{article}\usepackage[]{graphicx}\usepackage[]{color}
 % maxwidth is the original width if it is less than linewidth
 % otherwise use linewidth (to make sure the graphics do not exceed the margin)
@@ -58,6 +60,7 @@
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{bm}
+\usepackage{float}
 \let\lctau\tau % save the lowercase of '\tau'
 \renewcommand{\tau}{\scalerel*{\lctau}{X}}
 
@@ -131,19 +134,21 @@
 \end{titlepage}
 \newpage
 
-% Pacotes:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 
 
 \tableofcontents  % sumário
 
-% Formato do chunk:
+% Formato do chunk a ser usado:
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Descritiva %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \newpage
-\section{{\LARGE\textbf{Análise exploratória}}}
+\section{{\LARGE\textbf{Análise exploratória}}}   
 
+%%%%%%%%%% Descrição dos dados %%%%%%%%%%%%% 
 
 \subsection{\textbf{Descrição dos dados}}
 
@@ -232,6 +237,20 @@ $\mathbf{maior65}$ - proporção da população com mais de $65$ anos;
 
 \noindent
 \textbf{dengue} - número de notificações municipais de dengue.
+
+%%%%%%%%%% Notificações de dengue por municipio %%%%%%%%%%%%%
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-3-1} 
+
+}
+
+
+
+\end{knitrout}
+\textbf{Figura 1:} Notificações de dengue por municípios do estado do Espírito Santo.
 
 \newpage
 \section{{\LARGE\textbf{Construção do modelo}}}

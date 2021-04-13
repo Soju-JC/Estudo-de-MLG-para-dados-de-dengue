@@ -1,3 +1,5 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Preâmbulo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
 \documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -8,6 +10,7 @@
 \usepackage{booktabs}
 \usepackage{xcolor}
 \usepackage{bm}
+\usepackage{float}
 \let\lctau\tau % save the lowercase of '\tau'
 \renewcommand{\tau}{\scalerel*{\lctau}{X}}
 
@@ -81,7 +84,7 @@
 \end{titlepage}
 \newpage
 
-% Pacotes:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Pacotes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
 loadlibrary <- function(x){
@@ -131,18 +134,17 @@ View(dados_2013)
 
 \tableofcontents  % sumário
 
-% Formato do chunk:
+% Formato do chunk a ser usado:
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.height=8,fig.width=12>>=
 
 @
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Descritiva %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \newpage
-\section{{\LARGE\textbf{Análise exploratória}}}
-<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+\section{{\LARGE\textbf{Análise exploratória}}}   
 
-
-@
+%%%%%%%%%% Descrição dos dados %%%%%%%%%%%%% 
 
 \subsection{\textbf{Descrição dos dados}}
 
@@ -231,6 +233,20 @@ $\mathbf{maior65}$ - proporção da população com mais de $65$ anos;
 
 \noindent
 \textbf{dengue} - número de notificações municipais de dengue.
+
+%%%%%%%%%% Notificações de dengue por municipio %%%%%%%%%%%%%
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.width= 8, fig.height= 11, fig.align= "center", fig.pos='H'>>=
+ggplot(dados_2013,aes(x = Municipio, y = dengue)) + 
+  geom_histogram(fill = rgb(0.3,0.7,0.5,0.9), stat= "identity") + 
+  labs(x = "Municipio", y = "\nNotificações de dengue") + 
+  coord_flip() + 
+  scale_y_continuous(expand = c(0,.5), limits = c(0,25000)) + 
+  theme(axis.text.x  = element_text(angle=45, hjust = 1)) +
+  scale_x_discrete(expand = c(0,.5)) 
+
+@
+\textbf{Figura 1:} Notificações de dengue por municípios do estado do Espírito Santo.
 
 \newpage
 \section{{\LARGE\textbf{Construção do modelo}}}

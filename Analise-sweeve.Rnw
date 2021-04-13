@@ -11,6 +11,7 @@
 \usepackage{xcolor}
 \usepackage{bm}
 \usepackage{float}
+\usepackage[margin=1.5in]{geometry}
 \let\lctau\tau % save the lowercase of '\tau'
 \renewcommand{\tau}{\scalerel*{\lctau}{X}}
 
@@ -140,13 +141,10 @@ View(dados_2013)
 
 @
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Descritiva %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Descrição dos dados %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
 \newpage
-\section{{\LARGE\textbf{Análise exploratória}}}   
-
-%%%%% Descrição dos dados %%%%%% 
-
-\subsection{\textbf{Descrição dos dados}}
+\section{\textbf{{\LARGE\textbf{Descrição dos dados}}}}
 
 \textbf{IntCdAtBca} - Proporção de internações por condições sensíveis à Atenção Basica;
 
@@ -234,6 +232,11 @@ $\mathbf{maior65}$ - proporção da população com mais de $65$ anos;
 \noindent
 \textbf{dengue} - número de notificações municipais de dengue.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Descritiva %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\newpage
+\section{{\LARGE\textbf{Análise exploratória}}}
+
 %%%%%% Notificações de dengue por municipio %%%%%%%
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.width= 8, fig.height= 11, fig.align= "center", fig.pos='H'>>=
@@ -241,7 +244,7 @@ ggplot(dados_2013,aes(x = Municipio, y = dengue)) +
   geom_histogram(fill = rgb(0.3,0.7,0.5,0.9), stat= "identity") + 
   labs(x = "Municipio", y = "\nNotificações de dengue") + 
   coord_flip() + 
-  scale_y_continuous(expand = c(0,.5), limits = c(0,25000)) + 
+  scale_y_continuous(expand = c(0,.5), limits = c(0,25000), breaks = seq(0,25000,2500)) + 
   theme(axis.text.x  = element_text(angle=45, hjust = 1)) +
   scale_x_discrete(expand = c(0,.5)) 
 

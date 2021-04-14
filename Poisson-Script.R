@@ -109,9 +109,22 @@ solve(t(X)%*%W%*%X)
 
 vif(fit1)
 
+# Agora iremos remover novamente as covariáveis com VIF > 10 desde a com maior
+#VIF para a menor até obtermos um conjunto de covariáveis com VIF < 10. 
+# Obs: pop será mantida como offset
+fit1 <- glm(dengue~. +offset(log(pop)) -Municipio -adultos -temp_p10 -temp_p90 -umid_p10 -umid_p90 -menor15 -dens -expcosteira -Pobr -ifdm_saude -precip, 
+            family=poisson, 
+            data=dados_2013
+            )
+
+vif(fit1)
+
+#As seguintes covariáveis foram retiradas do modelo na seguinte ordem:
+#expcosteira > Pobr > ifdm_saude > precip
+
 fit1 <- stepAIC(fit1)
 summary(fit1)
-# temp foi removida pelo critério AIC. 
+# ifdm_edu foi removida pelo critério AIC. 
 
 ############################ Diagnóstico ################################
          ################### rodar daqui ######################

@@ -1,3 +1,5 @@
+rm(list = ls())
+
 loadlibrary <- function(x){
   
   if (!require(x,character.only = TRUE)) {
@@ -32,7 +34,8 @@ packages <- c(
   "glmmLasso",
   "glmmTMB",
   "mgcv",
-  "writexl"
+  "writexl",
+  "car"
 )
 
 lapply(packages, loadlibrary) # carrega pacotes
@@ -40,9 +43,11 @@ lapply(packages, loadlibrary) # carrega pacotes
 # carrega dados
 dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
-
+dados_2013 <- dados_2013[,-c(26,28,29)]
+#colunas 26,28 e 29 são referentes a "area","id" e "ano" reespectivamente.
+View(dados_2013)
 ############################ Descritiva ###################################
-  
+
 ####### Notificações de dengue por municipio #######
 dev.new(width=6,height=3)
 ggplot(dados_2013,aes(x = Municipio, y = dengue)) + 
@@ -54,3 +59,6 @@ ggplot(dados_2013,aes(x = Municipio, y = dengue)) +
                      breaks = seq(0,25000,2500)) + 
   theme(axis.text.x  = element_text(angle=45, hjust = 1)) +
   scale_x_discrete(expand = c(0,.5)) 
+
+dev.new(width=6,height=3)
+plot(dados_2013$CobAtencBsca, dados_2013$dengue)

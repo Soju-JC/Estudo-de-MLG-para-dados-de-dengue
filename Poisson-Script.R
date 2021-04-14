@@ -50,7 +50,7 @@ View(dados_2013)
 ############################ Ajuste poisson  ###############################
 
 attach(dados_2013)
-fit <- glm(dengue~. -Municipio,family=poisson,data=dados_2013)
+fit <- glm(dengue~. +offset(log(pop)) -Municipio,family=poisson,data=dados_2013)
 summary(fit)
 # Desvio residual muito diferente dos graus de liberdade, indica
 #possível superdispersão.
@@ -63,7 +63,7 @@ attributes(alias(fit)$Complete)$dimnames[[1]]
 # Identificamos que a covariável adultos possui multicolinearidade
 #perfeita, logo, iremos excluí-la do modelo.
 
-fit <- glm(dengue~. -Municipio -adultos,family=poisson,data=dados_2013)
+fit <- glm(dengue~. +offset(log(pop)) -Municipio -adultos,family=poisson,data=dados_2013)
 summary(fit)
 vif(fit)
 # As covariáveis de umidade e temperatura estão com 
@@ -72,7 +72,7 @@ vif(fit)
 #vif > 10.
 
 #### Modelo com as medidas médias de temperatura(temp) e umidade(umid) ####
-fit1 <- glm(dengue~. -Municipio -adultos -temp_p10 -temp_p90 -umid_p10 -umid_p90,
+fit1 <- glm(dengue~. +offset(log(pop)) -Municipio -adultos -temp_p10 -temp_p90 -umid_p10 -umid_p90,
             family=poisson,
             data=dados_2013
             )
@@ -80,7 +80,7 @@ fit1 <- glm(dengue~. -Municipio -adultos -temp_p10 -temp_p90 -umid_p10 -umid_p90
 vif(fit1)
 
 #### Modelo com as medidas extremas(temp_p10,temp_p90 e umid_p10,umid_p90####
-fit2 <- glm(dengue~. -Municipio -adultos -temp -umid, 
+fit2 <- glm(dengue~. +offset(log(pop)) -Municipio -adultos -temp -umid, 
             family=poisson, 
             data=dados_2013 
             )
@@ -89,23 +89,29 @@ vif(fit2)
 #O vif das medidas extremas continuam com valores muito grandes, 
 #então vamos dar continuidade com o modelo 1 (fit1). 
 
-#Ainda precisamos lidar com as covariáveis com vif > 10, caso contrário
-#teremos problema de singularidade (matrizes não inversíveis por serem LD) 
+#Ainda precisamos lidar com as demais covariáveis com vif relativamente alto, 
+#caso contrário teremos problema de singularidade (matrizes não inversíveis por serem LD) 
 #ao criar gráficos de diagnósticos. Iremos remover 1 por 1 da com maior 
-#multicolinearidade para a menor até obter todas covariáveis restantes 
-#com vif < 10.
+#multicolinearidade para a menor até obter t(X)%*%W%*%X inversível, onde
+#X = model.matrix(fit1) e W = diag(fit1$weights).
 
-fit1 <- glm(dengue~. -Municipio -adultos -temp_p10 -temp_p90 -umid_p10 -umid_p90 -menor15 -dens -pop -expcosteira -Pobr -ifdm_saude, 
+fit1 <- glm(dengue~. +offset(log(pop)) -Municipio -adultos -temp_p10 -temp_p90 -umid_p10 -umid_p90 -menor15 -dens, 
             family=poisson, 
             data=dados_2013
             )
+
 #As seguintes covariáveis foram retiradas do modelo na seguinte ordem:
-#menor15 > dens > pop > expcosteira > Pobr > ifdm_saude
+#menor15 > dens 
+X <- model.matrix(fit1)
+W <- diag(fit1$weights)
+solve(t(X)%*%W%*%X)
+#resolvido
+
 vif(fit1)
 
-fit1<- stepAIC(fit1)
+fit1 <- stepAIC(fit1)
 summary(fit1)
-# Nenhuma das covariáveis consideradas foi removida pelo critério AIC. 
+# temp foi removida pelo critério AIC. 
 
 ############################ Diagnóstico ################################
          ################### rodar daqui ######################

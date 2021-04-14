@@ -69,7 +69,7 @@ vif(fit)
 # As covariáveis de umidade e temperatura estão com 
 #multicolinearidade muito alta, logo, vamos considerar os modelos
 #separados. Além disso, note que existe muitas covariáveis com 
-#vif > 10.
+#vif relativamente alto.
 
 #### Modelo com as medidas médias de temperatura(temp) e umidade(umid) ####
 fit1 <- glm(dengue~. +offset(log(pop)) -Municipio -adultos -temp_p10 -temp_p90 -umid_p10 -umid_p90,
@@ -86,13 +86,13 @@ fit2 <- glm(dengue~. +offset(log(pop)) -Municipio -adultos -temp -umid,
             )
 vif(fit2)
 
-#O vif das medidas extremas continuam com valores muito grandes, 
+#O vif das medidas extremas continuam com valores muito altos, 
 #então vamos dar continuidade com o modelo 1 (fit1). 
 
 #Ainda precisamos lidar com as demais covariáveis com vif relativamente alto, 
-#caso contrário teremos problema de singularidade (matrizes não inversíveis por serem LD) 
+#caso contrário teremos problema de singularidade (matrizes não invertíveis por serem LD) 
 #ao criar gráficos de diagnósticos. Iremos remover 1 por 1 da com maior 
-#multicolinearidade para a menor até obter t(X)%*%W%*%X inversível, onde
+#multicolinearidade para a menor até obter t(X)%*%W%*%X invertível, onde
 #X = model.matrix(fit1) e W = diag(fit1$weights).
 
 fit1 <- glm(dengue~. +offset(log(pop)) -Municipio -adultos -temp_p10 -temp_p90 -umid_p10 -umid_p90 -menor15 -dens, 

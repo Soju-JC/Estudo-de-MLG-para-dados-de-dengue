@@ -122,7 +122,8 @@ packages <- c(
   "glmmLasso",
   "glmmTMB",
   "mgcv",
-  "writexl"
+  "writexl",
+  "car"
 )
 
 lapply(packages, loadlibrary) # carrega pacotes

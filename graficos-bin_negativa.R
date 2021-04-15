@@ -1,8 +1,44 @@
-rm(list=ls(all=TRUE))
-######################################
-### AJUSTE USANDO COMANDO GLM.NB() ###
-######################################
-require('readxl')
+rm(list = ls())
+loadlibrary <- function(x){
+  
+  if (!require(x,character.only = TRUE)) {
+    install.packages(x,dependencies = T)
+    if(!require(x, character.only = TRUE)) 
+      stop("Package not found")
+  }
+}
+
+packages <- c(
+  "tidyverse",
+  "readxl",
+  "janitor",
+  "skimr",
+  "lubridate",
+  "summarytools",
+  "magrittr", 
+  "pipeR",
+  "knitr",
+  "viridis",
+  "cowplot",
+  "tidyr",
+  "reshape2",
+  "VIM",
+  "mice",
+  "VGAM",
+  "nlme",
+  "visreg",
+  "lme4",
+  "glmnet",
+  "leaps",
+  "glmmLasso",
+  "glmmTMB",
+  "mgcv",
+  "writexl",
+  "car"
+)
+
+lapply(packages, loadlibrary) # carrega pacotes
+
 dados <- read_excel("dados.xlsx")
 ### SELECIONANDO O ANO DE 2013 ####
 dados_2013 <- subset(dados,ano == 2013)

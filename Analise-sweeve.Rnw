@@ -123,8 +123,7 @@ packages <- c(
   "glmmTMB",
   "mgcv",
   "writexl",
-  "car",
-  "ggcorrplot"
+  "car"
 )
 
 lapply(packages, loadlibrary) # carrega pacotes

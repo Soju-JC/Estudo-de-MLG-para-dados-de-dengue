@@ -75,6 +75,7 @@ st_css()
 
 ```
 
+
 # Análise Exploratória
 
 ### Descrição dos dados
@@ -83,17 +84,75 @@ st_css()
 
 ### Definição do modelo
 
+Como temos a nossa variável resposta como um dado de contagem, sendo esses dados com valores baixos, não é correto que ajustemos um modelo linear simples, sendo, então, necessário um modelo específico, no caso temos duas distribuições principais que podem ser melhores ajustes:
+
+* Poisson
+
+* Binomial Negativa
+
+##### Modelo Poisson
+Como vimos, a nossa variável resposta possui um formato que condiz com um modelo poisson, temos, também que $Y_i$ são independentes $\forall i \leq n$, onde cada unidade experimental é o município.
+
+Utilizando uma função de ligação logarítmica temos um modelo inicial utilizando todas as variáveis na forma sistemática abaixo
+
+$$log(\lambda_i)=\alpha+\beta_1{x_1}_i+\beta_2{x_2}_i+\cdots+\beta_{26}{x_{26}}_i$$
+Pela análise descritiva observamos que algumas variáveis possuem baixa correlação com a variável resposta _dengue_, por esse motivo, retiramos do modelo :
+
+* ifdm_edu     -0.04902219
+
+* area         -0.08359838
+
+Pelas altas correlações entre covariáveis damos atenção as combinações a seguir
+
+* IntCdAtBca X **ifdm_saude**   -0.77960350
+
+* temp_p10 X **alt**   -0.821314067
+
+* temp_p10 X **temp**    0.993364738
+
+* temp_p10 X **temp_p90**    0.946850236
+
+* temp X **temp_p90**      0.976276719 
+
+* **temp X alt**          -0.852298080
+
+* **temp_p90** X alt          -0.884910605
+
+* **precip** X umid_p90     0.79257030
+
+* umid_p10 X **umid**          0.86471582
+
+* **umid** X umid_p90      0.890202356
+
+* umid_p90 X **ivc**          -0.63608509
+
+* **ifdm_emprend** X Pobr         -0.62697421
+
+* Pobr X **adultos**      -0.56395565 -0.708001527
+
+* menor15 X **maior65**      -0.690958203
+
+* menor15 X **adultos**      -0.715345068
+
+* pop X **dens**         0.78260681
+
+
+[1] 16 17 19 29 57 66 68 70 71 74 77 78
+
+[1] 16 17 19 70 74 78
+
+observações 78, 74 e 19 temos q retirar
+
+
+Vemos que mesmo retirando essas observações preocupantes, continuamos com um ajuste ruim, visto que temos um desvio residual muito maior que os graus de liberdade. Outro indício disso é a sobredispersão observada no gráfico de envelope, o que podemos imaginar que ocorreria, uma vez que temos a média da nossa variável resposta dengue (833.5) consideravelmente diferente da sua variância (7653841).
+
+Tais constatações nos levam a descartar o Modelo Poisson e tentar o ajuste por um Modelo Binomial Negativo.
+
 ### Modelo considerando todas as covariáveis
 
 ### Verificando multicolinearidade
 
-```{r, echo = FALSE}
 
-# require(car)
-# fit <- lm(y~., data = dados)
-# vif(fit)
-
-```
 
 ### Seleção de covariáveis
 

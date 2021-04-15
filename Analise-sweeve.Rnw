@@ -123,7 +123,8 @@ packages <- c(
   "glmmTMB",
   "mgcv",
   "writexl",
-  "car"
+  "car",
+  "ggcorrplot"
 )
 
 lapply(packages, loadlibrary) # carrega pacotes
@@ -131,6 +132,7 @@ lapply(packages, loadlibrary) # carrega pacotes
 # carrega dados
 dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
+dados_2013 <- dados_2013[,-28] #sem id
 
 @
 
@@ -252,6 +254,21 @@ ggplot(dados_2013,aes(x = Municipio, y = dengue)) +
   scale_x_discrete(expand = c(0,.5)) 
 @
 \textbf{Figura 1:} Notificações de dengue por municípios do estado do Espírito Santo.
+
+%%%%%%% Grafico de correlação %%%%%%%
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.width= 9.5, fig.height= 8>>=
+require(ggcorrplot)
+corr <- round(cor(dados_2013[,-1]), 1)
+ggcorrplot(corr,
+           #hc.order = TRUE, 
+           type = "upper",
+           outline.col = "white", 
+           lab = TRUE, 
+           lab_size = 3
+           )
+@
+\textbf{Figura 2:} Gráfico de correlação entre as covariáveis.
 
 \newpage
 \section{{\LARGE\textbf{Construção do modelo}}}

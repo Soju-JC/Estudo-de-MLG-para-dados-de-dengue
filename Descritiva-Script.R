@@ -35,7 +35,8 @@ packages <- c(
   "glmmTMB",
   "mgcv",
   "writexl",
-  "car"
+  "car",
+  "ggcorrplot"
 )
 
 lapply(packages, loadlibrary) # carrega pacotes
@@ -43,9 +44,10 @@ lapply(packages, loadlibrary) # carrega pacotes
 # carrega dados
 dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
-dados_2013 <- dados_2013[,-c(26,28,29)]
-#colunas 26,28 e 29 são referentes a "area","id" e "ano" reespectivamente.
+dados_2013 <- dados_2013[,-c(28,29)]
+#colunas 28 e 29 são referentes a "id" e "ano" reespectivamente.
 #View(dados_2013)
+attach(dados_2013)
 ############################ Descritiva ###################################
 
 ####### Notificações de dengue por municipio #######
@@ -60,5 +62,11 @@ ggplot(dados_2013,aes(x = Municipio, y = dengue)) +
   theme(axis.text.x  = element_text(angle=45, hjust = 1)) +
   scale_x_discrete(expand = c(0,.5)) 
 
+####### Grafico de correlação #######
+
+corr <- round(cor(dados_2013[,-1]), 1)
+
 dev.new(width=6,height=3)
-plot(dados_2013$CobAtencBsca, dados_2013$dengue)
+ggcorrplot(corr, hc.order = TRUE, type = "upper", outline.col = "white", lab = TRUE)
+
+detach(dados_2013)

@@ -1,3 +1,48 @@
+rm(list = ls())
+loadlibrary <- function(x){
+  
+  if (!require(x,character.only = TRUE)) {
+    install.packages(x,dependencies = T)
+    if(!require(x, character.only = TRUE)) 
+      stop("Package not found")
+  }
+}
+
+packages <- c(
+  "tidyverse",
+  "readxl",
+  "janitor",
+  "skimr",
+  "lubridate",
+  "summarytools",
+  "magrittr", 
+  "pipeR",
+  "knitr",
+  "viridis",
+  "cowplot",
+  "tidyr",
+  "reshape2",
+  "VIM",
+  "mice",
+  "VGAM",
+  "nlme",
+  "visreg",
+  "lme4",
+  "glmnet",
+  "leaps",
+  "glmmLasso",
+  "glmmTMB",
+  "mgcv",
+  "writexl",
+  "car"
+)
+
+lapply(packages, loadlibrary) # carrega pacotes
+
+# carrega dados
+data <- read_excel("dados.xlsx")
+
+
 ###################################
 ### AJUSTE USANDO COMANDO GLM() ###
 ###################################
@@ -85,28 +130,56 @@ corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
 #############################
 ### ALAVACAGEM / LEVERAGE ###
 #############################
-plot(fitted(fit.model), h,xlab="Valor Ajustado", ylab="Medida
-h",cex.lab=1.5,cex.axis=1.5,
-     ylim=c(0,1),pch=20)
-lines(c(0,max(fitted(fit.model))+1),c(corte.hii,corte.hii),col='red',
-      lty=2)
-identify(fitted(fit.model), h, n=12)
+plot(fitted(fit.model), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20
+     )
+
+lines(c(0,max(fitted(fit.model))+1), 
+      c(corte.hii,corte.hii), 
+      col='red',
+      lty=2
+      )
+# identify(fitted(fit.model), h, n=12)
 #########################
 ### PONTOS INFLUENTES ###
 #########################
-plot(di,type="h",cex.lab=1.5,cex.axis=1.5,xlab="Observação",ylab="Dist
-ância de Cook",ylim=c(0,max(max(di),corte.cook)))
-lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
-identify(di, n=6)
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
+lines(c(0,n+1), 
+      c(corte.cook,corte.cook), 
+      col='red', 
+      lty=2 
+      )
+# identify(di, n=6)
 ############################
 ### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
 ############################
 w <- fit.model$weights
 eta <- predict(fit.model)
 z <- eta + resid(fit.model, type="pearson")/sqrt(w)
-plot(predict(fit.model),z,xlab="Preditor
-Linear",cex.lab=1.5,cex.axis=1.5, 
-     ylab="Variavel z", pch=20)
+
+plot(predict(fit.model), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
 lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
@@ -134,17 +207,22 @@ for(i in 1:n){
 med <- apply(e,1,mean)
 faixa <- range(td,e1,e2)
 #
-qqnorm(td,xlab="Percentil da N(0,1)",
-       ylab="Componente do Desvio", ylim=faixa, cex.lab=1.5,cex.axis=1.5,
-       pch=20, main="")
+qqnorm(td, 
+       xlab="Percentil da N(0,1)",
+       ylab="Componente do Desvio",
+       ylim=faixa, 
+       cex.lab=1.5, 
+       cex.axis=1.5,
+       pch=20,
+       main=""
+       )
 par(new=TRUE)
 #
 qqnorm(e1,axes=F,xlab="",ylab="",type="l",ylim=faixa,lty=1, main="")
 par(new=TRUE)
 qqnorm(e2,axes=F,xlab="",ylab="", type="l",ylim=faixa,lty=1, main="")
 par(new=TRUE)
-qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2,
-       main="")
+qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2, main="")
 
 ### retirei observações 78, 74 e 19
 
@@ -178,17 +256,34 @@ corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
 #############################
 ### ALAVACAGEM / LEVERAGE ###
 #############################
-plot(fitted(fit.model2), h,xlab="Valor Ajustado", ylab="Medida
-h",cex.lab=1.5,cex.axis=1.5,
-     ylim=c(0,1),pch=20)
-lines(c(0,max(fitted(fit.model2))+1),c(corte.hii,corte.hii),col='red',
-      lty=2)
+plot(fitted(fit.model2), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20 
+     )
+
+lines(c(0,max(fitted(fit.model2))+1), 
+      c(corte.hii,corte.hii), 
+      col='red', 
+      lty=2
+      )
 identify(fitted(fit.model2), h, n=12)
 #########################
 ### PONTOS INFLUENTES ###
 #########################
-plot(di,type="h",cex.lab=1.5,cex.axis=1.5,xlab="Observação",ylab="Dist
-ância de Cook",ylim=c(0,max(max(di),corte.cook)))
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
 lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
 identify(di, n=3)
 ############################
@@ -197,9 +292,16 @@ identify(di, n=3)
 w <- fit.model2$weights
 eta <- predict(fit.model2)
 z <- eta + resid(fit.model2, type="pearson")/sqrt(w)
-plot(predict(fit.model2),z,xlab="Preditor
-Linear",cex.lab=1.5,cex.axis=1.5, 
-     ylab="Variavel z", pch=20)
+
+plot(predict(fit.model2), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
 lines(smooth.spline(predict(fit.model2), z, df=2))
 ################
 ### ENVELOPE ###
@@ -227,14 +329,21 @@ for(i in 1:n){
 med <- apply(e,1,mean)
 faixa <- range(td,e1,e2)
 #
-qqnorm(td,xlab="Percentil da N(0,1)",
-       ylab="Componente do Desvio", ylim=faixa, cex.lab=1.5,cex.axis=1.5,
-       pch=20, main="")
+qqnorm(td, 
+       xlab="Percentil da N(0,1)",
+       ylab="Componente do Desvio", 
+       ylim=faixa,
+       cex.lab=1.5, 
+       cex.axis=1.5,
+       pch=20, 
+       main=""
+       )
 par(new=TRUE)
 #
 qqnorm(e1,axes=F,xlab="",ylab="",type="l",ylim=faixa,lty=1, main="")
 par(new=TRUE)
 qqnorm(e2,axes=F,xlab="",ylab="", type="l",ylim=faixa,lty=1, main="")
 par(new=TRUE)
-qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2,
-       main="")
+qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2, main="")
+
+detach(data)

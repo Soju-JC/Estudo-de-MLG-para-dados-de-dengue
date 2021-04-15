@@ -145,7 +145,7 @@ lines(c(0,max(fitted(fit.model))+1),
       col='red',
       lty=2
       )
-# identify(fitted(fit.model), h, n=12)
+identify(fitted(fit.model), h, n=12)
 #########################
 ### PONTOS INFLUENTES ###
 #########################
@@ -163,7 +163,7 @@ lines(c(0,n+1),
       col='red', 
       lty=2 
       )
-# identify(di, n=6)
+identify(di, n=6)
 ############################
 ### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
 ############################

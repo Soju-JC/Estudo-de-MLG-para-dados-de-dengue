@@ -45,7 +45,7 @@ dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
 dados_2013 <- dados_2013[,-c(26,28,29)]
 #colunas 26,28 e 29 são referentes a "area","id" e "ano" reespectivamente.
-View(dados_2013)
+#View(dados_2013)
 ############################ Descritiva ###################################
 
 ####### Notificações de dengue por municipio #######

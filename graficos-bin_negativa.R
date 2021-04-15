@@ -1,6 +1,4 @@
 rm(list=ls(all=TRUE))
-dados<- read.table("clipboard",header=TRUE)
-attach(dados)
 ######################################
 ### AJUSTE USANDO COMANDO GLM.NB() ###
 ######################################

@@ -59,9 +59,6 @@ attach(dados_2013)
 ### fornecidos pelo professor   ###
 
 require(MASS)
-fit.model<- glm.nb(nass~.,data=dados)
-summary(fit.model)
-fit.model<- stepAIC(fit.model)
 fit.model_ad <- glm.nb(
   dengue ~ offset(log(pop)) +
     IntCdAtBca +
@@ -83,8 +80,10 @@ fit.model_ad <- glm.nb(
     Municipio+
     dens,
   data = dados_2013)
+
 summary(fit.model_ad)
-fit.model_ad<- stepAIC(fit.model_ad)
+
+fit.model_ad <- stepAIC(fit.model_ad)
 summary(fit.model_ad)
 #####Modelo com as var menor15 e maior65
 
@@ -110,8 +109,10 @@ fit.model_na <- glm.nb(
     Municipio+
     dens,
   data = dados_2013)
+
 summary(fit.model_na)
-fit.model_na<- stepAIC(fit.model_na)
+
+fit.model_na <- stepAIC(fit.model_na)
 summary(fit.model_na)
 ###com base nos resultado o modelo com somente a variavel adultos foi melhor
 ###usando agora no lugar da variavel temp as variaveis temp_p10 e temp_p90
@@ -139,7 +140,9 @@ fit.model_px <- glm.nb(
     Municipio+
     dens,
   data = dados_2013)
+
 summary(fit.model_px)
+
 fit.model_px<- stepAIC(fit.model_px)
 summary(fit.model_px)
 ###com base nos resultado o modelo com somente a variavel temp foi melhor
@@ -166,8 +169,11 @@ fit.model_ux <- glm.nb(
     adultos-
     Municipio+
     dens,
-  data = dados_2013)
+  data = dados_2013, 
+  control = glm.control(maxit = 50))
+
 summary(fit.model_ux)
+
 fit.model_ux<- stepAIC(fit.model_ux)
 summary(fit.model_ux)
 ###nesse caso,apareceu um erro
@@ -194,11 +200,18 @@ fit.model_ad <- glm.nb(
     adultos-
     Municipio+
     dens,
-  data = dados_2013)
+  data = dados_2013, 
+  control = glm.control(maxit = 50))
+
 summary(fit.model_ad)
-fit.model_ad<- stepAIC(fit.model_ad)
+
+fit.model_ad <- stepAIC(fit.model_ad)
 summary(fit.model_ad)
-fit.model<-fit.model_ad
+
+vif(fit.model_ad)
+
+fit.model <- fit.model_ad
+
 par(mfrow=c(2,2))
 ### PREPARANDO OS GRÁFICOS
 X <- model.matrix(fit.model)
@@ -220,28 +233,51 @@ corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
 #############################
 ### ALAVACAGEM / LEVERAGE ###
 #############################
-plot(fitted(fit.model), h,xlab="Valor Ajustado", ylab="Medida
-h",cex.lab=1.5,cex.axis=1.5,
-     ylim=c(0,1),pch=20)
-lines(c(0,max(fitted(fit.model))+1),c(corte.hii,corte.hii),col='red',
-      lty=2)
+plot(fitted(fit.model), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20
+     )
+
+lines(c(0,max(fitted(fit.model))+1), 
+      c(corte.hii,corte.hii), 
+      col='red',
+      lty=2
+      )
 #identify(fitted(fit.model), h, n=1)
 #########################
 ### PONTOS INFLUENTES ###
 #########################
-plot(di,type="h",cex.lab=1.5,cex.axis=1.5,xlab="Observação",ylab="Dist
-ância de Cook",ylim=c(0,max(max(di),corte.cook)))
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
 lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
 #identify(di, n=1)
 ############################
-### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de
-ligação
+### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
 ############################
 eta <- predict(fit.model)
 z <- eta + resid(fit.model, type="pearson")/sqrt(w)
-plot(predict(fit.model),z,xlab="Preditor
-Linear",cex.lab=1.5,cex.axis=1.5, 
-ylab="Variavel z", pch=20)
+
+plot(predict(fit.model), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
 lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
@@ -269,14 +305,85 @@ e2[i] <- eo[975]}
 med <- apply(e,1,mean)
 faixa <- range(td,e1,e2)
 #
-qqnorm(td,xlab="Percentil da N(0,1)",
-ylab="Componente do Desvio", ylim=faixa, cex.lab=1.5,cex.axis=1.5,
-pch=20, main="")
+qqnorm(td, 
+       xlab="Percentil da N(0,1)", 
+       ylab="Componente do Desvio",
+       ylim=faixa,
+       cex.lab=1.5, 
+       cex.axis=1.5, 
+       pch=20,
+       main=""
+       )
 par(new=TRUE)
 #
 qqnorm(e1,axes=F,xlab="",ylab="",type="l",ylim=faixa,lty=1, main="")
 par(new=TRUE)
 qqnorm(e2,axes=F,xlab="",ylab="", type="l",ylim=faixa,lty=1, main="")
 par(new=TRUE)
-qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2,
-main="")
+qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2, main="")
+
+
+
+############# ESTUDANDO O ERRO DO ENVELOPE ##############
+
+fit.model_ad <- glm.nb(
+  dengue ~ offset(log(pop)) +
+    #IntCdAtBca +
+    #CobCondSaud +
+    #CobAtencBsca +
+    #temp +
+    #precip +
+    #umid +
+    #alt +
+    ifdm_edu +
+    ifdm_emprend +
+    ifdm_saude +
+    cobveg +
+    expcosteira+
+    Pobr+
+    ExpAnosEstud+
+    urb-
+    #adultos-
+    Municipio+
+    dens,
+  data = dados_2013, 
+  control = glm.control(maxit = 100))
+
+fit.model_ad <- glm.nb(dengue~CobCondSaud + temp_p90 + 
+                           precip + ifdm_saude + ifdm_emprend + cobveg +
+                           expcosteira + ivc + ExpAnosEstud + urb + maior65 + 
+                           adultos + dens + offset(log(pop)),
+                           data = dados_2013,
+                       control = glm.control(maxit = 100))
+
+fit.model_ad <- stepAIC(fit.model_ad)
+summary(fit.model_ad)
+
+vif(fit.model_ad)
+
+fit.model <- fit.model_ad
+
+X <- model.matrix(fit.model)
+n <- nrow(X)
+p <- ncol(X)
+fi <- fit.model$theta
+w <- fi*fitted(fit.model)/(fi + fitted(fit.model))
+W <- diag(w)
+H <- solve(t(X)%*%W%*%X)
+H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+h <- diag(H)
+td <- resid(fit.model,type="deviance")/sqrt(1-h)
+fi <- fit.model$theta
+e <- matrix(0,n,100)
+#
+for(i in 1:100){
+  resp <- rnegbin(n, fitted(fit.model),fi)
+  fit <- glm.nb(resp ~ X)
+  w <- fit$weights
+  W <- diag(w)
+  H <- solve(t(X)%*%W%*%X)
+  H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+  h <- diag(H)
+  e[,i] <- sort(resid(fit,type="deviance")/sqrt(1-h))}
+
+detach(dados_2013)

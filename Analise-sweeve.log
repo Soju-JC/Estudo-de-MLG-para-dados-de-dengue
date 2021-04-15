@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.10)  14 APR 2021 15:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.10)  15 APR 2021 19:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -518,15 +518,29 @@ File: figure/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf  used on input line 249.
 (pdftex.def)             Requested size: 380.69788pt x 523.45667pt.
-[3 <./figure/unnamed-chunk-3-1.pdf>] [4] [5] [6] [7] (./Analise-sweeve.aux)
+
+Package xcolor Warning: Incompatible color definition on input line 260.
+
+<figure/unnamed-chunk-4-1.pdf, id=76, 686.565pt x 578.16pt>
+File: figure/unnamed-chunk-4-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-4-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-4-1.pdf  used on input line 261.
+(pdftex.def)             Requested size: 380.69788pt x 320.58264pt.
+
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 261--262
+[][] 
+ []
+
+[3 <./figure/unnamed-chunk-3-1.pdf>] [4 <./figure/unnamed-chunk-4-1.pdf>]
+[5] [6] [7] [8] (./Analise-sweeve.aux)
 Package rerunfilecheck Info: File `Analise-sweeve.out' has not changed.
 (rerunfilecheck)             Checksum: A0029E4CF2CBA03044EAA9F7D381F1D9;2135.
  ) 
 Here is how much of TeX's memory you used:
- 9857 strings out of 480954
- 143796 string characters out of 5905840
+ 9865 strings out of 480954
+ 144030 string characters out of 5905840
  448227 words of memory out of 5000000
- 26910 multiletter control sequences out of 15000+600000
+ 26916 multiletter control sequences out of 15000+600000
  412661 words of font info for 60 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  71i,6n,74p,326b,345s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -534,10 +548,10 @@ Here is how much of TeX's memory you used:
 s/cm/cmbx12.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmr12.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist
 /fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on Analise-sweeve.pdf (8 pages, 58862 bytes).
+Output written on Analise-sweeve.pdf (9 pages, 69277 bytes).
 PDF statistics:
- 125 PDF objects out of 1000 (max. 8388607)
- 108 compressed objects within 2 object streams
- 20 named destinations out of 1000 (max. 500000)
- 94 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 136 PDF objects out of 1000 (max. 8388607)
+ 115 compressed objects within 2 object streams
+ 21 named destinations out of 1000 (max. 500000)
+ 99 words of extra memory for PDF output out of 10000 (max. 10000000)
 

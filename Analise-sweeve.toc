@@ -1,11 +1,11 @@
 \contentsline {section}{\numberline {1}\textbf {{\LARGE \textbf {Descrição dos dados}}}}{2}{section.1}%
 \contentsline {section}{\numberline {2}{\LARGE \textbf {Análise exploratória}}}{3}{section.2}%
-\contentsline {section}{\numberline {3}{\LARGE \textbf {Construção do modelo}}}{4}{section.3}%
-\contentsline {subsection}{\numberline {3.1}\textbf {Definição do modelo}}{4}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}\textbf {Modelo considerando todas as covariáveis}}{4}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}\textbf {Verificando multicolinearidade}}{4}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}\textbf {Seleção de covariáveis}}{4}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}\textbf {Transformação de covariáveis}}{4}{subsection.3.5}%
-\contentsline {subsection}{\numberline {3.6}\textbf {Pontos influentes/de alavanca/outliers}}{5}{subsection.3.6}%
-\contentsline {section}{\numberline {4}{\LARGE \textbf {Verificação dos pressupostos}}}{6}{section.4}%
-\contentsline {section}{\numberline {5}{\LARGE \textbf {Interpretação e conclusões}}}{7}{section.5}%
+\contentsline {section}{\numberline {3}{\LARGE \textbf {Construção do modelo}}}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}\textbf {Definição do modelo}}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}\textbf {Modelo considerando todas as covariáveis}}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}\textbf {Verificando multicolinearidade}}{5}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}\textbf {Seleção de covariáveis}}{5}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}\textbf {Transformação de covariáveis}}{5}{subsection.3.5}%
+\contentsline {subsection}{\numberline {3.6}\textbf {Pontos influentes/de alavanca/outliers}}{6}{subsection.3.6}%
+\contentsline {section}{\numberline {4}{\LARGE \textbf {Verificação dos pressupostos}}}{7}{section.4}%
+\contentsline {section}{\numberline {5}{\LARGE \textbf {Interpretação e conclusões}}}{8}{section.5}%

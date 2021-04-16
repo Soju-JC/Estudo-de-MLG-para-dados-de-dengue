@@ -109,9 +109,10 @@ Ajustando um modelo com todas as 26 covariáveis e realizando a seleção de var
 modelo_completo<- glm(dengue~IntCdAtBca + CobCondSaud + 
                         CobAtencBsca + temp_p10 + temp + temp_p90 + precip +
                         umid_p10 + umid + umid_p90 + alt + ifdm_saude + 
-                        ifdm_edu + ifdm_emprend + cobveg + expcosteira + ivc +
-                        Pobr + ExpAnosEstud + urb + menor15 + maior65 + 
-                        adultos + pop + area + dens,family=poisson,data=data)
+                        ifdm_edu + ifdm_emprend + cobveg + expcosteira + 
+                        ivc + Pobr + ExpAnosEstud + urb + menor15 + 
+                        maior65 + adultos + pop + area + dens,
+                      family=poisson,data=data)
 
 require(MASS)
 modelo_selecionado<- stepAIC(modelo_completo)

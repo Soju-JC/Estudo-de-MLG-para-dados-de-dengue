@@ -12,8 +12,11 @@
 \usepackage{bm}
 \usepackage{float}
 \usepackage[margin=1.5in]{geometry}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
 \let\lctau\tau % save the lowercase of '\tau'
 \renewcommand{\tau}{\scalerel*{\lctau}{X}}
+\renewcommand{\tablename}{\textbf{Tabela}}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -125,7 +128,9 @@ packages <- c(
   "writexl",
   "car",
   "ggcorrplot",
-  "hnp"
+  "hnp", 
+  "kableExtra",
+  "stargazer"
 )
 
 lapply(packages, loadlibrary) # carrega pacotes
@@ -134,6 +139,88 @@ lapply(packages, loadlibrary) # carrega pacotes
 dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
 dados_2013 <- dados_2013[,-28] #sem id
+
+
+########## modelos definidos ###########
+
+##### Poisson
+require(MASS)
+data <- read_excel("dados.xlsx")
+
+modelo_completo <- glm(dengue~IntCdAtBca +
+                        CobCondSaud +
+                        CobAtencBsca +
+                        temp_p10 +
+                        temp +
+                        temp_p90 +
+                        precip +
+                        umid_p10 +
+                        umid +
+                        umid_p90 +
+                        alt +
+                        ifdm_saude +
+                        ifdm_edu +
+                        ifdm_emprend +
+                        cobveg +
+                        expcosteira +
+                        ivc +
+                        Pobr +
+                        ExpAnosEstud +
+                        urb +
+                        menor15 +
+                        maior65 +
+                        adultos +
+                        pop +
+                        area +
+                        dens,
+                      family=poisson,
+                      data=data
+                      )
+
+modelo_selecionado <- stepAIC(modelo_completo)
+
+modelo_corr<- glm(dengue~CobCondSaud +
+                    CobAtencBsca +
+                    temp_p90 +
+                    precip +
+                    umid +
+                    ifdm_saude +
+                    ifdm_emprend +
+                    cobveg +
+                    expcosteira +
+                    ivc +
+                    ExpAnosEstud +
+                    urb +
+                    maior65 +
+                    adultos +
+                    dens,
+                  family=poisson,
+                  data=data
+                  )
+
+modelo_selecionado_corr <- stepAIC(modelo_corr)
+
+modelo_corr_offset<- glm(dengue~CobCondSaud + 
+                           CobAtencBsca +
+                           temp_p90 + 
+                           precip +
+                           umid +
+                           ifdm_saude +
+                           ifdm_emprend +
+                           cobveg + 
+                           expcosteira + 
+                           ivc +
+                           ExpAnosEstud +
+                           urb +
+                           maior65 +
+                           adultos +
+                           dens + 
+                           offset(log(pop)), 
+                         family=poisson, 
+                         data=data
+                         )
+
+modelo_selecionado_corr_offset <- stepAIC(modelo_corr_offset)
 
 @
 
@@ -274,32 +361,353 @@ ggcorrplot(corr,
 \newpage
 \section{{\LARGE\textbf{Construção do modelo}}}
 
-\subsection{\textbf{Definição do modelo}}
+A primeira coisa a se fazer para termos um modelo de regressão é verificar se é possível utilizar a regressão linear, sendo que, nesse modelo a nossa variável resposta tem de apresentar uma distribuição aproximadamente normal.
 
-\subsection{\textbf{Modelo considerando todas as covariáveis}}
+Como temos a nossa variável de interesse como um dado de contagem, sendo esses dados com valores baixos, não é correto que ajustemos um modelo linear simples, sendo então necessário um modelo específico, no caso temos duas distribuições principais que podem ser melhores ajustes:
 
-\subsection{\textbf{Verificando multicolinearidade}}
+\begin{itemize}
+  \item Poisson
+  \item Binomial Negativa
+\end{itemize}
+
+\subsection{\textbf{Modelo Poisson}}
+
+Como vimos, a variável independente do modelo possui um formato que condiz com o de uma distribuição Poisson, temos, também que $Y_i$ são independentes $\forall i \leq n$, onde cada unidade experimental é o município.
+
+\subsubsection{\textbf{Definição do modelo}}
+
+Utilizando uma função de ligação logarítmica temos um modelo inicial utilizando todas as variáveis na forma sistemática abaixo
+
+$$log(\lambda_i)=\alpha+\beta_1{x_1}_i+\beta_2{x_2}_i+\cdots+\beta_{26}{x_{26}}_i$$
+
+\subsubsection{\textbf{Modelo considerando todas as covariáveis}}
+
+Ajustando um modelo com todas as $26$ covariáveis e realizando a seleção de variáveis pelo método \_\_AIC\_\_ temos suas informações abaixo:
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
 
-# require(car)
-# fit <- lm(y~., data = dados)
-# vif(fit)
+summary(modelo_selecionado)
+
 @
 
+% FAZER TABELA NO LUGAR DO CHUNK ACIMA DE SER TEMPO.
 
-\subsection{\textbf{Seleção de covariáveis}}
+Vemos que o desvio do resíduo é muito maior que seus graus de liberdade, o que indica um ajuste ruim. Para melhorar nosso modelo vamos reduzir sua dimensão, onde, pela análise descritiva, observamos que algumas covariáveis possuem baixa correlação com a variável resposta \_dengue\_, por esse motivo, as retiramos do modelo, são essas variáveis \_ifdm\_edu\_ e \_area\_.
+
+Para impedir multicolinearidade observamos altas correlações entre pares de covariáveis, sendo as mais altas descritas a seguir:
+
+\begin{table}[H]
+\caption{Pares de covariáveis com as correlações mais altas identificadas:} 
+\begin{center}
+\begin{tabular}{c|c|c}
+\hline
+Variável 1                         & Variável 2      & Correlação                      \\ \hline
+IntCdAtBca                         & $\mathbf{ifdm\_saude}$ & \multicolumn{1}{l}{-0.77960350} \\
+temp\_p10                          & \textbf{alt}         & -0.821314067                    \\
+temp\_p10                          & \textbf{temp}        & 0.993364738                     \\
+temp\_p10                          & $\mathbf{temp\_p90}$   & 0.946850236                     \\
+temp                               & $\mathbf{temp\_p90}$   & 0.976276719                     \\
+\textbf{temp}                           & \textbf{alt}         & -0.852298080                    \\
+$\mathbf{temp\_p90}$                      & alt             & -0.884910605                    \\
+\textbf{precip}                         & umid\_p90       & 0.79257030                      \\
+umid\_p10                          & \textbf{umid}        & 0.86471582                      \\
+\textbf{umid}                           & umid\_p90       & 0.890202356                     \\
+umid\_p90                          & \textbf{ivc}         & -0.63608509                     \\
+$\mathbf{ifdm\_emprend}$                  & Pobr            & -0.62697421                     \\
+Pobr                               & \textbf{adultos}     & -0.708001527                    \\
+menor15                            & \textbf{maior65}     & -0.690958203                    \\
+menor15                            & \textbf{adultos}     & -0.715345068                    \\
+pop                                & \textbf{dens}        & 0.78260681                      \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Para nosso modelo escolhemos, então, seguir com a variávei mais correlata com a variável resposta entre os pares da tabela acima, o que nos deixou com um modelo com as 15 variáveis abaixo:
+
+\begin{itemize}
+  \item CobCondSaud
+  \item CobAtencBsca
+  \item temp\_p$90$
+  \item precip
+  \item umid
+  \item ifdm\_saude
+  \item ifdm\_emprend
+  \item cobveg
+  \item expcosteira
+  \item ivc
+  \item ExpAnosEstud
+  \item urb
+  \item maior$65$
+  \item adultos
+  \item dens
+\end{itemize}
 
 
-\subsection{\textbf{Transformação de covariáveis}}
+\subsubsection{\textbf{Modelo com seleção de covariáveis}}
+
+Com o modelo descrito acima obtivemos, também com a seleção de variáveis pelo \_AIC\_, os seguintes resultados:
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+
+summary(modelo_selecionado_corr)
+
+@
+
+% FAZER TABELA NO LUGAR DO CHUNK ACIMA DE SER TEMPO.
+
+Note que em comparação com o modelo completo, em teoria, pioramos a qualidade do ajuste, porém, tiramos as multicolinearidades, que podem ser observadas na tabela com os VIFs de cada variável por modelo abaixo:
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.pos='H'>>=
+
+tab_mold1 <- knitr::kable(vif(modelo_selecionado), col.names = c("VIF"), caption = "Modelo com variáveis correlatas")
+
+kable_styling(tab_mold1, latex_options = "HOLD_position")
+
+tab_mold2 <- knitr::kable(vif(modelo_selecionado_corr), col.names = c("VIF"), caption = "Modelo sem variáveis correlatas")
+
+kable_styling(tab_mold2, latex_options = "HOLD_position")
+@
+
+Seguimos, agora, para a análise do nosso modelo sem as variáveis correlatas, que nos dá os gráficos abaixo:
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+
+fit.model <-modelo_selecionado_corr
+
+par(mfrow=c(2,2))
+### PREPARANDO OS GRÁFICOS
+X <- model.matrix(fit.model)
+n <- nrow(X)
+p <- ncol(X)
+w <- fit.model$weights
+W <- diag(w)
+H <- solve(t(X)%*%W%*%X)
+H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+h <- diag(H)
+ts <- resid(fit.model,type="pearson")/sqrt(1-h)
+td <- resid(fit.model,type="deviance")/sqrt(1-h)
+di <- (h/(1-h))*(ts^2)
+corte.hii<- 2*p/n # corte para elementos da diagonal de H
+corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
+#############################
+### ALAVACAGEM / LEVERAGE ###
+#############################
+plot(fitted(fit.model), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20
+     )
+
+lines(c(0,max(fitted(fit.model))+1), 
+      c(corte.hii,corte.hii), 
+      col='red',
+      lty=2
+      )
+# identify(fitted(fit.model), h, n=12)
+#########################
+### PONTOS INFLUENTES ###
+#########################
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
+lines(c(0,n+1), 
+      c(corte.cook,corte.cook), 
+      col='red', 
+      lty=2 
+      )
+# identify(di, n=6)
+############################
+### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
+############################
+w <- fit.model$weights
+eta <- predict(fit.model)
+z <- eta + resid(fit.model, type="pearson")/sqrt(w)
+
+plot(predict(fit.model), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
+lines(smooth.spline(predict(fit.model), z, df=2))
+################
+### ENVELOPE ###
+################
+e <- matrix(0,n,1000)
+#
+for(i in 1:1000){
+  nresp <- rpois(n, fitted(fit.model))
+  fit <- glm(nresp ~ X, family=poisson)
+  w <- fit$weights
+  W <- diag(w)
+  H <- solve(t(X)%*%W%*%X)
+  H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+  h <- diag(H)
+  e[,i] <- sort(resid(fit,type="deviance")/sqrt(1-h))}
+#
+e1 <- numeric(n)
+e2 <- numeric(n)
+#
+for(i in 1:n){
+  eo <- sort(e[i,])
+  e1[i] <- eo[25]
+  e2[i] <- eo[975]}
+#
+med <- apply(e,1,mean)
+faixa <- range(td,e1,e2)
+#
+qqnorm(td, 
+       xlab="Percentil da N(0,1)",
+       ylab="Componente do Desvio",
+       ylim=faixa, 
+       cex.lab=1.5, 
+       cex.axis=1.5,
+       pch=20,
+       main=""
+       )
+par(new=TRUE)
+#
+qqnorm(e1,axes=F,xlab="",ylab="",type="l",ylim=faixa,lty=1, main="")
+par(new=TRUE)
+qqnorm(e2,axes=F,xlab="",ylab="", type="l",ylim=faixa,lty=1, main="")
+par(new=TRUE)
+qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2, main="")
+@
+\textbf{Figura :} Gráficos de diagnóstico para o modelo sem \_offset\_.
+
+Como é possível observar pelos gráficos da \emph{Figura}, principalmente pelo gráfico de envelope dos resíduos, temos um modelo superdisperso, o que tentaremos resolver acrescentando um \_offset\_.
+
+\subsubsection{\textbf{Modelo com \_Offset\_}}
+
+Para adicionarmos um dado \_offset\_ no modelo vemos que ele pode ser a variável \_pop\_, que indica uma alta variabilidade do tamanho das populações nos municípios. Segue o modelo:
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+ 
+# stargazer(modelo_selecionado_corr_offset, table.placement = "H", no.space = TRUE, keep.stat = c("res.dev","aic"))
+
+summary(modelo_selecionado_corr_offset)
+
+@
+
+% FAZER TABELA NO LUGAR DO SGUNK ACIMA DE SER TEMPO
+\newpage
+Vemos que, ainda que tenhamos adicionado o dado \_offset\_, continuamos com um desvio do resíduo super alto, o que significa que o ajuste segue impróprio para o modelo, o que vamos confirmar com a análise dos gráficos do modelo:
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+
+fit.model2 <- modelo_selecionado_corr_offset
+par(mfrow=c(2,2))
+### PREPARANDO OS GRÁFICOS
+X <- model.matrix(fit.model2)
+n <- nrow(X)
+p <- ncol(X)
+w <- fit.model2$weights
+W <- diag(w)
+H <- solve(t(X)%*%W%*%X)
+H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+h <- diag(H)
+ts <- resid(fit.model2,type="pearson")/sqrt(1-h)
+td <- resid(fit.model2,type="deviance")/sqrt(1-h)
+di <- (h/(1-h))*(ts^2)
+corte.hii<- 2*p/n # corte para elementos da diagonal de H
+corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
+#############################
+### ALAVACAGEM / LEVERAGE ###
+#############################
+plot(fitted(fit.model2), h,xlab="Valor Ajustado", ylab="Medida
+h",cex.lab=1.5,cex.axis=1.5,
+     ylim=c(0,1),pch=20)
+lines(c(0,max(fitted(fit.model2))+1),c(corte.hii,corte.hii),col='red',
+      lty=2)
+#########################
+### PONTOS INFLUENTES ###
+#########################
+plot(di,type="h",cex.lab=1.5,cex.axis=1.5,xlab="Observação",ylab="Dist. de Cook",ylim=c(0,max(max(di),corte.cook)))
+lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
+############################
+### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
+############################
+w <- fit.model2$weights
+eta <- predict(fit.model2)
+z <- eta + resid(fit.model2, type="pearson")/sqrt(w)
+plot(predict(fit.model2),z,xlab="Preditor
+Linear",cex.lab=1.5,cex.axis=1.5, 
+     ylab="Variavel z", pch=20)
+lines(smooth.spline(predict(fit.model2), z, df=2))
+################
+### ENVELOPE ###
+################
+e <- matrix(0,n,1000)
+#
+for(i in 1:1000){
+  nresp <- rpois(n, fitted(fit.model2))
+  fit <- glm(nresp ~ X, family=poisson)
+  w <- fit$weights
+  W <- diag(w)
+  H <- solve(t(X)%*%W%*%X)
+  H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+  h <- diag(H)
+  e[,i] <- sort(resid(fit,type="deviance")/sqrt(1-h))}
+#
+e1 <- numeric(n)
+e2 <- numeric(n)
+#
+for(i in 1:n){
+  eo <- sort(e[i,])
+  e1[i] <- eo[25]
+  e2[i] <- eo[975]}
+#
+med <- apply(e,1,mean)
+faixa <- range(td,e1,e2)
+#
+qqnorm(td, 
+       xlab="Percentil da N(0,1)",
+       ylab="Componente do Desvio",
+       ylim=faixa, 
+       cex.lab=1.5, 
+       cex.axis=1.5,
+       pch=20,
+       main=""
+       )
+par(new=TRUE)
+#
+qqnorm(e1,axes=F,xlab="",ylab="",type="l",ylim=faixa,lty=1, main="")
+par(new=TRUE)
+qqnorm(e2,axes=F,xlab="",ylab="", type="l",ylim=faixa,lty=1, main="")
+par(new=TRUE)
+qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2, main="")
+
+@
+\textbf{Figura :} Gráficos de diagnóstico para o modelo com \_offset\_.
 
 \newpage
-\subsection{\textbf{Pontos influentes/de alavanca/outliers}}
+\subsubsection{\textbf{Interpretação e conclusões}}
 
-\newpage
-\section{{\LARGE\textbf{Verificação dos pressupostos}}}
+Pudemos observar que, mesmo manipulando nosso modelo, continuamos com um ajuste ruim, visto que temos um desvio residual muito maior que os graus de liberdade. Outro indício disso é a sobredispersão observada no gráfico de envelope, o que podemos imaginar que ocorreria, uma vez que temos a média da nossa variável resposta dengue consideravelmente diferente da sua variância, o que não deveria ocorrer, uma vez que a distribuição de Poisson teórica possui média e variância iguais.
 
-\newpage
-\section{{\LARGE\textbf{Interpretação e conclusões}}}
+Tais constatações nos levam a descartar o modelo Poisson e tentar o ajuste por um modelo Binomial Negativo.
+
+\subsection{\textbf{Modelo Binomial Negativo}}
+
+\subsubsection{\textbf{Definição do modelo}}
+
+\subsubsection{\textbf{Modelo com seleção de covariáveis}}
+
+\subsubsection{\textbf{Modelo com \_Offset\_}}
+
+\subsubsection{\textbf{Interpretação e conclusões}}
 
 \end{document}

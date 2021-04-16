@@ -185,6 +185,7 @@ lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
 ################
+
 e <- matrix(0,n,1000)
 #
 for(i in 1:1000){

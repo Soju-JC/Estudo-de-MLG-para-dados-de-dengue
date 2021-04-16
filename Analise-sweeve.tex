@@ -62,8 +62,11 @@
 \usepackage{bm}
 \usepackage{float}
 \usepackage[margin=1.5in]{geometry}
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
 \let\lctau\tau % save the lowercase of '\tau'
 \renewcommand{\tau}{\scalerel*{\lctau}{X}}
+\renewcommand{\tablename}{\textbf{Tabela}}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -267,27 +270,386 @@ $\mathbf{maior65}$ - proporção da população com mais de $65$ anos;
 \newpage
 \section{{\LARGE\textbf{Construção do modelo}}}
 
-\subsection{\textbf{Definição do modelo}}
+A primeira coisa a se fazer para termos um modelo de regressão é verificar se é possível utilizar a regressão linear, sendo que, nesse modelo a nossa variável resposta tem de apresentar uma distribuição aproximadamente normal.
 
-\subsection{\textbf{Modelo considerando todas as covariáveis}}
+Como temos a nossa variável de interesse como um dado de contagem, sendo esses dados com valores baixos, não é correto que ajustemos um modelo linear simples, sendo então necessário um modelo específico, no caso temos duas distribuições principais que podem ser melhores ajustes:
 
-\subsection{\textbf{Verificando multicolinearidade}}
+\begin{itemize}
+  \item Poisson
+  \item Binomial Negativa
+\end{itemize}
+
+\subsection{\textbf{Modelo Poisson}}
+
+Como vimos, a variável independente do modelo possui um formato que condiz com o de uma distribuição Poisson, temos, também que $Y_i$ são independentes $\forall i \leq n$, onde cada unidade experimental é o município.
+
+\subsubsection{\textbf{Definição do modelo}}
+
+Utilizando uma função de ligação logarítmica temos um modelo inicial utilizando todas as variáveis na forma sistemática abaixo
+
+$$log(\lambda_i)=\alpha+\beta_1{x_1}_i+\beta_2{x_2}_i+\cdots+\beta_{26}{x_{26}}_i$$
+
+\subsubsection{\textbf{Modelo considerando todas as covariáveis}}
+
+Ajustando um modelo com todas as $26$ covariáveis e realizando a seleção de variáveis pelo método \_\_AIC\_\_ temos suas informações abaixo:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+Call:
+glm(formula = dengue ~ IntCdAtBca + CobCondSaud + CobAtencBsca + 
+    temp_p10 + temp + temp_p90 + precip + umid_p10 + umid + umid_p90 + 
+    alt + ifdm_saude + ifdm_edu + ifdm_emprend + cobveg + expcosteira + 
+    ivc + Pobr + ExpAnosEstud + urb + menor15 + maior65 + pop + 
+    area + dens, family = poisson, data = data)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-76.799   -8.593   -3.737    2.188   80.479  
+
+Coefficients:
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)   5.625e+00  5.033e-01  11.177  < 2e-16 ***
+IntCdAtBca   -1.841e-02  7.551e-04 -24.376  < 2e-16 ***
+CobCondSaud  -1.122e-02  2.981e-04 -37.640  < 2e-16 ***
+CobAtencBsca -8.239e-04  2.413e-04  -3.415 0.000637 ***
+temp_p10      1.541e+00  2.921e-02  52.764  < 2e-16 ***
+temp         -1.732e+00  4.962e-02 -34.911  < 2e-16 ***
+temp_p90      4.375e-01  2.323e-02  18.835  < 2e-16 ***
+precip        1.020e-03  2.390e-05  42.688  < 2e-16 ***
+umid_p10     -3.788e-02  7.191e-03  -5.267 1.39e-07 ***
+umid         -2.660e-01  1.490e-02 -17.858  < 2e-16 ***
+umid_p90      3.570e-01  9.558e-03  37.357  < 2e-16 ***
+alt          -1.478e-03  6.399e-05 -23.103  < 2e-16 ***
+ifdm_saude   -4.640e-02  1.012e-03 -45.845  < 2e-16 ***
+ifdm_edu      1.186e-02  1.532e-03   7.738 1.01e-14 ***
+ifdm_emprend -1.883e-02  4.796e-04 -39.255  < 2e-16 ***
+cobveg       -4.985e-03  2.213e-04 -22.522  < 2e-16 ***
+expcosteira  -1.826e-02  2.070e-04 -88.190  < 2e-16 ***
+ivc          -2.312e-02  3.151e-04 -73.368  < 2e-16 ***
+Pobr          1.084e-01  2.277e-03  47.591  < 2e-16 ***
+ExpAnosEstud  1.625e-01  1.060e-02  15.325  < 2e-16 ***
+urb           4.995e-02  5.676e-04  87.989  < 2e-16 ***
+menor15      -3.528e-01  5.361e-03 -65.821  < 2e-16 ***
+maior65      -3.859e-01  6.691e-03 -57.672  < 2e-16 ***
+pop           4.913e-06  5.292e-08  92.841  < 2e-16 ***
+area          2.482e-04  7.988e-06  31.069  < 2e-16 ***
+dens          2.018e-04  7.718e-06  26.147  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 630804  on 389  degrees of freedom
+Residual deviance:  76437  on 364  degrees of freedom
+AIC: 78440
+
+Number of Fisher Scoring iterations: 6
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+% FAZER TABELA NO LUGAR DO CHUNK ACIMA DE SER TEMPO.
+
+Vemos que o desvio do resíduo é muito maior que seus graus de liberdade, o que indica um ajuste ruim. Para melhorar nosso modelo vamos reduzir sua dimensão, onde, pela análise descritiva, observamos que algumas covariáveis possuem baixa correlação com a variável resposta \_dengue\_, por esse motivo, as retiramos do modelo, são essas variáveis \_ifdm\_edu\_ e \_area\_.
+
+Para impedir multicolinearidade observamos altas correlações entre pares de covariáveis, sendo as mais altas descritas a seguir:
+
+\begin{table}[H]
+\caption{Pares de covariáveis com as correlações mais altas identificadas:} 
+\begin{center}
+\begin{tabular}{c|c|c}
+\hline
+Variável 1                         & Variável 2      & Correlação                      \\ \hline
+IntCdAtBca                         & $\mathbf{ifdm\_saude}$ & \multicolumn{1}{l}{-0.77960350} \\
+temp\_p10                          & \textbf{alt}         & -0.821314067                    \\
+temp\_p10                          & \textbf{temp}        & 0.993364738                     \\
+temp\_p10                          & $\mathbf{temp\_p90}$   & 0.946850236                     \\
+temp                               & $\mathbf{temp\_p90}$   & 0.976276719                     \\
+\textbf{temp}                           & \textbf{alt}         & -0.852298080                    \\
+$\mathbf{temp\_p90}$                      & alt             & -0.884910605                    \\
+\textbf{precip}                         & umid\_p90       & 0.79257030                      \\
+umid\_p10                          & \textbf{umid}        & 0.86471582                      \\
+\textbf{umid}                           & umid\_p90       & 0.890202356                     \\
+umid\_p90                          & \textbf{ivc}         & -0.63608509                     \\
+$\mathbf{ifdm\_emprend}$                  & Pobr            & -0.62697421                     \\
+Pobr                               & \textbf{adultos}     & -0.708001527                    \\
+menor15                            & \textbf{maior65}     & -0.690958203                    \\
+menor15                            & \textbf{adultos}     & -0.715345068                    \\
+pop                                & \textbf{dens}        & 0.78260681                      \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Para nosso modelo escolhemos, então, seguir com a variávei mais correlata com a variável resposta entre os pares da tabela acima, o que nos deixou com um modelo com as 15 variáveis abaixo:
+
+\begin{itemize}
+  \item CobCondSaud
+  \item CobAtencBsca
+  \item temp\_p$90$
+  \item precip
+  \item umid
+  \item ifdm\_saude
+  \item ifdm\_emprend
+  \item cobveg
+  \item expcosteira
+  \item ivc
+  \item ExpAnosEstud
+  \item urb
+  \item maior$65$
+  \item adultos
+  \item dens
+\end{itemize}
 
 
+\subsubsection{\textbf{Modelo com seleção de covariáveis}}
+
+Com o modelo descrito acima obtivemos, também com a seleção de variáveis pelo \_AIC\_, os seguintes resultados:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+Call:
+glm(formula = dengue ~ CobCondSaud + CobAtencBsca + temp_p90 + 
+    precip + umid + ifdm_saude + ifdm_emprend + cobveg + expcosteira + 
+    ivc + ExpAnosEstud + urb + maior65 + adultos + dens, family = poisson, 
+    data = data)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-79.650   -9.002   -3.851    2.948   89.358  
+
+Coefficients:
+               Estimate Std. Error  z value Pr(>|z|)    
+(Intercept)  -1.780e+01  3.944e-01  -45.134   <2e-16 ***
+CobCondSaud  -2.518e-02  2.579e-04  -97.636   <2e-16 ***
+CobAtencBsca -1.032e-02  1.740e-04  -59.317   <2e-16 ***
+temp_p90      4.684e-01  5.163e-03   90.728   <2e-16 ***
+precip        1.003e-03  1.466e-05   68.392   <2e-16 ***
+umid          2.474e-02  2.743e-03    9.022   <2e-16 ***
+ifdm_saude   -2.334e-02  7.268e-04  -32.113   <2e-16 ***
+ifdm_emprend -1.566e-02  4.009e-04  -39.069   <2e-16 ***
+cobveg       -4.818e-03  1.943e-04  -24.799   <2e-16 ***
+expcosteira  -2.103e-02  1.750e-04 -120.217   <2e-16 ***
+ivc          -2.860e-02  2.502e-04 -114.313   <2e-16 ***
+ExpAnosEstud  2.863e-01  8.079e-03   35.436   <2e-16 ***
+urb           3.204e-02  4.126e-04   77.669   <2e-16 ***
+maior65      -1.330e-01  3.252e-03  -40.898   <2e-16 ***
+adultos       1.517e-01  3.737e-03   40.599   <2e-16 ***
+dens          5.926e-04  6.096e-06   97.212   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 630804  on 389  degrees of freedom
+Residual deviance: 101739  on 374  degrees of freedom
+AIC: 103722
+
+Number of Fisher Scoring iterations: 6
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+% FAZER TABELA NO LUGAR DO CHUNK ACIMA DE SER TEMPO.
+
+Note que em comparação com o modelo completo, em teoria, pioramos a qualidade do ajuste, porém, tiramos as multicolinearidades, que podem ser observadas na tabela com os VIFs de cada variável por modelo abaixo:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{table}[H]
+
+\caption{\label{tab:unnamed-chunk-7}Modelo com variáveis correlatas}
+\centering
+\begin{tabular}[t]{l|r}
+\hline
+  & VIF\\
+\hline
+IntCdAtBca & 3.340568\\
+\hline
+CobCondSaud & 4.516761\\
+\hline
+CobAtencBsca & 4.193826\\
+\hline
+temp\_p10 & 113.647345\\
+\hline
+temp & 301.402079\\
+\hline
+temp\_p90 & 59.161914\\
+\hline
+precip & 17.075523\\
+\hline
+umid\_p10 & 90.809074\\
+\hline
+umid & 227.462163\\
+\hline
+umid\_p90 & 52.120415\\
+\hline
+alt & 3.903644\\
+\hline
+ifdm\_saude & 6.531280\\
+\hline
+ifdm\_edu & 9.642008\\
+\hline
+ifdm\_emprend & 4.907702\\
+\hline
+cobveg & 7.685869\\
+\hline
+expcosteira & 9.610107\\
+\hline
+ivc & 8.212447\\
+\hline
+Pobr & 15.043009\\
+\hline
+ExpAnosEstud & 3.831969\\
+\hline
+urb & 7.619431\\
+\hline
+menor15 & 27.804045\\
+\hline
+maior65 & 17.626240\\
+\hline
+pop & 11.892503\\
+\hline
+area & 4.290132\\
+\hline
+dens & 17.308483\\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+
+\caption{\label{tab:unnamed-chunk-7}Modelo sem variáveis correlatas}
+\centering
+\begin{tabular}[t]{l|r}
+\hline
+  & VIF\\
+\hline
+CobCondSaud & 3.380583\\
+\hline
+CobAtencBsca & 2.412786\\
+\hline
+temp\_p90 & 2.934455\\
+\hline
+precip & 6.425093\\
+\hline
+umid & 7.753469\\
+\hline
+ifdm\_saude & 3.234629\\
+\hline
+ifdm\_emprend & 3.295120\\
+\hline
+cobveg & 6.045962\\
+\hline
+expcosteira & 7.002723\\
+\hline
+ivc & 4.899843\\
+\hline
+ExpAnosEstud & 2.546300\\
+\hline
+urb & 3.872085\\
+\hline
+maior65 & 4.019939\\
+\hline
+adultos & 5.614155\\
+\hline
+dens & 10.987268\\
+\hline
+\end{tabular}
+\end{table}
 
 
-\subsection{\textbf{Seleção de covariáveis}}
+\end{knitrout}
 
+Seguimos, agora, para a análise do nosso modelo sem as variáveis correlatas, que nos dá os gráficos abaixo:
 
-\subsection{\textbf{Transformação de covariáveis}}
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-8-1} 
+
+\end{knitrout}
+\textbf{Figura :} Gráficos de diagnóstico para o modelo sem \_offset\_.
+
+Como é possível observar pelos gráficos da \emph{Figura}, principalmente pelo gráfico de envelope dos resíduos, temos um modelo superdisperso, o que tentaremos resolver acrescentando um \_offset\_.
+
+\subsubsection{\textbf{Modelo com \_Offset\_}}
+
+Para adicionarmos um dado \_offset\_ no modelo vemos que ele pode ser a variável \_pop\_, que indica uma alta variabilidade do tamanho das populações nos municípios. Segue o modelo:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+Call:
+glm(formula = dengue ~ CobCondSaud + CobAtencBsca + temp_p90 + 
+    precip + umid + ifdm_saude + ifdm_emprend + cobveg + expcosteira + 
+    ivc + ExpAnosEstud + urb + maior65 + adultos + dens + offset(log(pop)), 
+    family = poisson, data = data)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-76.558   -8.836   -4.680    0.753   71.536  
+
+Coefficients:
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  -3.457e+01  3.948e-01 -87.546   <2e-16 ***
+CobCondSaud  -9.838e-03  2.650e-04 -37.124   <2e-16 ***
+CobAtencBsca  5.798e-03  1.979e-04  29.294   <2e-16 ***
+temp_p90      4.254e-01  5.316e-03  80.033   <2e-16 ***
+precip        9.829e-04  1.445e-05  68.036   <2e-16 ***
+umid          1.046e-01  2.729e-03  38.321   <2e-16 ***
+ifdm_saude   -3.633e-02  7.469e-04 -48.638   <2e-16 ***
+ifdm_emprend -4.018e-02  4.172e-04 -96.307   <2e-16 ***
+cobveg       -3.371e-03  2.019e-04 -16.694   <2e-16 ***
+expcosteira  -1.374e-02  1.734e-04 -79.256   <2e-16 ***
+ivc          -1.743e-02  2.494e-04 -69.905   <2e-16 ***
+ExpAnosEstud  1.261e-01  8.573e-03  14.714   <2e-16 ***
+urb           1.829e-02  4.362e-04  41.940   <2e-16 ***
+maior65       2.850e-02  3.273e-03   8.708   <2e-16 ***
+adultos       1.820e-01  4.011e-03  45.363   <2e-16 ***
+dens          6.176e-05  6.065e-06  10.183   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for poisson family taken to be 1)
+
+    Null deviance: 180512  on 389  degrees of freedom
+Residual deviance:  81585  on 374  degrees of freedom
+AIC: 83568
+
+Number of Fisher Scoring iterations: 6
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+
+% FAZER TABELA NO LUGAR DO SGUNK ACIMA DE SER TEMPO
+\newpage
+Vemos que, ainda que tenhamos adicionado o dado \_offset\_, continuamos com um desvio do resíduo super alto, o que significa que o ajuste segue impróprio para o modelo, o que vamos confirmar com a análise dos gráficos do modelo:
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-10-1} 
+
+\end{knitrout}
+\textbf{Figura :} Gráficos de diagnóstico para o modelo com \_offset\_.
 
 \newpage
-\subsection{\textbf{Pontos influentes/de alavanca/outliers}}
+\subsubsection{\textbf{Interpretação e conclusões}}
 
-\newpage
-\section{{\LARGE\textbf{Verificação dos pressupostos}}}
+Pudemos observar que, mesmo manipulando nosso modelo, continuamos com um ajuste ruim, visto que temos um desvio residual muito maior que os graus de liberdade. Outro indício disso é a sobredispersão observada no gráfico de envelope, o que podemos imaginar que ocorreria, uma vez que temos a média da nossa variável resposta dengue consideravelmente diferente da sua variância, o que não deveria ocorrer, uma vez que a distribuição de Poisson teórica possui média e variância iguais.
 
-\newpage
-\section{{\LARGE\textbf{Interpretação e conclusões}}}
+Tais constatações nos levam a descartar o modelo Poisson e tentar o ajuste por um modelo Binomial Negativo.
+
+\subsection{\textbf{Modelo Binomial Negativo}}
+
+\subsubsection{\textbf{Definição do modelo}}
+
+\subsubsection{\textbf{Modelo com seleção de covariáveis}}
+
+\subsubsection{\textbf{Modelo com \_Offset\_}}
+
+\subsubsection{\textbf{Interpretação e conclusões}}
 
 \end{document}

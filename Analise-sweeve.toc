@@ -1,11 +1,14 @@
 \contentsline {section}{\numberline {1}\textbf {{\LARGE \textbf {Descrição dos dados}}}}{2}{section.1}%
 \contentsline {section}{\numberline {2}{\LARGE \textbf {Análise exploratória}}}{3}{section.2}%
 \contentsline {section}{\numberline {3}{\LARGE \textbf {Construção do modelo}}}{5}{section.3}%
-\contentsline {subsection}{\numberline {3.1}\textbf {Definição do modelo}}{5}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}\textbf {Modelo considerando todas as covariáveis}}{5}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}\textbf {Verificando multicolinearidade}}{5}{subsection.3.3}%
-\contentsline {subsection}{\numberline {3.4}\textbf {Seleção de covariáveis}}{5}{subsection.3.4}%
-\contentsline {subsection}{\numberline {3.5}\textbf {Transformação de covariáveis}}{5}{subsection.3.5}%
-\contentsline {subsection}{\numberline {3.6}\textbf {Pontos influentes/de alavanca/outliers}}{6}{subsection.3.6}%
-\contentsline {section}{\numberline {4}{\LARGE \textbf {Verificação dos pressupostos}}}{7}{section.4}%
-\contentsline {section}{\numberline {5}{\LARGE \textbf {Interpretação e conclusões}}}{8}{section.5}%
+\contentsline {subsection}{\numberline {3.1}\textbf {Modelo Poisson}}{5}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}\textbf {Definição do modelo}}{5}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}\textbf {Modelo considerando todas as covariáveis}}{5}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}\textbf {Modelo com seleção de covariáveis}}{8}{subsubsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.4}\textbf {Modelo com \_Offset\_}}{12}{subsubsection.3.1.4}%
+\contentsline {subsubsection}{\numberline {3.1.5}\textbf {Interpretação e conclusões}}{15}{subsubsection.3.1.5}%
+\contentsline {subsection}{\numberline {3.2}\textbf {Modelo Binomial Negativo}}{15}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}\textbf {Definição do modelo}}{15}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}\textbf {Modelo com seleção de covariáveis}}{15}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}\textbf {Modelo com \_Offset\_}}{15}{subsubsection.3.2.3}%
+\contentsline {subsubsection}{\numberline {3.2.4}\textbf {Interpretação e conclusões}}{15}{subsubsection.3.2.4}%

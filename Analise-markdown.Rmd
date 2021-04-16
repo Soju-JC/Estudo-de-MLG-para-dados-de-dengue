@@ -324,4 +324,3 @@ Tais constatações nos levam a descartar o Modelo Poisson e tentar o ajuste por
 
 
 ## Modelo Binomial Negativo
-

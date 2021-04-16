@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.10)  15 APR 2021 19:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.4.10)  16 APR 2021 05:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -230,6 +230,17 @@ Package: iftex 2020/03/06 v1.0d TeX engine tests
 \Gm@layouthoffset=\dimen173
 \Gm@layoutvoffset=\dimen174
 \Gm@dimlist=\toks25
+) (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box51
+\UL@hyphenbox=\box52
+\UL@skip=\skip53
+\UL@hook=\toks26
+\UL@height=\dimen175
+\UL@pe=\count273
+\UL@pixel=\dimen176
+\ULC@box=\box53
+Package: ulem 2019/11/18
+\ULdepth=\dimen177
 )
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.
 sty
@@ -280,9 +291,9 @@ Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 s.sty
 Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
 )
-\@linkdim=\dimen175
-\Hy@linkcounter=\count273
-\Hy@pagecounter=\count274
+\@linkdim=\dimen178
+\Hy@linkcounter=\count274
+\Hy@pagecounter=\count275
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.de
 f
@@ -303,7 +314,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 s.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count275
+\Hy@SavedSpaceFactor=\count276
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
@@ -317,13 +328,13 @@ Package hyperref Info: Plain pages OFF on input line 4207.
 Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4445.
-\c@Hy@tempcnt=\count276
+\c@Hy@tempcnt=\count277
  (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip17
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
 LaTeX Info: Redefining \url on input line 4804.
-\XeTeXLinkMargin=\dimen176
+\XeTeXLinkMargin=\dimen179
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.st
 y
@@ -334,9 +345,9 @@ tcalc.sty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count277
-\Field@Width=\dimen177
-\Fld@charsize=\dimen178
+\Fld@menulength=\count278
+\Field@Width=\dimen180
+\Fld@charsize=\dimen181
 Package hyperref Info: Hyper figures OFF on input line 6075.
 Package hyperref Info: Link nesting OFF on input line 6080.
 Package hyperref Info: Hyper index ON on input line 6083.
@@ -353,9 +364,9 @@ Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
 ge
 with kernel methods
 )
-\Hy@abspage=\count278
-\c@Item=\count279
-\c@Hfootnote=\count280
+\Hy@abspage=\count279
+\c@Item=\count280
+\c@Hfootnote=\count281
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
@@ -369,8 +380,8 @@ Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
 e
 with kernel methods
 )
-\Fld@listcount=\count281
-\c@bookmark@seq@number=\count282
+\Fld@listcount=\count282
+\c@bookmark@seq@number=\count283
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rer
 unfilecheck.sty
@@ -383,36 +394,40 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 86.
 )
-\Hy@SectionHShift=\skip53
+\Hy@SectionHShift=\skip54
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 75.
+Package hyperref Info: Option `colorlinks' set `true' on input line 78.
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backen
 d-pdftex.def
 File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count283
-\l__pdf_internal_box=\box51
-) (./Analise-sweeve.aux)
+\l__color_backend_stack_int=\count284
+\l__pdf_internal_box=\box54
+) (./Analise-sweeve.aux
+
+LaTeX Warning: Label `tab:unnamed-chunk-7' multiply defined.
+
+)
 \openout1 = `Analise-sweeve.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 83.
-LaTeX Font Info:    ... okay on input line 83.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 86.
+LaTeX Font Info:    ... okay on input line 86.
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epsto
 pdf-base.sty
@@ -459,7 +474,7 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring ON on input line 83.
+Package hyperref Info: Link coloring ON on input line 86.
 
 (c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.s
 ty
@@ -473,17 +488,17 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count284
+\c@section@level=\count285
 )
-LaTeX Info: Redefining \ref on input line 83.
-LaTeX Info: Redefining \pageref on input line 83.
-LaTeX Info: Redefining \nameref on input line 83.
+LaTeX Info: Redefining \ref on input line 86.
+LaTeX Info: Redefining \pageref on input line 86.
+LaTeX Info: Redefining \nameref on input line 86.
  (./Analise-sweeve.out) (./Analise-sweeve.out)
 \@outlinefile=\write3
 \openout3 = `Analise-sweeve.out'.
 
 
-Overfull \hbox (3.91891pt too wide) in paragraph at lines 115--116
+Overfull \hbox (3.91891pt too wide) in paragraph at lines 118--119
 []\OT1/cmr/m/n/12 Segundo tra-balho da dis-ci-plina de MLG min-istrado
  []
 
@@ -508,50 +523,189 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.150 \newpage
+l.153 \newpage
                [1] [2]
 
-Package xcolor Warning: Incompatible color definition on input line 247.
+Package xcolor Warning: Incompatible color definition on input line 250.
 
-<figure/unnamed-chunk-3-1.pdf, id=75, 578.16pt x 794.97pt>
+<figure/unnamed-chunk-3-1.pdf, id=90, 578.16pt x 794.97pt>
 File: figure/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf  used on input line 249.
+Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf  used on input line 252.
 (pdftex.def)             Requested size: 380.69788pt x 523.45667pt.
 
-Package xcolor Warning: Incompatible color definition on input line 261.
+Package xcolor Warning: Incompatible color definition on input line 264.
 
-<figure/unnamed-chunk-4-1.pdf, id=76, 686.565pt x 578.16pt>
+<figure/unnamed-chunk-4-1.pdf, id=91, 686.565pt x 578.16pt>
 File: figure/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: figure/unnamed-chunk-4-1.pdf  used on input line 262.
+Package pdftex.def Info: figure/unnamed-chunk-4-1.pdf  used on input line 265.
 (pdftex.def)             Requested size: 380.69788pt x 320.58264pt.
 
-Overfull \hbox (17.62482pt too wide) in paragraph at lines 262--263
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 265--266
 [][] 
  []
 
 [3 <./figure/unnamed-chunk-3-1.pdf>] [4 <./figure/unnamed-chunk-4-1.pdf>]
-[5] [6] [7] [8] (./Analise-sweeve.aux)
+
+Package xcolor Warning: Incompatible color definition on input line 297.
+
+
+Overfull \hbox (14.50232pt too wide) in paragraph at lines 349--349
+[]\OT1/cmtt/m/n/12 glm(formula = dengue ~ IntCdAtBca + CobCondSaud + CobAtencBs
+ca +[] 
+ []
+
+
+Overfull \hbox (51.55234pt too wide) in paragraph at lines 349--349
+[]    \OT1/cmtt/m/n/12 temp_p10 + temp + temp_p90 + precip + umid_p10 + umid + 
+umid_p90 +[] 
+ []
+
+
+Overfull \hbox (57.72734pt too wide) in paragraph at lines 349--349
+[]    \OT1/cmtt/m/n/12 alt + ifdm_saude + ifdm_edu + ifdm_emprend + cobveg + ex
+pcosteira +[] 
+ []
+
+
+Overfull \hbox (8.32732pt too wide) in paragraph at lines 349--349
+[]    \OT1/cmtt/m/n/12 ivc + Pobr + ExpAnosEstud + urb + menor15 + maior65 + po
+p +[] 
+ []
+
+
+Overfull \hbox (2.15231pt too wide) in paragraph at lines 349--349
+[]\OT1/cmtt/m/n/12 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' '
+ 1[] 
+ []
+
+[5] [6]
+Overfull \hbox (3.94536pt too wide) in paragraph at lines 357--358
+[]\OT1/cmr/m/n/12 Para im-pedir mul-ti-co-l-in-eari-dade ob-ser-va-mos al-tas c
+or-rela^^Xc~oes en-tre pares
+ []
+
+[7]
+
+Package xcolor Warning: Incompatible color definition on input line 411.
+
+
+Overfull \hbox (2.15231pt too wide) in paragraph at lines 452--452
+[]\OT1/cmtt/m/n/12 glm(formula = dengue ~ CobCondSaud + CobAtencBsca + temp_p90
+ +[] 
+ []
+
+
+Overfull \hbox (51.55234pt too wide) in paragraph at lines 452--452
+[]    \OT1/cmtt/m/n/12 precip + umid + ifdm_saude + ifdm_emprend + cobveg + exp
+costeira +[] 
+ []
+
+
+Overfull \hbox (76.25235pt too wide) in paragraph at lines 452--452
+[]    \OT1/cmtt/m/n/12 ivc + ExpAnosEstud + urb + maior65 + adultos + dens, fam
+ily = poisson,[] 
+ []
+
+
+Overfull \hbox (2.15231pt too wide) in paragraph at lines 452--452
+[]\OT1/cmtt/m/n/12 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' '
+ 1[] 
+ []
+
+[8]
+
+Package xcolor Warning: Incompatible color definition on input line 461.
+
+[9] [10]
+
+Package xcolor Warning: Incompatible color definition on input line 569.
+
+<figure/unnamed-chunk-8-1.pdf, id=147, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-8-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-8-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-8-1.pdf  used on input line 570.
+(pdftex.def)             Requested size: 380.69788pt x 380.70567pt.
+
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 570--571
+[][] 
+ []
+
+[11]
+
+Package xcolor Warning: Incompatible color definition on input line 582.
+
+
+Overfull \hbox (2.15231pt too wide) in paragraph at lines 623--623
+[]\OT1/cmtt/m/n/12 glm(formula = dengue ~ CobCondSaud + CobAtencBsca + temp_p90
+ +[] 
+ []
+
+
+Overfull \hbox (51.55234pt too wide) in paragraph at lines 623--623
+[]    \OT1/cmtt/m/n/12 precip + umid + ifdm_saude + ifdm_emprend + cobveg + exp
+costeira +[] 
+ []
+
+
+Overfull \hbox (82.42735pt too wide) in paragraph at lines 623--623
+[]    \OT1/cmtt/m/n/12 ivc + ExpAnosEstud + urb + maior65 + adultos + dens + of
+fset(log(pop)),[] 
+ []
+
+
+Overfull \hbox (2.15231pt too wide) in paragraph at lines 623--623
+[]\OT1/cmtt/m/n/12 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' '
+ 1[] 
+ []
+
+[12 <./figure/unnamed-chunk-8-1.pdf>] [13]
+
+Package xcolor Warning: Incompatible color definition on input line 632.
+
+<figure/unnamed-chunk-10-1.pdf, id=169, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-10-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-10-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-10-1.pdf  used on input line 633.
+
+(pdftex.def)             Requested size: 380.69788pt x 380.70567pt.
+
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 633--634
+[][] 
+ []
+
+[14 <./figure/unnamed-chunk-10-1.pdf>] [15] (./Analise-sweeve.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `Analise-sweeve.out' has not changed.
-(rerunfilecheck)             Checksum: A0029E4CF2CBA03044EAA9F7D381F1D9;2135.
+(rerunfilecheck)             Checksum: 598746E129B88F6A89535A8D3BFEE4FC;2683.
  ) 
 Here is how much of TeX's memory you used:
- 9865 strings out of 480954
- 144030 string characters out of 5905840
- 448227 words of memory out of 5000000
- 26916 multiletter control sequences out of 15000+600000
- 412661 words of font info for 60 fonts, out of 8000000 for 9000
+ 9990 strings out of 480954
+ 145822 string characters out of 5905840
+ 457440 words of memory out of 5000000
+ 27018 multiletter control sequences out of 15000+600000
+ 413620 words of font info for 64 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 71i,6n,74p,326b,345s stack positions out of 5000i,500n,10000p,200000b,80000s
-<c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmbx12.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr12.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on Analise-sweeve.pdf (9 pages, 69278 bytes).
+ 71i,14n,74p,526b,386s stack positions out of 5000i,500n,10000p,200000b,80000s
+ <c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/e
+c/tcrm1200.600pk><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmbx12.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/Users/xumim/AppData/Roaming/Ti
+nyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/Users/xumim/AppDa
+ta/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/User
+s/xumim/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17
+.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr8.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb><c:/Users/xumim/AppData/Roaming/TinyTeX/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/Users/xumim/AppData/Roaming/Ti
+nyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on Analise-sweeve.pdf (16 pages, 298696 bytes).
 PDF statistics:
- 136 PDF objects out of 1000 (max. 8388607)
- 115 compressed objects within 2 object streams
- 21 named destinations out of 1000 (max. 500000)
- 99 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 226 PDF objects out of 1000 (max. 8388607)
+ 187 compressed objects within 2 object streams
+ 34 named destinations out of 1000 (max. 500000)
+ 133 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -706,7 +706,7 @@ Tais constatações nos levam a descartar o modelo Poisson e tentar o ajuste por
 ########## modelos definidos ###########
 
 ##### bn
-require(MASS)
+
 
 dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
@@ -738,7 +738,8 @@ modelo_completo_bn <- glm.nb(dengue~IntCdAtBca +
                         pop +
                         area +
                         dens, 
-                        control = glm.control(maxit = 50), 
+                        control = 
+                          glm.control(maxit = 50), 
                         data = dados
                        )
 
@@ -760,7 +761,8 @@ modelo_corr_bn<- glm.nb(dengue~CobCondSaud +
                          adultos +
                          dens +
                          pop,
-                       control = glm.control(maxit = 50), 
+                       control = 
+                         glm.control(maxit = 50), 
                        data = dados_2013
                        )
 modelo_selecionado_corr_bn <- stepAIC(modelo_corr_bn)
@@ -781,7 +783,8 @@ modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
                          adultos +
                          dens +
                          offset(log(pop)),
-                       control = glm.control(maxit = 50), 
+                       control = 
+                         glm.control(maxit = 50), 
                        data = dados_2013
                        )
 
@@ -791,7 +794,9 @@ modelo_selecionado_corr_offset_bn <- stepAIC(modelo_corr_offset_nb)
 \subsection{\textbf{Modelo Binomial Negativo}}
 O modelo Binomial Negativo por definição não é MLG, entretanto, possui características muito semelhantes e possui uma boa capacidade de capturar um efeito $E(Y_i)<Var(Y_i)$. Que é exatamente o problema encontrado acima.
 \subsubsection{\textbf{Definição do modelo}}
+Utilizando uma função de ligação logarítmica temos um modelo inicial utilizando todas as variáveis na forma sistemática abaixo
 
+$$log(\lambda_i)=\alpha+\beta_1{x_1}_i+\beta_2{x_2}_i+\cdots+\beta_{26}{x_{26}}_i$$
 \subsubsection{\textbf{Modelo considerando todas covariáveis}}
 Ajustando um modelo com todas as 26 covariáveis e realizando a seleção de variáveis pelo método AIC temos suas informações abaixo:
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
@@ -1473,9 +1478,38 @@ hnp(fit.model,
     )
 @
 \textbf{Figura :} Gráficos de diagnóstico para quatro remoções.
-Como optamos por manter os pontos influentes o modelo final ficou definido como:
-<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
 
+
+Como optamos por manter os pontos influentes os gráficos de analise ficaram da seguinte forma:
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
+dados <- read_excel("dados.xlsx")
+dados_2013 <- subset(dados,ano == 2013)
+dados_2013 <- dados_2013[,-28] #sem id
+
+modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
+                                 CobAtencBsca +
+                                 temp_p90 + 
+                                 precip +
+                                 umid +
+                                 ifdm_saude +
+                                 ifdm_emprend +
+                                 cobveg +
+                                 expcosteira +
+                                 ivc + 
+                                 ExpAnosEstud +
+                                 urb + 
+                                 maior65 + 
+                                 adultos +
+                                 dens +
+                                 offset(log(pop)),
+                               control = glm.control(maxit = 50), 
+                               data = dados_2013
+)
+
+modelo_selecionado_corr_offset_bn <- stepAIC(modelo_corr_offset_nb)
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
 fit.model <- modelo_selecionado_corr_offset_bn
 par(mfrow=c(2,2))
 ### PREPARANDO OS GRÁFICOS
@@ -1558,6 +1592,7 @@ hnp(fit.model,
     )
 
 @
+Podemos percerber pelos gráficos que o ajuste foi bem feito, muito diferente de quando utilizamos a Poisson.
 \subsubsection{\textbf{Interpretação e conclusões}}
-
+Pelo ajuste do modelo final, podemos verificar que de fato, o Modelo Binomial Negativo, se adequou aos dados, já que os dados tinham alta variabilidade em relação média, motivo, que levou o descarte do modelo Poisson.
 \end{document}

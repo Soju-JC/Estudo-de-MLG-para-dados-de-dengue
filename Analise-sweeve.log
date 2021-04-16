@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.3.10)  16 APR 2021 16:19
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2021.3.10)  16 APR 2021 19:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -533,7 +533,7 @@ l.153 \newpage
 
 Package xcolor Warning: Incompatible color definition on input line 250.
 
-<figure/unnamed-chunk-3-1.pdf, id=95, 578.16pt x 794.97pt>
+<figure/unnamed-chunk-3-1.pdf, id=100, 578.16pt x 794.97pt>
 File: figure/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-3-1.pdf>
 Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf  used on input line 252.
@@ -541,7 +541,7 @@ Package pdftex.def Info: figure/unnamed-chunk-3-1.pdf  used on input line 252.
 
 Package xcolor Warning: Incompatible color definition on input line 264.
 
-<figure/unnamed-chunk-4-1.pdf, id=96, 686.565pt x 578.16pt>
+<figure/unnamed-chunk-4-1.pdf, id=101, 686.565pt x 578.16pt>
 File: figure/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-4-1.pdf>
 Package pdftex.def Info: figure/unnamed-chunk-4-1.pdf  used on input line 265.
@@ -627,7 +627,7 @@ Package xcolor Warning: Incompatible color definition on input line 461.
 
 Package xcolor Warning: Incompatible color definition on input line 569.
 
-<figure/unnamed-chunk-8-1.pdf, id=152, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-8-1.pdf, id=158, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-8-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-8-1.pdf>
 Package pdftex.def Info: figure/unnamed-chunk-8-1.pdf  used on input line 570.
@@ -669,7 +669,7 @@ Overfull \hbox (2.15231pt too wide) in paragraph at lines 623--623
 
 Package xcolor Warning: Incompatible color definition on input line 632.
 
-<figure/unnamed-chunk-10-1.pdf, id=174, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-10-1.pdf, id=179, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-10-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-10-1.pdf>
 Package pdftex.def Info: figure/unnamed-chunk-10-1.pdf  used on input line 633.
@@ -752,7 +752,7 @@ aken to be 1)[]
 
 Package xcolor Warning: Incompatible color definition on input line 773.
 
-<figure/unnamed-chunk-14-1.pdf, id=196, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-14-1.pdf, id=201, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-14-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-14-1.pdf>
 Package pdftex.def Info: figure/unnamed-chunk-14-1.pdf  used on input line 778.
@@ -799,7 +799,7 @@ Overfull \vbox (1.55049pt too high) detected at line 823
 
 Package xcolor Warning: Incompatible color definition on input line 827.
 
-<figure/unnamed-chunk-16-1.pdf, id=212, 505.89pt x 505.89pt>
+<figure/unnamed-chunk-16-1.pdf, id=217, 505.89pt x 505.89pt>
 File: figure/unnamed-chunk-16-1.pdf Graphic file (type pdf)
 <use figure/unnamed-chunk-16-1.pdf>
 Package pdftex.def Info: figure/unnamed-chunk-16-1.pdf  used on input line 832.
@@ -810,18 +810,178 @@ Overfull \hbox (17.62482pt too wide) in paragraph at lines 832--833
 [][] 
  []
 
-[20] [21 <./figure/unnamed-chunk-16-1.pdf>] (./Analise-sweeve.aux)
+[20]
+
+Package xcolor Warning: Incompatible color definition on input line 843.
+
+
+Overfull \hbox (39.20233pt too wide) in paragraph at lines 882--882
+[]    \OT1/cmtt/m/n/12 urb + maior65 + adultos + offset(log(pop)), data = dados
+_2013_1,[] 
+ []
+
+
+Overfull \hbox (14.50232pt too wide) in paragraph at lines 882--882
+[]    \OT1/cmtt/m/n/12 control = glm.control(maxit = 50), init.theta = 1.198029
+355,[] 
+ []
+
+
+Overfull \hbox (2.15231pt too wide) in paragraph at lines 882--882
+[]\OT1/cmtt/m/n/12 Signif. codes:  0 ^^M***^^M 0.001 ^^M**^^M 0.01 ^^M*^^M 0.05
+ ^^M.^^M 0.1 ^^M ^^M 1[] 
+ []
+
+
+Overfull \hbox (63.90234pt too wide) in paragraph at lines 882--882
+[]\OT1/cmtt/m/n/12 (Dispersion parameter for Negative Binomial(1.198) family ta
+ken to be 1)[] 
+ []
+
+[21 <./figure/unnamed-chunk-16-1.pdf>]
+<figure/unnamed-chunk-19-1.pdf, id=232, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-19-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-19-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-19-1.pdf  used on input line 884.
+
+(pdftex.def)             Requested size: 380.69788pt x 380.70567pt.
+
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 884--885
+[][] 
+ []
+
+[22]
+
+Package xcolor Warning: Incompatible color definition on input line 894.
+
+
+Overfull \hbox (39.20233pt too wide) in paragraph at lines 933--933
+[]    \OT1/cmtt/m/n/12 urb + maior65 + adultos + offset(log(pop)), data = dados
+_2013_1,[] 
+ []
+
+
+Overfull \hbox (14.50232pt too wide) in paragraph at lines 933--933
+[]    \OT1/cmtt/m/n/12 control = glm.control(maxit = 50), init.theta = 1.253312
+012,[] 
+ []
+
+
+Overfull \hbox (2.15231pt too wide) in paragraph at lines 933--933
+[]\OT1/cmtt/m/n/12 Signif. codes:  0 ^^M***^^M 0.001 ^^M**^^M 0.01 ^^M*^^M 0.05
+ ^^M.^^M 0.1 ^^M ^^M 1[] 
+ []
+
+
+Overfull \hbox (70.07735pt too wide) in paragraph at lines 933--933
+[]\OT1/cmtt/m/n/12 (Dispersion parameter for Negative Binomial(1.2533) family t
+aken to be 1)[] 
+ []
+
+[23 <./figure/unnamed-chunk-19-1.pdf>]
+<figure/unnamed-chunk-22-1.pdf, id=247, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-22-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-22-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-22-1.pdf  used on input line 935.
+
+(pdftex.def)             Requested size: 380.69788pt x 380.70567pt.
+
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 935--936
+[][] 
+ []
+
+[24]
+
+Package xcolor Warning: Incompatible color definition on input line 945.
+
+
+Overfull \hbox (33.02733pt too wide) in paragraph at lines 981--981
+[]\OT1/cmtt/m/n/12 glm.nb(formula = dengue ~ temp_p90 + ifdm_emprend + urb + ma
+ior65 +[] 
+ []
+
+
+Overfull \hbox (94.77736pt too wide) in paragraph at lines 981--981
+[]    \OT1/cmtt/m/n/12 offset(log(pop)), data = dados_2013_1, control = glm.con
+trol(maxit = 50),[] 
+ []
+
+
+Overfull \hbox (2.15231pt too wide) in paragraph at lines 981--981
+[]\OT1/cmtt/m/n/12 Signif. codes:  0 ^^M***^^M 0.001 ^^M**^^M 0.01 ^^M*^^M 0.05
+ ^^M.^^M 0.1 ^^M ^^M 1[] 
+ []
+
+
+Overfull \hbox (70.07735pt too wide) in paragraph at lines 981--981
+[]\OT1/cmtt/m/n/12 (Dispersion parameter for Negative Binomial(1.3258) family t
+aken to be 1)[] 
+ []
+
+[25 <./figure/unnamed-chunk-22-1.pdf>]
+<figure/unnamed-chunk-25-1.pdf, id=263, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-25-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-25-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-25-1.pdf  used on input line 983.
+
+(pdftex.def)             Requested size: 380.69788pt x 380.70567pt.
+
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 983--984
+[][] 
+ []
+
+[26]
+
+Package xcolor Warning: Incompatible color definition on input line 992.
+
+
+Overfull \hbox (33.02733pt too wide) in paragraph at lines 1028--1028
+[]\OT1/cmtt/m/n/12 glm.nb(formula = dengue ~ temp_p90 + ifdm_emprend + urb + ma
+ior65 +[] 
+ []
+
+
+Overfull \hbox (94.77736pt too wide) in paragraph at lines 1028--1028
+[]    \OT1/cmtt/m/n/12 offset(log(pop)), data = dados_2013_1, control = glm.con
+trol(maxit = 50),[] 
+ []
+
+
+Overfull \hbox (2.15231pt too wide) in paragraph at lines 1028--1028
+[]\OT1/cmtt/m/n/12 Signif. codes:  0 ^^M***^^M 0.001 ^^M**^^M 0.01 ^^M*^^M 0.05
+ ^^M.^^M 0.1 ^^M ^^M 1[] 
+ []
+
+
+Overfull \hbox (70.07735pt too wide) in paragraph at lines 1028--1028
+[]\OT1/cmtt/m/n/12 (Dispersion parameter for Negative Binomial(1.3929) family t
+aken to be 1)[] 
+ []
+
+[27 <./figure/unnamed-chunk-25-1.pdf>]
+<figure/unnamed-chunk-28-1.pdf, id=278, 505.89pt x 505.89pt>
+File: figure/unnamed-chunk-28-1.pdf Graphic file (type pdf)
+<use figure/unnamed-chunk-28-1.pdf>
+Package pdftex.def Info: figure/unnamed-chunk-28-1.pdf  used on input line 1030
+.
+(pdftex.def)             Requested size: 380.69788pt x 380.70567pt.
+
+Overfull \hbox (17.62482pt too wide) in paragraph at lines 1030--1031
+[][] 
+ []
+
+[28] [29 <./figure/unnamed-chunk-28-1.pdf>] (./Analise-sweeve.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Analise-sweeve.out' has not changed.
-(rerunfilecheck)             Checksum: 6F507B5B084EE5EDB1756C0D64D7F8ED;2948.
+(rerunfilecheck)             Checksum: BF6D693C8CEF6B3B93DDD8BF6DA46ADD;3217.
  ) 
 Here is how much of TeX's memory you used:
- 10024 strings out of 480971
- 146851 string characters out of 5905996
+ 10062 strings out of 480971
+ 147887 string characters out of 5905996
  465052 words of memory out of 5000000
- 27026 multiletter control sequences out of 15000+600000
+ 27051 multiletter control sequences out of 15000+600000
  413620 words of font info for 64 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  71i,14n,74p,526b,386s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -837,10 +997,10 @@ onts/cm/cmr8.pfb><c:/Users/luisf/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmsy10.pfb><c:/Users/luisf/AppData/Roaming/TinyTeX/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/Users/luisf/AppData/Roaming/Ti
 nyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Analise-sweeve.pdf (22 pages, 348242 bytes).
+Output written on Analise-sweeve.pdf (30 pages, 435813 bytes).
 PDF statistics:
- 274 PDF objects out of 1000 (max. 8388607)
- 224 compressed objects within 3 object streams
- 41 named destinations out of 1000 (max. 500000)
- 151 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 342 PDF objects out of 1000 (max. 8388607)
+ 276 compressed objects within 3 object streams
+ 50 named destinations out of 1000 (max. 500000)
+ 179 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -112,6 +112,7 @@ vif(modelo_selecionado_corr_offset)
 
 
 fit.model<-modelo_selecionado_corr_offset
+
 par(mfrow=c(2,2))
 ### PREPARANDO OS GRÁFICOS
 X <- model.matrix(fit.model)

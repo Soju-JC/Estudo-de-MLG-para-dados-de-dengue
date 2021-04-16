@@ -707,6 +707,7 @@ Tais constatações nos levam a descartar o modelo Poisson e tentar o ajuste por
 
 ##### bn
 require(MASS)
+
 dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
 dados_2013 <- dados_2013[,-28] #sem id
@@ -1007,6 +1008,471 @@ hnp(fit.model,
     )
 
 @
+\subsubsection{\textbf{Sobre a remoção de pontos influentes}}
+Usando a funçao identify, identificamos pontos influentes, entretanto, preferimos por não remove-los, já que em nosso subset temos apenas 78 linhas.
+Abaixo, alguns resultados que obtivemos na remoção de alguns pontos influentes:
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+##Uma remocao
+dados_2013_1<- dados_2013[-44,]
+modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
+                         CobAtencBsca +
+                         temp_p90 + 
+                         precip +
+                         umid +
+                         ifdm_saude +
+                         ifdm_emprend +
+                         cobveg +
+                         expcosteira +
+                         ivc + 
+                         ExpAnosEstud +
+                         urb + 
+                         maior65 + 
+                         adultos +
+                         dens +
+                         offset(log(pop)),
+                       control = glm.control(maxit = 50), 
+                       data = dados_2013_1
+                       )
+
+
+
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
+modelo_selecionado_corr_offset_bn <- stepAIC(modelo_corr_offset_nb)
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+summary(modelo_selecionado_corr_offset_bn)
+fit.model <- modelo_selecionado_corr_offset_bn
+par(mfrow=c(2,2))
+### PREPARANDO OS GRÁFICOS
+X <- model.matrix(fit.model)
+n <- nrow(X)
+p <- ncol(X)
+fi <- fit.model$theta
+#w <- fi*fitted(fit.model)/(fi + fitted(fit.model))
+w <- fit.model$weights
+W <- diag(w)
+H <- solve(t(X)%*%W%*%X)
+H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+h <- diag(H)
+ts <- resid(fit.model,type="pearson")/sqrt(1-h)
+td <- resid(fit.model,type="deviance")/sqrt(1-h)
+di <- (h/(1-h))*(ts^2)
+corte.hii<- 2*p/n # corte para elementos da diagonal de
+corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
+#############################
+### ALAVACAGEM / LEVERAGE ###
+#############################
+plot(fitted(fit.model), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20
+     )
+
+lines(c(0,max(fitted(fit.model))+1), 
+      c(corte.hii,corte.hii), 
+      col='red',
+      lty=2
+      )
+#identify(fitted(fit.model), h, n=1)
+#########################
+### PONTOS INFLUENTES ###
+#########################
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
+lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
+#identify(di, n=1)
+############################
+### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
+############################
+eta <- predict(fit.model)
+z <- eta + resid(fit.model, type="pearson")/sqrt(w)
+
+plot(predict(fit.model), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
+lines(smooth.spline(predict(fit.model), z, df=2))
+################
+### ENVELOPE ###
+################
+
+# dev.new(width=6,height=3)
+hnp(fit.model, 
+    xlab = 'Percentil da N(0,1)',
+    ylab = 'Resíduos', 
+    main = 'Gráfico Normal de Probabilidades', 
+    pch = 20, 
+    cex.lab=1.5, 
+    cex.axis=1.5
+    )
+@
+
+\textbf{Figura :} Gráficos de diagnóstico para uma remoção.
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,results=FALSE>>=
+##duas remocoes
+dados_2013_1<- dados_2013_1[-73,]
+modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
+                         CobAtencBsca +
+                         temp_p90 + 
+                         precip +
+                         umid +
+                         ifdm_saude +
+                         ifdm_emprend +
+                         cobveg +
+                         expcosteira +
+                         ivc + 
+                         ExpAnosEstud +
+                         urb + 
+                         maior65 + 
+                         adultos +
+                         dens +
+                         offset(log(pop)),
+                       control = glm.control(maxit = 50), 
+                       data = dados_2013_1
+                       )
+
+
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
+modelo_selecionado_corr_offset_bn <- stepAIC(modelo_corr_offset_nb)
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+summary(modelo_selecionado_corr_offset_bn)
+
+fit.model <- modelo_selecionado_corr_offset_bn
+par(mfrow=c(2,2))
+### PREPARANDO OS GRÁFICOS
+X <- model.matrix(fit.model)
+n <- nrow(X)
+p <- ncol(X)
+fi <- fit.model$theta
+#w <- fi*fitted(fit.model)/(fi + fitted(fit.model))
+w <- fit.model$weights
+W <- diag(w)
+H <- solve(t(X)%*%W%*%X)
+H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+h <- diag(H)
+ts <- resid(fit.model,type="pearson")/sqrt(1-h)
+td <- resid(fit.model,type="deviance")/sqrt(1-h)
+di <- (h/(1-h))*(ts^2)
+corte.hii<- 2*p/n # corte para elementos da diagonal de
+corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
+#############################
+### ALAVACAGEM / LEVERAGE ###
+#############################
+plot(fitted(fit.model), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20
+     )
+
+lines(c(0,max(fitted(fit.model))+1), 
+      c(corte.hii,corte.hii), 
+      col='red',
+      lty=2
+      )
+#identify(fitted(fit.model), h, n=1)
+#########################
+### PONTOS INFLUENTES ###
+#########################
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
+lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
+#identify(di, n=1)
+############################
+### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
+############################
+eta <- predict(fit.model)
+z <- eta + resid(fit.model, type="pearson")/sqrt(w)
+
+plot(predict(fit.model), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
+lines(smooth.spline(predict(fit.model), z, df=2))
+################
+### ENVELOPE ###
+################
+
+# dev.new(width=6,height=3)
+hnp(fit.model, 
+    xlab = 'Percentil da N(0,1)',
+    ylab = 'Resíduos', 
+    main = 'Gráfico Normal de Probabilidades', 
+    pch = 20, 
+    cex.lab=1.5, 
+    cex.axis=1.5
+    )
+
+@
+\textbf{Figura :} Gráficos de diagnóstico para duas remoção.
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+##tres remocoes
+dados_2013_1<- dados_2013_1[-5,]
+modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
+                         CobAtencBsca +
+                         temp_p90 + 
+                         precip +
+                         umid +
+                         ifdm_saude +
+                         ifdm_emprend +
+                         cobveg +
+                         expcosteira +
+                         ivc + 
+                         ExpAnosEstud +
+                         urb + 
+                         maior65 + 
+                         adultos +
+                         dens +
+                         offset(log(pop)),
+                       control = glm.control(maxit = 50), 
+                       data = dados_2013_1
+                       )
+
+
+
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
+modelo_selecionado_corr_offset_bn <- stepAIC(modelo_corr_offset_nb)
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+summary(modelo_selecionado_corr_offset_bn)
+fit.model <- modelo_selecionado_corr_offset_bn
+par(mfrow=c(2,2))
+### PREPARANDO OS GRÁFICOS
+X <- model.matrix(fit.model)
+n <- nrow(X)
+p <- ncol(X)
+fi <- fit.model$theta
+#w <- fi*fitted(fit.model)/(fi + fitted(fit.model))
+w <- fit.model$weights
+W <- diag(w)
+H <- solve(t(X)%*%W%*%X)
+H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+h <- diag(H)
+ts <- resid(fit.model,type="pearson")/sqrt(1-h)
+td <- resid(fit.model,type="deviance")/sqrt(1-h)
+di <- (h/(1-h))*(ts^2)
+corte.hii<- 2*p/n # corte para elementos da diagonal de
+corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
+#############################
+### ALAVACAGEM / LEVERAGE ###
+#############################
+plot(fitted(fit.model), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20
+     )
+
+lines(c(0,max(fitted(fit.model))+1), 
+      c(corte.hii,corte.hii), 
+      col='red',
+      lty=2
+      )
+#identify(fitted(fit.model), h, n=1)
+#########################
+### PONTOS INFLUENTES ###
+#########################
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
+lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
+#identify(di, n=1)
+############################
+### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
+############################
+eta <- predict(fit.model)
+z <- eta + resid(fit.model, type="pearson")/sqrt(w)
+
+plot(predict(fit.model), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
+lines(smooth.spline(predict(fit.model), z, df=2))
+################
+### ENVELOPE ###
+################
+
+# dev.new(width=6,height=3)
+hnp(fit.model, 
+    xlab = 'Percentil da N(0,1)',
+    ylab = 'Resíduos', 
+    main = 'Gráfico Normal de Probabilidades', 
+    pch = 20, 
+    cex.lab=1.5, 
+    cex.axis=1.5
+    )
+@
+\textbf{Figura :} Gráficos de diagnóstico para tres remoções.
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+##tres remocoes
+dados_2013_1<- dados_2013_1[-41,]
+modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
+                         CobAtencBsca +
+                         temp_p90 + 
+                         precip +
+                         umid +
+                         ifdm_saude +
+                         ifdm_emprend +
+                         cobveg +
+                         expcosteira +
+                         ivc + 
+                         ExpAnosEstud +
+                         urb + 
+                         maior65 + 
+                         adultos +
+                         dens +
+                         offset(log(pop)),
+                       control = glm.control(maxit = 50), 
+                       data = dados_2013_1
+                       )
+
+
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
+modelo_selecionado_corr_offset_bn <- stepAIC(modelo_corr_offset_nb)
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+summary(modelo_selecionado_corr_offset_bn)
+fit.model <- modelo_selecionado_corr_offset_bn
+par(mfrow=c(2,2))
+### PREPARANDO OS GRÁFICOS
+X <- model.matrix(fit.model)
+n <- nrow(X)
+p <- ncol(X)
+fi <- fit.model$theta
+#w <- fi*fitted(fit.model)/(fi + fitted(fit.model))
+w <- fit.model$weights
+W <- diag(w)
+H <- solve(t(X)%*%W%*%X)
+H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+h <- diag(H)
+ts <- resid(fit.model,type="pearson")/sqrt(1-h)
+td <- resid(fit.model,type="deviance")/sqrt(1-h)
+di <- (h/(1-h))*(ts^2)
+corte.hii<- 2*p/n # corte para elementos da diagonal de
+corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
+#############################
+### ALAVACAGEM / LEVERAGE ###
+#############################
+plot(fitted(fit.model), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20
+     )
+
+lines(c(0,max(fitted(fit.model))+1), 
+      c(corte.hii,corte.hii), 
+      col='red',
+      lty=2
+      )
+#identify(fitted(fit.model), h, n=1)
+#########################
+### PONTOS INFLUENTES ###
+#########################
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
+lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
+#identify(di, n=1)
+############################
+### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
+############################
+eta <- predict(fit.model)
+z <- eta + resid(fit.model, type="pearson")/sqrt(w)
+
+plot(predict(fit.model), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
+lines(smooth.spline(predict(fit.model), z, df=2))
+################
+### ENVELOPE ###
+################
+
+# dev.new(width=6,height=3)
+hnp(fit.model, 
+    xlab = 'Percentil da N(0,1)',
+    ylab = 'Resíduos', 
+    main = 'Gráfico Normal de Probabilidades', 
+    pch = 20, 
+    cex.lab=1.5, 
+    cex.axis=1.5
+    )
+@
+\textbf{Figura :} Gráficos de diagnóstico para quatro remoções.
 \subsubsection{\textbf{Interpretação e conclusões}}
 
 \end{document}

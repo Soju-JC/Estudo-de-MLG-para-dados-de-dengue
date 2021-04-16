@@ -700,14 +700,311 @@ Pudemos observar que, mesmo manipulando nosso modelo, continuamos com um ajuste 
 
 Tais constatações nos levam a descartar o modelo Poisson e tentar o ajuste por um modelo Binomial Negativo.
 
-\subsection{\textbf{Modelo Binomial Negativo}}
+%%%%%%Modelos
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
 
+########## modelos definidos ###########
+
+##### bn
+require(MASS)
+data <- read_excel("dados.xlsx")
+
+modelo_completo_bn <- glm(dengue~IntCdAtBca +
+                        CobCondSaud +
+                        CobAtencBsca +
+                        temp_p10 +
+                        temp +
+                        temp_p90 +
+                        precip +
+                        umid_p10 +
+                        umid +
+                        umid_p90 +
+                        alt +
+                        ifdm_saude +
+                        ifdm_edu +
+                        ifdm_emprend +
+                        cobveg +
+                        expcosteira +
+                        ivc +
+                        Pobr +
+                        ExpAnosEstud +
+                        urb +
+                        menor15 +
+                        maior65 +
+                        adultos +
+                        pop +
+                        area +
+                        dens, 
+                        control = glm.control(maxit = 50), 
+                        data = dados_2013
+                       )
+
+modelo_selecionado_bn <- stepAIC(modelo_completo_bn)
+
+modelo_corr_bn<- glm.nb(dengue~CobCondSaud +
+                         CobAtencBsca +
+                         temp_p90 + 
+                         precip +
+                         umid +
+                         ifdm_saude +
+                         ifdm_emprend +
+                         cobveg +
+                         expcosteira +
+                         ivc + 
+                         ExpAnosEstud +
+                         urb + 
+                         maior65 + 
+                         adultos +
+                         dens +
+                         pop,
+                       control = glm.control(maxit = 50), 
+                       data = dados_2013
+                       )
+modelo_selecionado_corr_bn <- stepAIC(modelo_corr_bn)
+ 
+modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
+                         CobAtencBsca +
+                         temp_p90 + 
+                         precip +
+                         umid +
+                         ifdm_saude +
+                         ifdm_emprend +
+                         cobveg +
+                         expcosteira +
+                         ivc + 
+                         ExpAnosEstud +
+                         urb + 
+                         maior65 + 
+                         adultos +
+                         dens +
+                         offset(log(pop)),
+                       control = glm.control(maxit = 50), 
+                       data = dados_2013
+                       )
+
+modelo_selecionado_corr_offset_bn <- stepAIC(modelo_corr_offset_nb)
+
+@
+\subsection{\textbf{Modelo Binomial Negativo}}
+O modelo Binomial Negativo por definição não é MLG, entretanto, possui características muito semelhantes e possui uma boa capacidade de capturar um efeito $E(Y_i)<Var(Y_i)$. Que é exatamente o problema encontrado acima.
 \subsubsection{\textbf{Definição do modelo}}
+
+\subsubsection{\textbf{Modelo considerando todas covariáveis}}
+Ajustando um modelo com todas as 26 covariáveis e realizando a seleção de variáveis pelo método AIC temos suas informações abaixo:
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+
+summary(modelo_selecionado_bn)
+
+@
+Como aconteceu com o Modelo Poisson, é possivel perceber, com base no desvio residual que o ajuste é ruim. Para corrir isso, faremos o mesmo que foi feito com o Modelo Poisson, ou seja, usaremos as 15 variáveis mais correlatadas com a variável resposta, sendo elas:
+
+\begin{itemize}
+  \item CobCondSaud
+  \item CobAtencBsca
+  \item temp\_p$90$
+  \item precip
+  \item umid
+  \item ifdm\_saude
+  \item ifdm\_emprend
+  \item cobveg
+  \item expcosteira
+  \item ivc
+  \item ExpAnosEstud
+  \item urb
+  \item maior$65$
+  \item adultos
+  \item dens
+\end{itemize}
 
 \subsubsection{\textbf{Modelo com seleção de covariáveis}}
 
-\subsubsection{\textbf{Modelo com \_Offset\_}}
+Com o modelo descrito acima obtivemos, também com a seleção de variáveis pelo \_AIC\_, os seguintes resultados:
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
 
+summary(modelo_selecionado_corr_bn)
+
+@
+Perceba que, com a escolha de variáveis acima, melhoramos bastante o ajuste do modelo. Gerando os gráficos para o modelo acima, obtemos:
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+fit.model <- modelo_selecionado_corr_bn
+
+par(mfrow=c(2,2))
+### PREPARANDO OS GRÁFICOS
+X <- model.matrix(fit.model)
+n <- nrow(X)
+p <- ncol(X)
+fi <- fit.model$theta
+#w <- fi*fitted(fit.model)/(fi + fitted(fit.model))
+w <- fit.model$weights
+W <- diag(w)
+H <- solve(t(X)%*%W%*%X)
+H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+h <- diag(H)
+ts <- resid(fit.model,type="pearson")/sqrt(1-h)
+td <- resid(fit.model,type="deviance")/sqrt(1-h)
+di <- (h/(1-h))*(ts^2)
+corte.hii<- 2*p/n # corte para elementos da diagonal de
+
+corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
+#############################
+### ALAVACAGEM / LEVERAGE ###
+#############################
+plot(fitted(fit.model), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20
+     )
+
+lines(c(0,max(fitted(fit.model))+1), 
+      c(corte.hii,corte.hii), 
+      col='red',
+      lty=2
+      )
+#identify(fitted(fit.model), h, n=1)
+#########################
+### PONTOS INFLUENTES ###
+#########################
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
+lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
+#identify(di, n=1)
+############################
+### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
+############################
+eta <- predict(fit.model)
+z <- eta + resid(fit.model, type="pearson")/sqrt(w)
+
+plot(predict(fit.model), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
+lines(smooth.spline(predict(fit.model), z, df=2))
+################
+### ENVELOPE ###
+################
+
+# dev.new(width=6,height=3)
+hnp(fit.model, 
+    xlab = 'Percentil da N(0,1)',
+    ylab = 'Resíduos', 
+    main = 'Gráfico Normal de Probabilidades', 
+    pch = 20, 
+    cex.lab=1.5, 
+    cex.axis=1.5
+    )
+
+@
+
+\subsubsection{\textbf{Modelo com \_Offset\_}}
+Agora, colocando a variável \_pop\_ como \_Offset\_
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+ 
+# stargazer(modelo_selecionado_corr_offset, table.placement = "H", no.space = TRUE, keep.stat = c("res.dev","aic"))
+
+summary(modelo_selecionado_corr_offset_bn)
+
+@
+A escolha de deixar a variável \_pop\_ como \_Offset\_ melhorou o ajuste do modelo, visto que o desvio residual se aproximou um pouco mais dos graus de liberdade, abaixo, temos os gráficos do modelo com \_Offset\_:
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+
+fit.model <- modelo_selecionado_corr_offset_bn
+par(mfrow=c(2,2))
+### PREPARANDO OS GRÁFICOS
+X <- model.matrix(fit.model)
+n <- nrow(X)
+p <- ncol(X)
+fi <- fit.model$theta
+#w <- fi*fitted(fit.model)/(fi + fitted(fit.model))
+w <- fit.model$weights
+W <- diag(w)
+H <- solve(t(X)%*%W%*%X)
+H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
+h <- diag(H)
+ts <- resid(fit.model,type="pearson")/sqrt(1-h)
+td <- resid(fit.model,type="deviance")/sqrt(1-h)
+di <- (h/(1-h))*(ts^2)
+corte.hii<- 2*p/n # corte para elementos da diagonal de
+corte.cook<- qf(0.5,p,n-p) # corte para Distância de Cook
+#############################
+### ALAVACAGEM / LEVERAGE ###
+#############################
+plot(fitted(fit.model), 
+     h, 
+     xlab="Valor Ajustado", 
+     ylab="Medida h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylim=c(0,1), 
+     pch=20
+     )
+
+lines(c(0,max(fitted(fit.model))+1), 
+      c(corte.hii,corte.hii), 
+      col='red',
+      lty=2
+      )
+#identify(fitted(fit.model), h, n=1)
+#########################
+### PONTOS INFLUENTES ###
+#########################
+plot(di, 
+     type="h", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     xlab="Observação", 
+     ylab="Distância de Cook", 
+     ylim=c(0,max(max(di),corte.cook))
+     )
+
+lines(c(0,n+1),c(corte.cook,corte.cook),col='red',lty=2)
+#identify(di, n=1)
+############################
+### PREDITOR LINEAR VS Z ### p/ verificar adequação da função de ligação
+############################
+eta <- predict(fit.model)
+z <- eta + resid(fit.model, type="pearson")/sqrt(w)
+
+plot(predict(fit.model), 
+     z, 
+     xlab="Preditor Linear", 
+     cex.lab=1.5, 
+     cex.axis=1.5, 
+     ylab="Variavel z", 
+     pch=20
+     )
+
+lines(smooth.spline(predict(fit.model), z, df=2))
+################
+### ENVELOPE ###
+################
+
+# dev.new(width=6,height=3)
+hnp(fit.model, 
+    xlab = 'Percentil da N(0,1)',
+    ylab = 'Resíduos', 
+    main = 'Gráfico Normal de Probabilidades', 
+    pch = 20, 
+    cex.lab=1.5, 
+    cex.axis=1.5
+    )
+
+@
 \subsubsection{\textbf{Interpretação e conclusões}}
 
 \end{document}

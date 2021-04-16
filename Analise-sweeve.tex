@@ -647,7 +647,9 @@ Tais constatações nos levam a descartar o modelo Poisson e tentar o ajuste por
 \subsection{\textbf{Modelo Binomial Negativo}}
 O modelo Binomial Negativo por definição não é MLG, entretanto, possui características muito semelhantes e possui uma boa capacidade de capturar um efeito $E(Y_i)<Var(Y_i)$. Que é exatamente o problema encontrado acima.
 \subsubsection{\textbf{Definição do modelo}}
+Utilizando uma função de ligação logarítmica temos um modelo inicial utilizando todas as variáveis na forma sistemática abaixo
 
+$$log(\lambda_i)=\alpha+\beta_1{x_1}_i+\beta_2{x_2}_i+\cdots+\beta_{26}{x_{26}}_i$$
 \subsubsection{\textbf{Modelo considerando todas covariáveis}}
 Ajustando um modelo com todas as 26 covariáveis e realizando a seleção de variáveis pelo método AIC temos suas informações abaixo:
 \begin{knitrout}
@@ -1033,7 +1035,7 @@ Negative binomial model (using MASS package)
 \textbf{Figura :} Gráficos de diagnóstico para quatro remoções.
 
 
-Como optamos por manter os pontos influentes o modelo final ficou definido como:
+Como optamos por manter os pontos influentes os gráficos de analise ficaram da seguinte forma:
 
 
 \begin{knitrout}
@@ -1045,6 +1047,7 @@ Negative binomial model (using MASS package)
 \includegraphics[width=\maxwidth]{figure/unnamed-chunk-30-1} 
 
 \end{knitrout}
+Podemos percerber pelos gráficos que o ajuste foi bem feito, muito diferente de quando utilizamos a Poisson.
 \subsubsection{\textbf{Interpretação e conclusões}}
-
+Pelo ajuste do modelo final, podemos verificar que de fato, o Modelo Binomial Negativo, se adequou aos dados, já que os dados tinham alta variabilidade em relação média, motivo, que levou o descarte do modelo Poisson.
 \end{document}

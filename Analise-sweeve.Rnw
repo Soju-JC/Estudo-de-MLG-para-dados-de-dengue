@@ -707,9 +707,11 @@ Tais constatações nos levam a descartar o modelo Poisson e tentar o ajuste por
 
 ##### bn
 require(MASS)
-data <- read_excel("dados.xlsx")
+dados <- read_excel("dados.xlsx")
+dados_2013 <- subset(dados,ano == 2013)
+dados_2013 <- dados_2013[,-28] #sem id
 
-modelo_completo_bn <- glm(dengue~IntCdAtBca +
+modelo_completo_bn <- glm.nb(dengue~IntCdAtBca +
                         CobCondSaud +
                         CobAtencBsca +
                         temp_p10 +
@@ -735,8 +737,8 @@ modelo_completo_bn <- glm(dengue~IntCdAtBca +
                         pop +
                         area +
                         dens, 
-                        control = glm.control(maxit = 50), 
-                        data = dados_2013
+                        control = glm.control(maxit = 10), 
+                        data = dados
                        )
 
 modelo_selecionado_bn <- stepAIC(modelo_completo_bn)

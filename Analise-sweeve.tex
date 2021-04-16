@@ -833,7 +833,7 @@ Negative binomial model (using MASS package)
 
 \end{knitrout}
 \subsubsection{\textbf{Sobre a remoção de pontos influentes}}
-Usando a funçao identify, identificamos pontos influentes, entretanto, preferimos por não remove-los, já que em nosso subset temos apenas 78 linhas.
+Usando a funçao identify, identificamos pontos influentes, entretanto, preferimos por não remove-los no modelo final, já que em nosso subset temos apenas 78 linhas.
 Abaixo, alguns resultados que obtivemos na remoção de alguns pontos influentes:
 
 
@@ -1031,6 +1031,16 @@ Negative binomial model (using MASS package)
 
 \end{knitrout}
 \textbf{Figura :} Gráficos de diagnóstico para quatro remoções.
+Como optamos por manter os pontos influentes o modelo final ficou definido como:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+Negative binomial model (using MASS package) 
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-29-1} 
+
+\end{knitrout}
 \subsubsection{\textbf{Interpretação e conclusões}}
 
 \end{document}

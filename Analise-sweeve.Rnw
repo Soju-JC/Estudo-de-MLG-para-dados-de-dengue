@@ -139,8 +139,8 @@ lapply(packages, loadlibrary) # carrega pacotes
 dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
 dados_2013 <- dados_2013[,-28] #sem id
-
-
+data<-subset(dados,ano == 2013)
+data<-data[,-28] #sem id
 ########## modelos definidos ###########
 
 ##### Poisson
@@ -737,7 +737,7 @@ modelo_completo_bn <- glm.nb(dengue~IntCdAtBca +
                         pop +
                         area +
                         dens, 
-                        control = glm.control(maxit = 10), 
+                        control = glm.control(maxit = 50), 
                         data = dados
                        )
 

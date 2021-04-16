@@ -322,7 +322,5 @@ Pudemos observar que, mesmo manipulando nosso modelo, continuamos com um ajuste 
 Tais constatações nos levam a descartar o Modelo Poisson e tentar o ajuste por um Modelo Binomial Negativo.
 
 
-# Pontos influentes/de alavanca/outliers
-
-# Verificação dos pressupostos
+## Modelo Binomial Negativo
 

@@ -642,14 +642,179 @@ Pudemos observar que, mesmo manipulando nosso modelo, continuamos com um ajuste 
 
 Tais constatações nos levam a descartar o modelo Poisson e tentar o ajuste por um modelo Binomial Negativo.
 
-\subsection{\textbf{Modelo Binomial Negativo}}
+%%%%%%Modelos
 
+\subsection{\textbf{Modelo Binomial Negativo}}
+O modelo Binomial Negativo por definição não é MLG, entretanto, possui características muito semelhantes e possui uma boa capacidade de capturar um efeito $E(Y_i)<Var(Y_i)$. Que é exatamente o problema encontrado acima.
 \subsubsection{\textbf{Definição do modelo}}
+
+\subsubsection{\textbf{Modelo considerando todas covariáveis}}
+Ajustando um modelo com todas as 26 covariáveis e realizando a seleção de variáveis pelo método AIC temos suas informações abaixo:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+Call:
+glm(formula = dengue ~ temp + umid_p10 + expcosteira + ivc + 
+    pop + dens, data = dados_2013, control = glm.control(maxit = 50))
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-5212.8   -343.9    -69.5    250.5   4273.8  
+
+Coefficients:
+              Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  4.793e+03  4.326e+03   1.108  0.27159    
+temp         1.250e+02  8.575e+01   1.458  0.14922    
+umid_p10    -9.708e+01  6.981e+01  -1.391  0.16865    
+expcosteira -1.422e+01  6.315e+00  -2.252  0.02740 *  
+ivc         -2.006e+01  7.258e+00  -2.763  0.00728 ** 
+pop          4.486e-03  2.203e-03   2.037  0.04540 *  
+dens         4.633e+00  4.274e-01  10.840  < 2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for gaussian family taken to be 1084203)
+
+    Null deviance: 589345740  on 77  degrees of freedom
+Residual deviance:  76978437  on 71  degrees of freedom
+AIC: 1313.9
+
+Number of Fisher Scoring iterations: 2
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Como aconteceu com o Modelo Poisson, é possivel perceber, com base no desvio residual que o ajuste é ruim. Para corrir isso, faremos o mesmo que foi feito com o Modelo Poisson, ou seja, usaremos as 15 variáveis mais correlatadas com a variável resposta, sendo elas:
+
+\begin{itemize}
+  \item CobCondSaud
+  \item CobAtencBsca
+  \item temp\_p$90$
+  \item precip
+  \item umid
+  \item ifdm\_saude
+  \item ifdm\_emprend
+  \item cobveg
+  \item expcosteira
+  \item ivc
+  \item ExpAnosEstud
+  \item urb
+  \item maior$65$
+  \item adultos
+  \item dens
+\end{itemize}
 
 \subsubsection{\textbf{Modelo com seleção de covariáveis}}
 
-\subsubsection{\textbf{Modelo com \_Offset\_}}
+Com o modelo descrito acima obtivemos, também com a seleção de variáveis pelo \_AIC\_, os seguintes resultados:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
 
+Call:
+glm.nb(formula = dengue ~ CobAtencBsca + temp_p90 + ifdm_saude + 
+    ifdm_emprend + cobveg + urb + maior65 + pop, data = dados_2013, 
+    control = glm.control(maxit = 50), init.theta = 0.9549042419, 
+    link = log)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.2211  -1.1597  -0.5190   0.5277   1.7196  
+
+Coefficients:
+               Estimate Std. Error z value Pr(>|z|)    
+(Intercept)  -9.909e+00  2.488e+00  -3.983  6.8e-05 ***
+CobAtencBsca -1.731e-02  6.116e-03  -2.830  0.00466 ** 
+temp_p90      2.597e-01  1.003e-01   2.590  0.00960 ** 
+ifdm_saude    3.859e-02  1.628e-02   2.371  0.01773 *  
+ifdm_emprend  1.990e-02  1.385e-02   1.436  0.15091    
+cobveg       -1.410e-02  4.493e-03  -3.139  0.00170 ** 
+urb           5.752e-02  8.886e-03   6.473  9.6e-11 ***
+maior65       2.543e-01  8.215e-02   3.095  0.00197 ** 
+pop           4.355e-06  1.837e-06   2.371  0.01776 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for Negative Binomial(0.9549) family taken to be 1)
+
+    Null deviance: 387.550  on 77  degrees of freedom
+Residual deviance:  89.209  on 69  degrees of freedom
+AIC: 912.9
+
+Number of Fisher Scoring iterations: 1
+
+
+              Theta:  0.955 
+          Std. Err.:  0.142 
+
+ 2 x log-likelihood:  -892.899 
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+Perceba que, com a escolha de variáveis acima, melhoramos bastante o ajuste do modelo. Gerando os gráficos para o modelo acima, obtemos:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+Negative binomial model (using MASS package) 
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-1} 
+
+\end{knitrout}
+
+\subsubsection{\textbf{Modelo com \_Offset\_}}
+Agora, colocando a variável \_pop\_ como \_Offset\_
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+Call:
+glm.nb(formula = dengue ~ temp_p90 + umid + cobveg + urb + maior65 + 
+    adultos + offset(log(pop)), data = dados_2013, control = glm.control(maxit = 50), 
+    init.theta = 1.108820464, link = log)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.4896  -1.0525  -0.4003   0.4286   1.8971  
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -22.743600   6.472959  -3.514 0.000442 ***
+temp_p90      0.340296   0.091139   3.734 0.000189 ***
+umid         -0.131944   0.085253  -1.548 0.121702    
+cobveg       -0.012231   0.004026  -3.038 0.002381 ** 
+urb           0.041645   0.006909   6.028 1.66e-09 ***
+maior65       0.303516   0.071226   4.261 2.03e-05 ***
+adultos       0.205808   0.080866   2.545 0.010926 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for Negative Binomial(1.1088) family taken to be 1)
+
+    Null deviance: 185.528  on 77  degrees of freedom
+Residual deviance:  87.661  on 71  degrees of freedom
+AIC: 895.02
+
+Number of Fisher Scoring iterations: 1
+
+
+              Theta:  1.109 
+          Std. Err.:  0.168 
+
+ 2 x log-likelihood:  -879.015 
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
+A escolha de deixar a variável \_pop\_ como \_Offset\_ melhorou o ajuste do modelo, visto que o desvio residual se aproximou um pouco mais dos graus de liberdade, abaixo, temos os gráficos do modelo com \_Offset\_:
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+Negative binomial model (using MASS package) 
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
+
+\end{knitrout}
 \subsubsection{\textbf{Interpretação e conclusões}}
 
 \end{document}

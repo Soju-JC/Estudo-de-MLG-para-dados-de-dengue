@@ -990,6 +990,7 @@ Negative binomial model (using MASS package)
 
 
 
+
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
@@ -1035,8 +1036,52 @@ Negative binomial model (using MASS package)
 \textbf{Figura :} Gráficos de diagnóstico para quatro remoções.
 
 
-Como optamos por manter os pontos influentes os gráficos de analise ficaram da seguinte forma:
+Como optamos por manter os pontos influentes o modelo e os gráficos de analise ficaram da seguinte forma:
 
+
+
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+
+Call:
+glm.nb(formula = dengue ~ temp_p90 + umid + cobveg + urb + maior65 + 
+    adultos + offset(log(pop)), data = dados_2013, control = glm.control(maxit = 50), 
+    init.theta = 1.108820464, link = log)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-2.4896  -1.0525  -0.4003   0.4286   1.8971  
+
+Coefficients:
+              Estimate Std. Error z value Pr(>|z|)    
+(Intercept) -22.743600   6.472959  -3.514 0.000442 ***
+temp_p90      0.340296   0.091139   3.734 0.000189 ***
+umid         -0.131944   0.085253  -1.548 0.121702    
+cobveg       -0.012231   0.004026  -3.038 0.002381 ** 
+urb           0.041645   0.006909   6.028 1.66e-09 ***
+maior65       0.303516   0.071226   4.261 2.03e-05 ***
+adultos       0.205808   0.080866   2.545 0.010926 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for Negative Binomial(1.1088) family taken to be 1)
+
+    Null deviance: 185.528  on 77  degrees of freedom
+Residual deviance:  87.661  on 71  degrees of freedom
+AIC: 895.02
+
+Number of Fisher Scoring iterations: 1
+
+
+              Theta:  1.109 
+          Std. Err.:  0.168 
+
+ 2 x log-likelihood:  -879.015 
+\end{verbatim}
+\end{kframe}
+\end{knitrout}
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
@@ -1044,7 +1089,7 @@ Como optamos por manter os pontos influentes os gráficos de analise ficaram da 
 Negative binomial model (using MASS package) 
 \end{verbatim}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-30-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-31-1} 
 
 \end{knitrout}
 Podemos percerber pelos gráficos que o ajuste foi bem feito, muito diferente de quando utilizamos a Poisson.

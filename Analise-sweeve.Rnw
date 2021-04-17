@@ -1365,7 +1365,7 @@ hnp(fit.model,
 @
 \textbf{Figura :} Gráficos de diagnóstico para tres remoções.
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
-##tres remocoes
+##quatro remocoes
 dados_2013_1<- dados_2013_1[-41,]
 modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
                          CobAtencBsca +
@@ -1393,6 +1393,7 @@ modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
 modelo_selecionado_corr_offset_bn <- stepAIC(modelo_corr_offset_nb)
 @
+
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
 summary(modelo_selecionado_corr_offset_bn)
@@ -1480,7 +1481,9 @@ hnp(fit.model,
 \textbf{Figura :} Gráficos de diagnóstico para quatro remoções.
 
 
-Como optamos por manter os pontos influentes os gráficos de analise ficaram da seguinte forma:
+Como optamos por manter os pontos influentes o modelo e os gráficos de analise ficaram da seguinte forma:
+
+
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,include=FALSE>>=
 dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
@@ -1507,6 +1510,14 @@ modelo_corr_offset_nb<- glm.nb(dengue~CobCondSaud +
 )
 
 modelo_selecionado_corr_offset_bn <- stepAIC(modelo_corr_offset_nb)
+@
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+ 
+# stargazer(modelo_selecionado_corr_offset, table.placement = "H", no.space = TRUE, keep.stat = c("res.dev","aic"))
+
+summary(modelo_selecionado_corr_offset_bn)
+
 @
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=

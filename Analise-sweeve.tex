@@ -99,7 +99,7 @@
         
         \vspace{85pt}
         
-		\textbf{\LARGE{Modelagem dos dados de 2013 referentes às notificações de dengue no estado do Espírito Santo}}
+		\textbf{\LARGE{Modelagem das Notificações de Casos de Dengue do ano de 2013 nos Municípios do Espírito Santo}}
 		\title{\large{Título}}
 	%	\large{Modelo\\
      %   		Validação do modelo clássico}
@@ -123,7 +123,9 @@
       \setlength{\labelwidth}{0pt}
       \setlength{\labelsep}{\leftmargin}}
 
-			\item Alunos: \
+			\item Alunos: José Carlos Soares Junior\\
+			         \;\;\;\;\;\;\;\;\;\;\;\;\;     Luiz Felipe Figueiredo\\
+			         \;\;\;\;\;\;\;\;\;\;\;\;\;     Mariana Machado Matheus 
             \item Orientador: Prof. Dr. Saulo Morellato\
 
       \end{list}
@@ -244,6 +246,13 @@ $\mathbf{maior65}$ - proporção da população com mais de $65$ anos;
 \newpage
 \section{{\LARGE\textbf{Análise exploratória}}}
 
+A dengue é uma doença que por melhor que tenham sido as ações da humanidade para lidar com ela, sempre tem sido parte de nossas vidas, tendo perdurado como um dos maiores problemas de saúde pública já visto.
+
+Este trabalho consiste em construir modelos de regressão com interesse nas notificações de dengue dos municípios do estado do Espirito Santo, sendo os dados utilizados contendo várias informações sociais ou até mesmo de origem natural como temperatura e umidade do ar. Estes dados são referentes ao ano de $2013$, onde foi quando o Espirito Santo enfrentou a pior crise epidêmica de dengue se comparado com os anos seguintes, até que foi passada pela crise de $2019$.
+
+\newpage
+Mas se olharmos para o número de notificações daquele ano por município, quais tiveram mais notificações ? 
+
 %%%%%% Notificações de dengue por municipio %%%%%%%
 
 \begin{knitrout}
@@ -258,14 +267,95 @@ $\mathbf{maior65}$ - proporção da população com mais de $65$ anos;
 \end{knitrout}
 \textbf{Figura 1:} Notificações de dengue por municípios do estado do Espírito Santo.
 
-%%%%%%% Grafico de correlação %%%%%%%
+\newpage
+Podemos observar pela \emph{Figura 1} que os municípios que tiveram mais notificações de dengue no ano de $2013$ foram os seguintes:
+
+\begin{itemize}
+  \item Vitória
+  \item Vila Velha
+  \item Viana
+  \item Serra
+  \item Cariacica
+  \item Cachoeiro de Itapemirim
+\end{itemize}
+
+Com exceção de Cachoeiro de Itapemirim, os demais municípios que tiveram mais notificações são graficamente cidades extremamente próximas concentradas ao redor da capital Vitória, o qual dentre todos, teve o maior número de notificações de dengue registrado.
+
+Pensando que talvez baixos índices referentes à saúde pública, ou índices sociais e educacionais possam ter alguma influência no número de notificações, o que podemos encontrar nos dados ?
+
+%%%%%%% Tabelas e gráficos de índices sociais e educacionais %%%%%%%
+
+\begin{table}[H]
+\caption{Estatísticas básicas das variáveis de índices sociais e educacionais:}
+\begin{center}
+\begin{tabular}{cc|c|c|c|c|c|c}
+\hline
+\multicolumn{1}{c|}{Variável}     & Min  & 1° quartil & Mediana & Média & 3° quartil & Máx   & Desvio \\ \hline
+\multicolumn{1}{c|}{IntCdAtBca}   & 16.5 & 25.9       & 31.3    & 33.7  & 38.7       & 63.9  & 10.5   \\
+\multicolumn{1}{c|}{CobCondSaud}  & 35.3 & 66.8       & 78.1    & 75.5  & 87.1       & 99.0  & 14.6   \\
+\multicolumn{1}{c|}{CobAtencBsca} & 0.0  & 85.0       & 100.0   & 87.2  & 100.0      & 100.0 & 21.3   \\
+\multicolumn{1}{c|}{ifdm\_saude}  & 54.6 & 74.1       & 82.9    & 80.0  & 86.4       & 92.5  & 8.7    \\
+\multicolumn{1}{c|}{ifdm\_edu}    & 72.9 & 79.5       & 83.5    & 83.2  & 86.7       & 91.7  & 4.7    \\
+\multicolumn{1}{c|}{ifdm\_emprend}                    & 28.4 & 50.6       & 58.5    & 59.0  & 66.1       & 89.5  & 11.6   \\ \cline{1-8} 
+\end{tabular}
+\end{center}
+\end{table}
+
+Ao olharmos para as informações da \emph{Tabela 1}, observamos valores centrais de média e mediana bem próximos indicando que os dados desses índices nos municípios não fogem tanto dos valores centrais, havendo uma maior diferênça quanto aos valores centrais na variável \_CobAtencBsca\_.
 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-1} 
+
+{\centering \includegraphics[width=\maxwidth]{figure/unnamed-chunk-4-1} 
+
+}
+
+
 
 \end{knitrout}
-\textbf{Figura 2:} Gráfico de correlação entre as covariáveis.
+\textbf{Figura 2A:} Boxplot do número de notificações de dengue e o índice \_IntCdAtBca\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.  
+
+\textbf{Figura 2B:} Boxplot do número de notificações de dengue e o índice \_CobCondSaud\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.
+
+\textbf{Figura 2C:} Boxplot do número de notificações de dengue e o índice \_CobAtencBsca\_ avaliado em dois grupos (acima da mediana e abaixo da mediana), sem considerar o município Vitória.
+
+\textbf{Figura 2D:} Boxplot do número de notificações de dengue e o índice \_ifdm saude\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.
+
+\textbf{Figura 2E:} Boxplot do número de notificações de dengue e o índice \_ifdm edu\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.
+
+\textbf{Figura 2F:} Boxplot do número de notificações de dengue e o índice \_ifdm emprend\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.
+
+\newpage
+Podemos observar que nas \emph{Figuras 2A, 2B, 2C e 2E} que o grupo dos municípios que tiveram os referentes índices abaixo da média (mediana para a \emph{Figura 2C}) naquele ano teve mais municípios com notificações extremas de dengue, se comparado com o grupo de municípios com os índices acima do valor central em questão. Além disso, a mediana de ambos os grupos não parece ter uma diferença muito discrepante, com exceção das medianas no índice CobAtencBsca, onde o grupo dos municípios com índice abaixo da mediana do estado teve a mediana consideralmente maior que a do grupo de municípios de índice de mediana acima.
+
+Por outro lado, nas \emph{Figuras 2D e 2F} o grupo dos municípios que tiveram os referentes índices acima ou igual à média naquele ano teve mais municípios com notificações extremas de dengue, se comparado com o grupo de municípios com os índices abaixo do valor central em questão.\\
+
+\noindent
+Obs: Município de Vitória não foi incluido nos gráficos pois suas notificações de dengue são extremas o suficiente para fazer esse tipo de gráfico ser inutilizado vizualmente.
+
+\newpage
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-5-1} 
+
+\end{knitrout}
+\textbf{Figura 3:} Boxplot do número de notificações de dengue e o nível de urbanização dos municípios por grupos (maior ou menor que a média).\\
+
+Na \emph{Figura 3}, vemos que o grupo de municípios que possuem um percentual de urbanização maior do que a média, possui mais casos com notificações extremas de dengue, sugerindo talvez, que o nível de urbanização do município tenha relação com notificações de dengue.
+
+\newpage
+%%%%%%% Grafico de correlação %%%%%%%
+
+Pensando em todas as variáveis do conjunto de dados, como é a correlação entre elas ?
+
+\begin{knitrout}
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-6-1} 
+
+\end{knitrout}
+\textbf{Figura 4:} Gráfico de correlação entre as covariáveis.\\
+
+Na \emph{Figura 4} vemos que as variáveis \_pop\_ e \_dens\_ possuem correlação muito alta com nossa variável de interesse, informação valiosa para construção do modelo posteriormente. Além disso, as variáveis de temperatura e umidade também possuem alta correlação com variáveis com as mesmas características como \_temp\_p$90$\_ e \_umid\_p$90$\_, o que é esperado.
 
 \newpage
 \section{{\LARGE\textbf{Construção do modelo}}}
@@ -460,7 +550,7 @@ Note que em comparação com o modelo completo, em teoria, pioramos a qualidade 
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-7}Modelo com variáveis correlatas}
+\caption{\label{tab:unnamed-chunk-9}Modelo com variáveis correlatas}
 \centering
 \begin{tabular}[t]{l|r}
 \hline
@@ -521,7 +611,7 @@ dens & 17.308483\\
 
 \begin{table}[H]
 
-\caption{\label{tab:unnamed-chunk-7}Modelo sem variáveis correlatas}
+\caption{\label{tab:unnamed-chunk-9}Modelo sem variáveis correlatas}
 \centering
 \begin{tabular}[t]{l|r}
 \hline
@@ -566,13 +656,17 @@ dens & 10.987268\\
 Seguimos, agora, para a análise do nosso modelo sem as variáveis correlatas, que nos dá os gráficos abaixo:
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-8-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+Poisson model 
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-10-1} 
 
 \end{knitrout}
-\textbf{Figura :} Gráficos de diagnóstico para o modelo sem \_offset\_.
+\textbf{Figura 5:} Gráficos de diagnóstico para o modelo sem \_offset\_.
 
-Como é possível observar pelos gráficos da \emph{Figura}, principalmente pelo gráfico de envelope dos resíduos, temos um modelo superdisperso, o que tentaremos resolver acrescentando um \_offset\_.
+Como é possível observar pelos gráficos da \emph{Figura 5}, principalmente pelo gráfico de envelope dos resíduos feito com pacote \emph{hnp} de Moral RA et.all(2017), temos um modelo superdisperso, o que tentaremos resolver acrescentando um \_offset\_.
 
 \subsubsection{\textbf{Modelo com \_Offset\_}}
 
@@ -581,45 +675,101 @@ Para adicionarmos um dado \_offset\_ no modelo vemos que ele pode ser a variáve
 \begin{knitrout}
 \definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
 \begin{verbatim}
-
-Call:
-glm(formula = dengue ~ CobCondSaud + CobAtencBsca + temp_p90 + 
-    precip + umid + ifdm_saude + ifdm_emprend + cobveg + expcosteira + 
-    ivc + ExpAnosEstud + urb + maior65 + adultos + dens + offset(log(pop)), 
-    family = poisson, data = data)
-
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--76.558   -8.836   -4.680    0.753   71.536  
-
-Coefficients:
-               Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  -3.457e+01  3.948e-01 -87.546   <2e-16 ***
-CobCondSaud  -9.838e-03  2.650e-04 -37.124   <2e-16 ***
-CobAtencBsca  5.798e-03  1.979e-04  29.294   <2e-16 ***
-temp_p90      4.254e-01  5.316e-03  80.033   <2e-16 ***
-precip        9.829e-04  1.445e-05  68.036   <2e-16 ***
-umid          1.046e-01  2.729e-03  38.321   <2e-16 ***
-ifdm_saude   -3.633e-02  7.469e-04 -48.638   <2e-16 ***
-ifdm_emprend -4.018e-02  4.172e-04 -96.307   <2e-16 ***
-cobveg       -3.371e-03  2.019e-04 -16.694   <2e-16 ***
-expcosteira  -1.374e-02  1.734e-04 -79.256   <2e-16 ***
-ivc          -1.743e-02  2.494e-04 -69.905   <2e-16 ***
-ExpAnosEstud  1.261e-01  8.573e-03  14.714   <2e-16 ***
-urb           1.829e-02  4.362e-04  41.940   <2e-16 ***
-maior65       2.850e-02  3.273e-03   8.708   <2e-16 ***
-adultos       1.820e-01  4.011e-03  45.363   <2e-16 ***
-dens          6.176e-05  6.065e-06  10.183   <2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-(Dispersion parameter for poisson family taken to be 1)
-
-    Null deviance: 180512  on 389  degrees of freedom
-Residual deviance:  81585  on 374  degrees of freedom
-AIC: 83568
-
-Number of Fisher Scoring iterations: 6
+dengue ~ CobCondSaud + CobAtencBsca + temp_p90 + precip + umid + 
+    ifdm_saude + ifdm_emprend + cobveg + expcosteira + ivc + 
+    ExpAnosEstud + urb + maior65 + adultos + dens + offset(log(pop))
+attr(,"variables")
+list(dengue, CobCondSaud, CobAtencBsca, temp_p90, precip, umid, 
+    ifdm_saude, ifdm_emprend, cobveg, expcosteira, ivc, ExpAnosEstud, 
+    urb, maior65, adultos, dens, offset(log(pop)))
+attr(,"offset")
+[1] 17
+attr(,"factors")
+                 CobCondSaud CobAtencBsca temp_p90 precip umid ifdm_saude
+dengue                     0            0        0      0    0          0
+CobCondSaud                1            0        0      0    0          0
+CobAtencBsca               0            1        0      0    0          0
+temp_p90                   0            0        1      0    0          0
+precip                     0            0        0      1    0          0
+umid                       0            0        0      0    1          0
+ifdm_saude                 0            0        0      0    0          1
+ifdm_emprend               0            0        0      0    0          0
+cobveg                     0            0        0      0    0          0
+expcosteira                0            0        0      0    0          0
+ivc                        0            0        0      0    0          0
+ExpAnosEstud               0            0        0      0    0          0
+urb                        0            0        0      0    0          0
+maior65                    0            0        0      0    0          0
+adultos                    0            0        0      0    0          0
+dens                       0            0        0      0    0          0
+offset(log(pop))           0            0        0      0    0          0
+                 ifdm_emprend cobveg expcosteira ivc ExpAnosEstud urb maior65
+dengue                      0      0           0   0            0   0       0
+CobCondSaud                 0      0           0   0            0   0       0
+CobAtencBsca                0      0           0   0            0   0       0
+temp_p90                    0      0           0   0            0   0       0
+precip                      0      0           0   0            0   0       0
+umid                        0      0           0   0            0   0       0
+ifdm_saude                  0      0           0   0            0   0       0
+ifdm_emprend                1      0           0   0            0   0       0
+cobveg                      0      1           0   0            0   0       0
+expcosteira                 0      0           1   0            0   0       0
+ivc                         0      0           0   1            0   0       0
+ExpAnosEstud                0      0           0   0            1   0       0
+urb                         0      0           0   0            0   1       0
+maior65                     0      0           0   0            0   0       1
+adultos                     0      0           0   0            0   0       0
+dens                        0      0           0   0            0   0       0
+offset(log(pop))            0      0           0   0            0   0       0
+                 adultos dens
+dengue                 0    0
+CobCondSaud            0    0
+CobAtencBsca           0    0
+temp_p90               0    0
+precip                 0    0
+umid                   0    0
+ifdm_saude             0    0
+ifdm_emprend           0    0
+cobveg                 0    0
+expcosteira            0    0
+ivc                    0    0
+ExpAnosEstud           0    0
+urb                    0    0
+maior65                0    0
+adultos                1    0
+dens                   0    1
+offset(log(pop))       0    0
+attr(,"term.labels")
+ [1] "CobCondSaud"  "CobAtencBsca" "temp_p90"     "precip"       "umid"        
+ [6] "ifdm_saude"   "ifdm_emprend" "cobveg"       "expcosteira"  "ivc"         
+[11] "ExpAnosEstud" "urb"          "maior65"      "adultos"      "dens"        
+attr(,"order")
+ [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+attr(,"intercept")
+[1] 1
+attr(,"response")
+[1] 1
+attr(,".Environment")
+<environment: R_GlobalEnv>
+attr(,"predvars")
+list(dengue, CobCondSaud, CobAtencBsca, temp_p90, precip, umid, 
+    ifdm_saude, ifdm_emprend, cobveg, expcosteira, ivc, ExpAnosEstud, 
+    urb, maior65, adultos, dens, offset(log(pop)))
+attr(,"dataClasses")
+          dengue      CobCondSaud     CobAtencBsca         temp_p90 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+          precip             umid       ifdm_saude     ifdm_emprend 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+          cobveg      expcosteira              ivc     ExpAnosEstud 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+             urb          maior65          adultos             dens 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+offset(log(pop)) 
+       "numeric" 
+[1] "Desvio"
+[1] 81585.09
+[1] "df.residual"
+[1] 374
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -629,11 +779,15 @@ Number of Fisher Scoring iterations: 6
 Vemos que, ainda que tenhamos adicionado o dado \_offset\_, continuamos com um desvio do resíduo super alto, o que significa que o ajuste segue impróprio para o modelo, o que vamos confirmar com a análise dos gráficos do modelo:
 
 \begin{knitrout}
-\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-10-1} 
+\definecolor{shadecolor}{rgb}{0.969, 0.969, 0.969}\color{fgcolor}\begin{kframe}
+\begin{verbatim}
+Poisson model 
+\end{verbatim}
+\end{kframe}
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-12-1} 
 
 \end{knitrout}
-\textbf{Figura :} Gráficos de diagnóstico para o modelo com \_offset\_.
+\textbf{Figura 6:} Gráficos de diagnóstico para o modelo com \_offset\_.
 
 \newpage
 \subsubsection{\textbf{Interpretação e conclusões}}
@@ -700,6 +854,99 @@ Number of Fisher Scoring iterations: 1
           Std. Err.:  0.0460 
 
  2 x log-likelihood:  -3937.3930 
+dengue ~ CobCondSaud + CobAtencBsca + temp_p90 + precip + umid + 
+    ifdm_saude + ifdm_emprend + cobveg + expcosteira + ivc + 
+    ExpAnosEstud + urb + maior65 + adultos + dens + offset(log(pop))
+attr(,"variables")
+list(dengue, CobCondSaud, CobAtencBsca, temp_p90, precip, umid, 
+    ifdm_saude, ifdm_emprend, cobveg, expcosteira, ivc, ExpAnosEstud, 
+    urb, maior65, adultos, dens, offset(log(pop)))
+attr(,"offset")
+[1] 17
+attr(,"factors")
+                 CobCondSaud CobAtencBsca temp_p90 precip umid ifdm_saude
+dengue                     0            0        0      0    0          0
+CobCondSaud                1            0        0      0    0          0
+CobAtencBsca               0            1        0      0    0          0
+temp_p90                   0            0        1      0    0          0
+precip                     0            0        0      1    0          0
+umid                       0            0        0      0    1          0
+ifdm_saude                 0            0        0      0    0          1
+ifdm_emprend               0            0        0      0    0          0
+cobveg                     0            0        0      0    0          0
+expcosteira                0            0        0      0    0          0
+ivc                        0            0        0      0    0          0
+ExpAnosEstud               0            0        0      0    0          0
+urb                        0            0        0      0    0          0
+maior65                    0            0        0      0    0          0
+adultos                    0            0        0      0    0          0
+dens                       0            0        0      0    0          0
+offset(log(pop))           0            0        0      0    0          0
+                 ifdm_emprend cobveg expcosteira ivc ExpAnosEstud urb maior65
+dengue                      0      0           0   0            0   0       0
+CobCondSaud                 0      0           0   0            0   0       0
+CobAtencBsca                0      0           0   0            0   0       0
+temp_p90                    0      0           0   0            0   0       0
+precip                      0      0           0   0            0   0       0
+umid                        0      0           0   0            0   0       0
+ifdm_saude                  0      0           0   0            0   0       0
+ifdm_emprend                1      0           0   0            0   0       0
+cobveg                      0      1           0   0            0   0       0
+expcosteira                 0      0           1   0            0   0       0
+ivc                         0      0           0   1            0   0       0
+ExpAnosEstud                0      0           0   0            1   0       0
+urb                         0      0           0   0            0   1       0
+maior65                     0      0           0   0            0   0       1
+adultos                     0      0           0   0            0   0       0
+dens                        0      0           0   0            0   0       0
+offset(log(pop))            0      0           0   0            0   0       0
+                 adultos dens
+dengue                 0    0
+CobCondSaud            0    0
+CobAtencBsca           0    0
+temp_p90               0    0
+precip                 0    0
+umid                   0    0
+ifdm_saude             0    0
+ifdm_emprend           0    0
+cobveg                 0    0
+expcosteira            0    0
+ivc                    0    0
+ExpAnosEstud           0    0
+urb                    0    0
+maior65                0    0
+adultos                1    0
+dens                   0    1
+offset(log(pop))       0    0
+attr(,"term.labels")
+ [1] "CobCondSaud"  "CobAtencBsca" "temp_p90"     "precip"       "umid"        
+ [6] "ifdm_saude"   "ifdm_emprend" "cobveg"       "expcosteira"  "ivc"         
+[11] "ExpAnosEstud" "urb"          "maior65"      "adultos"      "dens"        
+attr(,"order")
+ [1] 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+attr(,"intercept")
+[1] 1
+attr(,"response")
+[1] 1
+attr(,".Environment")
+<environment: R_GlobalEnv>
+attr(,"predvars")
+list(dengue, CobCondSaud, CobAtencBsca, temp_p90, precip, umid, 
+    ifdm_saude, ifdm_emprend, cobveg, expcosteira, ivc, ExpAnosEstud, 
+    urb, maior65, adultos, dens, offset(log(pop)))
+attr(,"dataClasses")
+          dengue      CobCondSaud     CobAtencBsca         temp_p90 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+          precip             umid       ifdm_saude     ifdm_emprend 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+          cobveg      expcosteira              ivc     ExpAnosEstud 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+             urb          maior65          adultos             dens 
+       "numeric"        "numeric"        "numeric"        "numeric" 
+offset(log(pop)) 
+       "numeric" 
+[1] 81585.09
+[1] 374
 \end{verbatim}
 \end{kframe}
 \end{knitrout}
@@ -777,9 +1024,10 @@ Perceba que, com a escolha de variáveis acima, melhoramos bastante o ajuste do 
 Negative binomial model (using MASS package) 
 \end{verbatim}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-14-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
 
 \end{knitrout}
+\textbf{Figura 7:} Gráficos de diagnóstico.
 
 \subsubsection{\textbf{Modelo com \_Offset\_}}
 Agora, colocando a variável \_pop\_ como \_Offset\_
@@ -831,11 +1079,13 @@ A escolha de deixar a variável \_pop\_ como \_Offset\_ melhorou o ajuste do mod
 Negative binomial model (using MASS package) 
 \end{verbatim}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-16-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-18-1} 
 
 \end{knitrout}
+\textbf{Figura 8:} Gráficos de diagnóstico.
+
 \subsubsection{\textbf{Sobre a remoção de pontos influentes}}
-Usando a funçao identify, identificamos pontos influentes, entretanto, preferimos por não remove-los no modelo final, já que em nosso subset temos apenas 78 linhas.
+Usando a funçao identify, identificamos pontos influentes, entretanto, preferimos por não remove-los no modelo final, já que em nosso subset temos apenas $78$ linhas.
 Abaixo, alguns resultados que obtivemos na remoção de alguns pontos influentes:
 
 
@@ -883,11 +1133,11 @@ Number of Fisher Scoring iterations: 1
 Negative binomial model (using MASS package) 
 \end{verbatim}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-19-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-21-1} 
 
 \end{knitrout}
+\textbf{Figura 9:} Gráficos de diagnóstico para uma remoção.
 
-\textbf{Figura :} Gráficos de diagnóstico para uma remoção.
 
 
 
@@ -934,10 +1184,10 @@ Number of Fisher Scoring iterations: 1
 Negative binomial model (using MASS package) 
 \end{verbatim}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-22-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-24-1} 
 
 \end{knitrout}
-\textbf{Figura :} Gráficos de diagnóstico para duas remoção.
+\textbf{Figura 10:} Gráficos de diagnóstico para duas remoção.
 
 
 
@@ -982,10 +1232,11 @@ Number of Fisher Scoring iterations: 1
 Negative binomial model (using MASS package) 
 \end{verbatim}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-25-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-27-1} 
 
 \end{knitrout}
-\textbf{Figura :} Gráficos de diagnóstico para tres remoções.
+\textbf{Figura 11:} Gráficos de diagnóstico para tres remoções.
+
 
 
 
@@ -1030,10 +1281,10 @@ Number of Fisher Scoring iterations: 1
 Negative binomial model (using MASS package) 
 \end{verbatim}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-28-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-30-1} 
 
 \end{knitrout}
-\textbf{Figura :} Gráficos de diagnóstico para quatro remoções.
+\textbf{Figura 12:} Gráficos de diagnóstico para quatro remoções.
 
 
 Como optamos por manter os pontos influentes o modelo e os gráficos de analise ficaram da seguinte forma:
@@ -1089,10 +1340,28 @@ Number of Fisher Scoring iterations: 1
 Negative binomial model (using MASS package) 
 \end{verbatim}
 \end{kframe}
-\includegraphics[width=\maxwidth]{figure/unnamed-chunk-31-1} 
+\includegraphics[width=\maxwidth]{figure/unnamed-chunk-33-1} 
 
 \end{knitrout}
+\textbf{Figura 13:} Gráficos de diagnóstico.
+
 Podemos percerber pelos gráficos que o ajuste foi bem feito, muito diferente de quando utilizamos a Poisson.
+
 \subsubsection{\textbf{Interpretação e conclusões}}
-Pelo ajuste do modelo final, podemos verificar que de fato, o Modelo Binomial Negativo, se adequou aos dados, já que os dados tinham alta variabilidade em relação média, motivo, que levou o descarte do modelo Poisson.
+
+Pelo ajuste do modelo final, podemos verificar que de fato, o Modelo Binomial Negativo, se comportou de forma adequada aos dados, já que a variável dengue tinha uma alta variabilidade em relação à sua média, motivo que levou o descarte do modelo Poisson.
+
+
+Ao analisar o modelo final vemos que, tendo em vista a existência de $26$ covariáveis, obtivemos um modelo parcimonioso, onde apenas $6$ variáveis, além da variável offset, explicam de forma eficiente a variável resposta. Observando os coeficientes resultantes notamos que a variável mais influente no modelo é a $\mathbf{temp\_p90}$, o que condiz com a informação já estabelecida de que o mosquito Aedes aegypti, agente transmissor da dengue, se proliferar com mais intensidade em épocas e locais mais quentes, o que, por sua vez, influi numa maior ocorrência de casos de dengue.
+
+
+Outras duas variáveis que se apresentaram com maior influência foram as indicadoras de faixa etária, $\mathbf{maior65}$ e $\mathbf{adultos}$, o que pode ter ocorrido por indicar um maior número de habitantes, o que levaria a maior número de casos, como pode indicar uma uma maior ocorrência de infecção em faixas etárias maiores, uma vez que a população de idosos tem maior influência no nosso modelo. Vale ressaltas que essa relação entre idade e dengue é algo estudado por especialistas.
+
+
+Quanto as demais variáveis mantidas no modelo temos que o índice de cobertura vegetal é negativamente correlacionado com as notificações, o que, mais uma vez, segue o conhecimento dos estudiosos, tendência que é seguida, mas agora positivamente, pela ocupação urbana. Por fim, temos a relação inversa da umidade relativa do ar, ou seja, lugares mais úmidos do estado em questão tendem a apresesentar menores números de casos de dengue, o que não parece uma associação óbvia, porém se mostrou, em conjunto com as demais variáveis do modelo, importante de se manter no modelo, de acordo com o critério AIC.
+
+\section{{\LARGE\textbf{Referências}}}
+
+Moral RA, Hinde J, Demétrio CGB ($2017$). “Half-Normal Plots and Overdispersed Models in R: The hnp Package.” \emph{Journal of Statistical Software}, URL:(https://www.jstatsoft.org/article/view/v$081i10$)
+
 \end{document}

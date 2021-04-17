@@ -49,7 +49,7 @@
         
         \vspace{85pt}
         
-		\textbf{\LARGE{Modelagem dos dados de 2013 referentes às notificações de dengue no estado do Espírito Santo}}
+		\textbf{\LARGE{Modelagem das Notificações de Casos de Dengue do ano de 2013 nos Municípios do Espírito Santo}}
 		\title{\large{Título}}
 	%	\large{Modelo\\
      %   		Validação do modelo clássico}
@@ -818,49 +818,18 @@ lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
 ################
-e <- matrix(0,n,1000)
-#
-for(i in 1:1000){
-  nresp <- rpois(n, fitted(fit.model))
-  fit <- glm(nresp ~ X, family=poisson)
-  w <- fit$weights
-  W <- diag(w)
-  H <- solve(t(X)%*%W%*%X)
-  H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
-  h <- diag(H)
-  e[,i] <- sort(resid(fit,type="deviance")/sqrt(1-h))}
-#
-e1 <- numeric(n)
-e2 <- numeric(n)
-#
-for(i in 1:n){
-  eo <- sort(e[i,])
-  e1[i] <- eo[25]
-  e2[i] <- eo[975]}
-#
-med <- apply(e,1,mean)
-faixa <- range(td,e1,e2)
-#
-qqnorm(td, 
-       xlab="Percentil da N(0,1)",
-       ylab="Componente do Desvio",
-       ylim=faixa, 
-       cex.lab=1.5, 
-       cex.axis=1.5,
-       pch=20,
-       main=""
-       )
-par(new=TRUE)
-#
-qqnorm(e1,axes=F,xlab="",ylab="",type="l",ylim=faixa,lty=1, main="")
-par(new=TRUE)
-qqnorm(e2,axes=F,xlab="",ylab="", type="l",ylim=faixa,lty=1, main="")
-par(new=TRUE)
-qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2, main="")
-@
-\textbf{Figura :} Gráficos de diagnóstico para o modelo sem \_offset\_.
+hnp(fit.model, 
+    xlab="Percentil da N(0,1)", 
+    ylab="Resíduos", 
+    cex.lab=1.5, 
+    cex.axis=1.5, 
+    pch=20
+)
 
-Como é possível observar pelos gráficos da \emph{Figura}, principalmente pelo gráfico de envelope dos resíduos, temos um modelo superdisperso, o que tentaremos resolver acrescentando um \_offset\_.
+@
+\textbf{Figura 5:} Gráficos de diagnóstico para o modelo sem \_offset\_.
+
+Como é possível observar pelos gráficos da \emph{Figura 5}, principalmente pelo gráfico de envelope dos resíduos feito com pacote \emph{hnp} de Moral RA et.all(2017), temos um modelo superdisperso, o que tentaremos resolver acrescentando um \_offset\_.
 
 \subsubsection{\textbf{Modelo com \_Offset\_}}
 
@@ -870,7 +839,15 @@ Para adicionarmos um dado \_offset\_ no modelo vemos que ele pode ser a variáve
  
 # stargazer(modelo_selecionado_corr_offset, table.placement = "H", no.space = TRUE, keep.stat = c("res.dev","aic"))
 
-summary(modelo_selecionado_corr_offset)
+sumario <- summary(modelo_selecionado_corr_offset)
+
+sumario[["call"]][["formula"]]
+
+print("Desvio")
+sumario[["deviance"]]
+
+print("df.residual")
+sumario[["df.residual"]]
 
 @
 
@@ -922,48 +899,16 @@ lines(smooth.spline(predict(fit.model2), z, df=2))
 ################
 ### ENVELOPE ###
 ################
-e <- matrix(0,n,1000)
-#
-for(i in 1:1000){
-  nresp <- rpois(n, fitted(fit.model2))
-  fit <- glm(nresp ~ X, family=poisson)
-  w <- fit$weights
-  W <- diag(w)
-  H <- solve(t(X)%*%W%*%X)
-  H <- sqrt(W)%*%X%*%H%*%t(X)%*%sqrt(W)
-  h <- diag(H)
-  e[,i] <- sort(resid(fit,type="deviance")/sqrt(1-h))}
-#
-e1 <- numeric(n)
-e2 <- numeric(n)
-#
-for(i in 1:n){
-  eo <- sort(e[i,])
-  e1[i] <- eo[25]
-  e2[i] <- eo[975]}
-#
-med <- apply(e,1,mean)
-faixa <- range(td,e1,e2)
-#
-qqnorm(td, 
-       xlab="Percentil da N(0,1)",
-       ylab="Componente do Desvio",
-       ylim=faixa, 
-       cex.lab=1.5, 
-       cex.axis=1.5,
-       pch=20,
-       main=""
-       )
-par(new=TRUE)
-#
-qqnorm(e1,axes=F,xlab="",ylab="",type="l",ylim=faixa,lty=1, main="")
-par(new=TRUE)
-qqnorm(e2,axes=F,xlab="",ylab="", type="l",ylim=faixa,lty=1, main="")
-par(new=TRUE)
-qqnorm(med,axes=F,xlab="", ylab="", type="l",ylim=faixa,lty=2, main="")
+hnp(fit.model2, 
+    xlab="Percentil da N(0,1)", 
+    ylab="Resíduos", 
+    cex.lab=1.5, 
+    cex.axis=1.5, 
+    pch=20
+)
 
 @
-\textbf{Figura :} Gráficos de diagnóstico para o modelo com \_offset\_.
+\textbf{Figura 6:} Gráficos de diagnóstico para o modelo com \_offset\_.
 
 \newpage
 \subsubsection{\textbf{Interpretação e conclusões}}
@@ -1074,7 +1019,15 @@ Ajustando um modelo com todas as 26 covariáveis e realizando a seleção de var
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
 
 summary(modelo_selecionado_bn)
+sumario <- summary(modelo_selecionado_corr_offset)
 
+sumario[["call"]][["formula"]] 
+
+#Desvio
+sumario[["deviance"]]
+
+#df.residual
+sumario[["df.residual"]]
 @
 Como aconteceu com o Modelo Poisson, é possivel perceber, com base no desvio residual que o ajuste é ruim. Para corrir isso, faremos o mesmo que foi feito com o Modelo Poisson, ou seja, usaremos as 15 variáveis mais correlatadas com a variável resposta, sendo elas:
 
@@ -1178,18 +1131,16 @@ lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
 ################
-
-# dev.new(width=6,height=3)
 hnp(fit.model, 
-    xlab = 'Percentil da N(0,1)',
-    ylab = 'Resíduos', 
-    main = 'Gráfico Normal de Probabilidades', 
-    pch = 20, 
+    xlab="Percentil da N(0,1)", 
+    ylab="Resíduos", 
     cex.lab=1.5, 
-    cex.axis=1.5
-    )
+    cex.axis=1.5, 
+    pch=20
+)
 
 @
+\textbf{Figura 7:} Gráficos de diagnóstico.
 
 \subsubsection{\textbf{Modelo com \_Offset\_}}
 Agora, colocando a variável \_pop\_ como \_Offset\_
@@ -1273,20 +1224,19 @@ lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
 ################
-
-# dev.new(width=6,height=3)
 hnp(fit.model, 
-    xlab = 'Percentil da N(0,1)',
-    ylab = 'Resíduos', 
-    main = 'Gráfico Normal de Probabilidades', 
-    pch = 20, 
+    xlab="Percentil da N(0,1)", 
+    ylab="Resíduos", 
     cex.lab=1.5, 
-    cex.axis=1.5
-    )
+    cex.axis=1.5, 
+    pch=20
+)
 
 @
+\textbf{Figura 8:} Gráficos de diagnóstico.
+
 \subsubsection{\textbf{Sobre a remoção de pontos influentes}}
-Usando a funçao identify, identificamos pontos influentes, entretanto, preferimos por não remove-los no modelo final, já que em nosso subset temos apenas 78 linhas.
+Usando a funçao identify, identificamos pontos influentes, entretanto, preferimos por não remove-los no modelo final, já que em nosso subset temos apenas $78$ linhas.
 Abaixo, alguns resultados que obtivemos na remoção de alguns pontos influentes:
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
 ##Uma remocao
@@ -1391,19 +1341,16 @@ lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
 ################
-
-# dev.new(width=6,height=3)
 hnp(fit.model, 
-    xlab = 'Percentil da N(0,1)',
-    ylab = 'Resíduos', 
-    main = 'Gráfico Normal de Probabilidades', 
-    pch = 20, 
+    xlab="Percentil da N(0,1)", 
+    ylab="Resíduos", 
     cex.lab=1.5, 
-    cex.axis=1.5
-    )
+    cex.axis=1.5, 
+    pch=20
+)
 @
+\textbf{Figura 9:} Gráficos de diagnóstico para uma remoção.
 
-\textbf{Figura :} Gráficos de diagnóstico para uma remoção.
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,results=FALSE>>=
 ##duas remocoes
 dados_2013_1<- dados_2013_1[-73,]
@@ -1507,19 +1454,16 @@ lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
 ################
-
-# dev.new(width=6,height=3)
 hnp(fit.model, 
-    xlab = 'Percentil da N(0,1)',
-    ylab = 'Resíduos', 
-    main = 'Gráfico Normal de Probabilidades', 
-    pch = 20, 
+    xlab="Percentil da N(0,1)", 
+    ylab="Resíduos", 
     cex.lab=1.5, 
-    cex.axis=1.5
-    )
+    cex.axis=1.5, 
+    pch=20
+)
 
 @
-\textbf{Figura :} Gráficos de diagnóstico para duas remoção.
+\textbf{Figura 10:} Gráficos de diagnóstico para duas remoção.
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
 ##tres remocoes
@@ -1624,18 +1568,16 @@ lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
 ################
-
-# dev.new(width=6,height=3)
 hnp(fit.model, 
-    xlab = 'Percentil da N(0,1)',
-    ylab = 'Resíduos', 
-    main = 'Gráfico Normal de Probabilidades', 
-    pch = 20, 
+    xlab="Percentil da N(0,1)", 
+    ylab="Resíduos", 
     cex.lab=1.5, 
-    cex.axis=1.5
-    )
+    cex.axis=1.5, 
+    pch=20
+)
 @
-\textbf{Figura :} Gráficos de diagnóstico para tres remoções.
+\textbf{Figura 11:} Gráficos de diagnóstico para tres remoções.
+
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
 ##quatro remocoes
 dados_2013_1<- dados_2013_1[-41,]
@@ -1739,18 +1681,15 @@ lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
 ################
-
-# dev.new(width=6,height=3)
 hnp(fit.model, 
-    xlab = 'Percentil da N(0,1)',
-    ylab = 'Resíduos', 
-    main = 'Gráfico Normal de Probabilidades', 
-    pch = 20, 
+    xlab="Percentil da N(0,1)", 
+    ylab="Resíduos", 
     cex.lab=1.5, 
-    cex.axis=1.5
-    )
+    cex.axis=1.5, 
+    pch=20
+)
 @
-\textbf{Figura :} Gráficos de diagnóstico para quatro remoções.
+\textbf{Figura 12:} Gráficos de diagnóstico para quatro remoções.
 
 
 Como optamos por manter os pontos influentes o modelo e os gráficos de analise ficaram da seguinte forma:
@@ -1863,19 +1802,34 @@ lines(smooth.spline(predict(fit.model), z, df=2))
 ################
 ### ENVELOPE ###
 ################
-
-# dev.new(width=6,height=3)
 hnp(fit.model, 
-    xlab = 'Percentil da N(0,1)',
-    ylab = 'Resíduos', 
-    main = 'Gráfico Normal de Probabilidades', 
-    pch = 20, 
+    xlab="Percentil da N(0,1)", 
+    ylab="Resíduos", 
     cex.lab=1.5, 
-    cex.axis=1.5
-    )
+    cex.axis=1.5, 
+    pch=20
+)
 
 @
+\textbf{Figura 13:} Gráficos de diagnóstico.
+
 Podemos percerber pelos gráficos que o ajuste foi bem feito, muito diferente de quando utilizamos a Poisson.
+
 \subsubsection{\textbf{Interpretação e conclusões}}
-Pelo ajuste do modelo final, podemos verificar que de fato, o Modelo Binomial Negativo, se adequou aos dados, já que os dados tinham alta variabilidade em relação média, motivo, que levou o descarte do modelo Poisson.
+
+Pelo ajuste do modelo final, podemos verificar que de fato, o Modelo Binomial Negativo, se comportou de forma adequada aos dados, já que a variável dengue tinha uma alta variabilidade em relação à sua média, motivo que levou o descarte do modelo Poisson.
+
+
+Ao analisar o modelo final vemos que, tendo em vista a existência de $26$ covariáveis, obtivemos um modelo parcimonioso, onde apenas $6$ variáveis, além da variável offset, explicam de forma eficiente a variável resposta. Observando os coeficientes resultantes notamos que a variável mais influente no modelo é a $\mathbf{temp\_p90}$, o que condiz com a informação já estabelecida de que o mosquito Aedes aegypti, agente transmissor da dengue, se proliferar com mais intensidade em épocas e locais mais quentes, o que, por sua vez, influi numa maior ocorrência de casos de dengue.
+
+
+Outras duas variáveis que se apresentaram com maior influência foram as indicadoras de faixa etária, $\mathbf{maior65}$ e $\mathbf{adultos}$, o que pode ter ocorrido por indicar um maior número de habitantes, o que levaria a maior número de casos, como pode indicar uma uma maior ocorrência de infecção em faixas etárias maiores, uma vez que a população de idosos tem maior influência no nosso modelo. Vale ressaltas que essa relação entre idade e dengue é algo estudado por especialistas.
+
+
+Quanto as demais variáveis mantidas no modelo temos que o índice de cobertura vegetal é negativamente correlacionado com as notificações, o que, mais uma vez, segue o conhecimento dos estudiosos, tendência que é seguida, mas agora positivamente, pela ocupação urbana. Por fim, temos a relação inversa da umidade relativa do ar, ou seja, lugares mais úmidos do estado em questão tendem a apresesentar menores números de casos de dengue, o que não parece uma associação óbvia, porém se mostrou, em conjunto com as demais variáveis do modelo, importante de se manter no modelo, de acordo com o critério AIC.
+
+\section{{\LARGE\textbf{Referências}}}
+
+Moral RA, Hinde J, Demétrio CGB ($2017$). “Half-Normal Plots and Overdispersed Models in R: The hnp Package.” \emph{Journal of Statistical Software}, URL:(https://www.jstatsoft.org/article/view/v$081i10$)
+
 \end{document}

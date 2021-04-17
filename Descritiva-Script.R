@@ -82,9 +82,9 @@ summary(IntCdAtBca) #mean = 33.7 deviance = 10.5
 summary(CobCondSaud) #mean = 75.5 deviance = 14.6
 summary(CobAtencBsca) #median = 100.0 deviance = 21.3
 
-summary(ifdm_saude) #mean = 80 deviance = 8.7
-summary(ifdm_edu) #mean = 83 deviance = 4.7
-summary(ifdm_emprend) #mean = 59 deviance = 11.6
+summary(ifdm_saude) #mean = 80.0 deviance = 8.7
+summary(ifdm_edu) #mean = 83.2 deviance = 4.7
+summary(ifdm_emprend) #mean = 59.0 deviance = 11.6
 
 #criar tabela com descrição das estatísticas básicas das 3.
 
@@ -278,6 +278,14 @@ plot_grid(plot1,
           plot5, 
           plot5,
           labels = c("A","B","C","D","E","F"))
+
+
+#Índices demograficos
+
+# cobveg - índice de cobertura vegetal;
+# expcosteira - ídice de exposição costeira;
+# ivc - índice de vulnerabilidade climática;
 ##############################################################
+
 
 detach(dados_2013)

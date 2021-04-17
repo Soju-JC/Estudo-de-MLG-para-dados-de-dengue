@@ -73,7 +73,9 @@
       \setlength{\labelwidth}{0pt}
       \setlength{\labelsep}{\leftmargin}}
 
-			\item Alunos: \
+			\item Alunos: José Carlos Soares Junior\\
+			         \;\;\;\;\;\;\;\;\;\;\;\;\;     Luiz Felipe Figueiredo\\
+			         \;\;\;\;\;\;\;\;\;\;\;\;\;     Mariana Machado Matheus
             \item Orientador: Prof. Dr. Saulo Morellato\
 
       \end{list}
@@ -138,7 +140,7 @@ lapply(packages, loadlibrary) # carrega pacotes
 # carrega dados
 dados <- read_excel("dados.xlsx")
 dados_2013 <- subset(dados,ano == 2013)
-dados_2013 <- dados_2013[,-28] #sem id
+dados_2013 <- dados_2013[,-c(28,29)] #sem id e ano
 
 
 ########## modelos definidos ###########
@@ -328,6 +330,13 @@ $\mathbf{maior65}$ - proporção da população com mais de $65$ anos;
 \newpage
 \section{{\LARGE\textbf{Análise exploratória}}}
 
+A dengue é uma doença que por melhor que tenham sido as ações da humanidade para lidar com ela, sempre tem sido parte de nossas vidas, tendo perdurado como um dos maiores problemas de saúde pública já visto.
+
+Este trabalho consiste em construir modelos de regressão com interesse nas notificações de dengue dos municípios do estado do Espirito Santo, sendo os dados utilizados contendo várias informações sociais ou até mesmo de origem natural como temperatura e umidade do ar. Estes dados são referentes ao ano de $2013$, onde foi quando o Espirito Santo enfrentou a pior crise epidêmica de dengue se comparado com os anos seguintes, até que foi passada pela crise de $2019$.
+
+\newpage
+Mas se olharmos para o número de notificações daquele ano por município, quais tiveram mais notificações ? 
+
 %%%%%% Notificações de dengue por municipio %%%%%%%
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.width= 8, fig.height= 11, fig.align= "center", fig.pos='H'>>=
@@ -343,7 +352,268 @@ ggplot(dados_2013,aes(x = Municipio, y = dengue)) +
 @
 \textbf{Figura 1:} Notificações de dengue por municípios do estado do Espírito Santo.
 
+\newpage
+Podemos observar pela \emph{Figura 1} que os municípios que tiveram mais notificações de dengue no ano de $2013$ foram os seguintes:
+
+\begin{itemize}
+  \item Vitória
+  \item Vila Velha
+  \item Viana
+  \item Serra
+  \item Cariacica
+  \item Cachoeiro de Itapemirim
+\end{itemize}
+
+Com exceção de Cachoeiro de Itapemirim, os demais municípios que tiveram mais notificações são graficamente cidades extremamente próximas concentradas ao redor da capital Vitória, o qual dentre todos, teve o maior número de notificações de dengue registrado.
+
+Pensando que talvez baixos índices referentes à saúde pública, ou índices sociais e educacionais possam ter alguma influência no número de notificações, o que podemos encontrar nos dados ?
+
+%%%%%%% Tabelas e gráficos de índices sociais e educacionais %%%%%%%
+
+\begin{table}[H]
+\caption{Estatísticas básicas das variáveis de índices sociais e educacionais:}
+\begin{center}
+\begin{tabular}{cc|c|c|c|c|c|c}
+\hline
+\multicolumn{1}{c|}{Variável}     & Min  & 1° quartil & Mediana & Média & 3° quartil & Máx   & Desvio \\ \hline
+\multicolumn{1}{c|}{IntCdAtBca}   & 16.5 & 25.9       & 31.3    & 33.7  & 38.7       & 63.9  & 10.5   \\
+\multicolumn{1}{c|}{CobCondSaud}  & 35.3 & 66.8       & 78.1    & 75.5  & 87.1       & 99.0  & 14.6   \\
+\multicolumn{1}{c|}{CobAtencBsca} & 0.0  & 85.0       & 100.0   & 87.2  & 100.0      & 100.0 & 21.3   \\
+\multicolumn{1}{c|}{ifdm\_saude}  & 54.6 & 74.1       & 82.9    & 80.0  & 86.4       & 92.5  & 8.7    \\
+\multicolumn{1}{c|}{ifdm\_edu}    & 72.9 & 79.5       & 83.5    & 83.2  & 86.7       & 91.7  & 4.7    \\
+\multicolumn{1}{c|}{ifdm\_emprend}                    & 28.4 & 50.6       & 58.5    & 59.0  & 66.1       & 89.5  & 11.6   \\ \cline{1-8} 
+\end{tabular}
+\end{center}
+\end{table}
+
+Ao olharmos para as informações da \emph{Tabela 1}, observamos valores centrais de média e mediana bem próximos indicando que os dados desses índices nos municípios não fogem tanto dos valores centrais, havendo uma maior diferênça quanto aos valores centrais na variável \_CobAtencBsca\_.
+
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.width= 10, fig.height= 7, fig.align= "center", fig.pos='H'>>=
+
+dados_2013_boxplot <- dados_2013
+attach(dados_2013_boxplot)
+
+             ########## IntCdAtBca ##########
+
+# Cria IntCdAtBca_indice
+dados_2013_boxplot$IntCdAtBca_indice <- 
+  ifelse(IntCdAtBca < 34, 1, 0)
+
+dados_2013_boxplot$IntCdAtBca_indice <- 
+  fct_recode(as.factor(dados_2013_boxplot$IntCdAtBca_indice), 
+             "sim" = "1",
+             "não" = "0")
+
+#Boxplot IntCdAtBca_indice e dengue
+# dev.new(width=6,height=3)
+plot1 <- ggplot(dados_2013_boxplot[-78,], 
+       aes(x = IntCdAtBca_indice,
+           y = dengue,
+           group = IntCdAtBca_indice, 
+           fill = IntCdAtBca_indice)
+       ) + 
+geom_boxplot(notch = FALSE) + 
+scale_y_continuous(breaks = seq(0,20500,500)) + 
+labs(y = "Notificações de dengue\n",
+     x = "\nMunicípio com IntCdAtBca < 34 ?") + 
+guides(fill = FALSE) 
+             
+             ########## CobCondSaud ##########
+
+#Cria CobCondSaud_indice
+dados_2013_boxplot$CobCondSaud_indice <- 
+  ifelse(CobCondSaud < 76, 1, 0)
+
+dados_2013_boxplot$CobCondSaud_indice <- 
+  fct_recode(as.factor(dados_2013_boxplot$CobCondSaud_indice), 
+             "sim" = "1",
+             "não" = "0")
+
+#Boxplot CobCondSaud_indice e dengue
+# dev.new(width=6,height=3)
+plot2 <- ggplot(dados_2013_boxplot[-78,], 
+       aes(x = CobCondSaud_indice,
+           y = dengue,
+           group = CobCondSaud_indice, 
+           fill = CobCondSaud_indice)
+) + 
+  geom_boxplot(notch = FALSE) + 
+  scale_y_continuous(breaks = seq(0,20500,500)) + 
+  labs(y = "Notificações de dengue\n",
+       x = "\nMunicípio com CobCondSaud < 76 ?") + 
+  guides(fill = FALSE)
+
+            ########## CobAtencBsca ##########
+
+#Cria CobAtencBsca_indice
+dados_2013_boxplot$CobAtencBsca_indice <- 
+  ifelse(CobAtencBsca < 100, 1, 0)
+
+dados_2013_boxplot$CobAtencBsca_indice <- 
+  fct_recode(as.factor(dados_2013_boxplot$CobAtencBsca_indice), 
+             "sim" = "1",
+             "não" = "0")
+
+#Boxplot CobAtencBsca_indice e dengue
+# dev.new(width=6,height=3)
+plot3 <- ggplot(dados_2013_boxplot[-78,], 
+       aes(x = CobAtencBsca_indice,
+           y = dengue,
+           group = CobAtencBsca_indice, 
+           fill = CobAtencBsca_indice)
+) + 
+  geom_boxplot(notch = FALSE) + 
+  scale_y_continuous(breaks = seq(0,20500,500)) + 
+  labs(y = "Notificações de dengue\n", 
+       x = "\nMunicípio com CobAtencBsca < 100 ?") + 
+  guides(fill = FALSE)
+
+               ########## ifdm_saude ##########
+
+#Cria ifdm_saude_indice
+dados_2013_boxplot$ifdm_saude_indice <- 
+  ifelse(ifdm_saude < 80, 1, 0)
+
+dados_2013_boxplot$ifdm_saude_indice <- 
+  fct_recode(as.factor(dados_2013_boxplot$ifdm_saude_indice), 
+             "sim" = "1",
+             "não" = "0")
+
+#Boxplot ifdm_saude_indice e dengue
+# dev.new(width=6,height=3)
+plot4 <- ggplot(dados_2013_boxplot[-78,], 
+       aes(x = ifdm_saude_indice,
+           y = dengue,
+           group = ifdm_saude_indice, 
+           fill = ifdm_saude_indice)
+) + 
+  geom_boxplot(notch = FALSE) + 
+  scale_y_continuous(breaks = seq(0,20500,500)) + 
+  labs(y = "Notificações de dengue\n", 
+       x = "\nMunicípio com ifdm_saude < 80 ?") + 
+  guides(fill = FALSE) 
+
+                ########## ifdm_edu ##########
+
+#Cria ifdm_edu_indice
+dados_2013_boxplot$ifdm_edu_indice <- 
+  ifelse(ifdm_edu < 83, 1, 0)
+
+dados_2013_boxplot$ifdm_edu_indice <- 
+  fct_recode(as.factor(dados_2013_boxplot$ifdm_edu_indice), 
+             "sim" = "1",
+             "não" = "0")
+
+#Boxplot ifdm_edu_indice e dengue
+# dev.new(width=6,height=3)
+plot5 <- ggplot(dados_2013_boxplot[-78,], 
+       aes(x = ifdm_edu_indice,
+           y = dengue,
+           group = ifdm_edu_indice, 
+           fill = ifdm_edu_indice)
+) + 
+  geom_boxplot(notch = FALSE) + 
+  scale_y_continuous(breaks = seq(0,20500,500)) + 
+  labs(y = "Notificações de dengue\n", 
+       x = "\nMunicípio com ifdm_edu < 83 ?") + 
+  guides(fill = FALSE) 
+
+              ########## ifdm_emprend ##########
+
+#Cria ifdm_emprend_indice
+dados_2013_boxplot$ifdm_emprend_indice <- 
+  ifelse(ifdm_emprend < 59, 1, 0)
+
+dados_2013_boxplot$ifdm_emprend_indice <- 
+  fct_recode(as.factor(dados_2013_boxplot$ifdm_emprend_indice), 
+             "sim" = "1",
+             "não" = "0")
+
+#Boxplot ifdm_emprend_indice e dengue
+# dev.new(width=6,height=3)
+plot6 <- ggplot(dados_2013_boxplot[-78,], 
+       aes(x = ifdm_emprend_indice,
+           y = dengue,
+           group = ifdm_emprend_indice, 
+           fill = ifdm_emprend_indice)
+) + 
+  geom_boxplot(notch = FALSE) + 
+  scale_y_continuous(breaks = seq(0,20500,500)) + 
+  labs(y = "Notificações de dengue\n", 
+       x = "\nMunicípio com ifdm_emprend < 59 ?") + 
+  guides(fill = FALSE) 
+
+plot_grid(plot1, 
+          plot2,
+          plot3, 
+          plot4, 
+          plot5, 
+          plot6,
+          labels = c("A","B","C","D","E","F"))
+
+detach(dados_2013_boxplot)
+
+@
+\textbf{Figura 2A:} Boxplot do número de notificações de dengue e o índice \_IntCdAtBca\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.  
+
+\textbf{Figura 2B:} Boxplot do número de notificações de dengue e o índice \_CobCondSaud\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.
+
+\textbf{Figura 2C:} Boxplot do número de notificações de dengue e o índice \_CobAtencBsca\_ avaliado em dois grupos (acima da mediana e abaixo da mediana), sem considerar o município Vitória.
+
+\textbf{Figura 2D:} Boxplot do número de notificações de dengue e o índice \_ifdm saude\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.
+
+\textbf{Figura 2E:} Boxplot do número de notificações de dengue e o índice \_ifdm edu\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.
+
+\textbf{Figura 2F:} Boxplot do número de notificações de dengue e o índice \_ifdm emprend\_ avaliado em dois grupos (acima da média e abaixo da média), sem considerar o município Vitória.
+
+\newpage
+Podemos observar que nas \emph{Figuras 2A, 2B, 2C e 2E} que o grupo dos municípios que tiveram os referentes índices abaixo da média (mediana para a \emph{Figura 2C}) naquele ano teve mais municípios com notificações extremas de dengue, se comparado com o grupo de municípios com os índices acima do valor central em questão. Além disso, a mediana de ambos os grupos não parece ter uma diferença muito discrepante, com exceção das medianas no índice CobAtencBsca, onde o grupo dos municípios com índice abaixo da mediana do estado teve a mediana consideralmente maior que a do grupo de municípios de índice de mediana acima.
+
+Por outro lado, nas \emph{Figuras 2D e 2F} o grupo dos municípios que tiveram os referentes índices acima ou igual à média naquele ano teve mais municípios com notificações extremas de dengue, se comparado com o grupo de municípios com os índices abaixo do valor central em questão.\\
+
+\noindent
+Obs: Município de Vitória não foi incluido nos gráficos pois suas notificações de dengue são extremas o suficiente para fazer esse tipo de gráfico ser inutilizado vizualmente.
+
+\newpage
+<<comment=NA,warning=FALSE,echo=FALSE,message=FALSE>>=
+
+attach(dados_2013_boxplot)
+
+           ########## urb ##########
+
+#Cria urb_indice
+dados_2013_boxplot$urb_indice <- 
+  ifelse(urb < 63, 1, 0)
+
+dados_2013_boxplot$urb_indice <- 
+  fct_recode(as.factor(dados_2013_boxplot$urb_indice), 
+             "sim" = "1",
+             "não" = "0")
+
+#Boxplot urb_indice e dengue
+ggplot(dados_2013_boxplot[-78,], 
+       aes(x = urb_indice,
+       y = dengue,
+       group = urb_indice, 
+       fill = urb_indice)
+) + 
+  geom_boxplot(notch = FALSE) + 
+  scale_y_continuous(breaks = seq(0,20500,500)) + 
+  labs(y = "Notificações de dengue\n",
+       x = "\nPercentual de urbanização menor do que a media (< 63%) ?") + 
+  guides(fill = FALSE) 
+
+detach(dados_2013_boxplot)
+
+@
+\textbf{Figura 3:} Boxplot do número de notificações de dengue e o nível de urbanização dos municípios por grupos (maior ou menor que a média).\\
+
+Na \emph{Figura 3}, vemos que o grupo de municípios que possuem um percentual de urbanização maior do que a média, possui mais casos com notificações extremas de dengue, sugerindo talvez, que o nível de urbanização do município tenha relação com notificações de dengue.
+
+\newpage
 %%%%%%% Grafico de correlação %%%%%%%
+
+Pensando em todas as variáveis do conjunto de dados, como é a correlação entre elas ?
 
 <<comment=NA,warning=FALSE,echo=FALSE,message=FALSE,fig.width= 9.5, fig.height= 8>>=
 require(ggcorrplot)
@@ -356,7 +626,9 @@ ggcorrplot(corr,
            lab_size = 3
            )
 @
-\textbf{Figura 2:} Gráfico de correlação entre as covariáveis.
+\textbf{Figura 4:} Gráfico de correlação entre as covariáveis.\\
+
+Na \emph{Figura 4} vemos que as variáveis \_pop\_ e \_dens\_ possuem correlação muito alta com nossa variável de interesse, informação valiosa para construção do modelo posteriormente. Além disso, as variáveis de temperatura e umidade também possuem alta correlação com variáveis com as mesmas características como \_temp\_p$90$\_ e \_umid\_p$90$\_, o que é esperado.
 
 \newpage
 \section{{\LARGE\textbf{Construção do modelo}}}
@@ -1008,5 +1280,10 @@ hnp(fit.model,
 
 @
 \subsubsection{\textbf{Interpretação e conclusões}}
+
+\section{{\LARGE\textbf{Referência}}}
+
+Moral RA, Hinde J, Demétrio CGB ($2017$). “Half-Normal Plots and Overdispersed Models in R: The hnp Package.” \_Journal of Statistical Software\_, URL:(https://www.jstatsoft.org/article/view/v$081i10$)
+
 
 \end{document}
